@@ -1,16 +1,23 @@
+* {
+    margin: 0;
+}
+
 body{
     font-family: Arial, sans-serif;
     background-color: #F5F5F0;
-    margin: 0;
-    padding: 0px 80px;
 }
+
 /*=========== NAVBAR ============== */
-.navbar {
+nav {
     display: flex; 
     align-items: center;
     border-bottom: 1px solid #90AB8B;
     font-size: small;
-    padding: 16px 0;
+    padding: 16px 80px;
+}
+
+main {
+    padding: 0px 80px;
 }
 
 /*================ Logo =============== */
@@ -122,7 +129,7 @@ body{
 
 /* VIEWPORT */
 .carousel {
-    overflow: hidden;
+    overflow: visible;
     width: 100%;
 }
 
@@ -150,7 +157,7 @@ body{
 }
 
 /* =============DOTS SLIDER=========== */
-.carousel-dots {
+.carousel-dots {    
     display: flex;
     justify-content: center;
     margin-top: 0px;
@@ -204,6 +211,7 @@ body{
 /* ========WHY US?============ */
 .why-us {
     padding: 60px 40px;
+    color: #5A7863;
 }
 
 .why-us h2 {
@@ -245,4 +253,74 @@ body{
 .why-card:hover {
     transform: translateY(-5px);
     box-shadow: 0 15px 30px rgba(0, 0, 0, 0.25);
+}
+
+footer {
+    background-color: #5A7863;
+    font-size: 0.9em;
+    padding: 28px 80px;
+}
+
+.footer-content {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+}
+
+.content-top {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+}
+
+.content-top1 {
+    display: flex;
+    flex-direction: row;
+    gap: 32px;
+}
+
+.content-top1-list {
+    display: flex;
+    flex-direction: column;
+    color: #ffffff;
+    gap: 8px;
+}
+
+.content-top1-list h3{
+    padding-bottom: 8px;
+}
+
+.content-top1-list a{
+    color: #ffffff;
+}
+
+.content-top2 {
+    display: flex;
+    flex-direction: column;
+    color: #ffffff;
+    text-align: right;
+    align-items: flex-end;
+    gap: 8px;
+}
+
+.content-top2 i{
+    background-color: #ffffff;
+    width: fit-content;
+}
+
+.icon-top2 {
+    display: flex;
+    flex-direction: row;
+    gap: 4px;
+}
+
+.content-bottom {
+    color: #ffffff;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+}
+
+.content-bottom i {
+    background-color: #ffffff;
 }

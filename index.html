@@ -7,103 +7,148 @@
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
-   <header>
     <!-- NAVBAR -->
-    <nav class="navbar">
+    <nav>
         <h1 class="logo">On-Book</h1>
 
         <input type="text" class="search" placeholder="Search books...">
 
         <ul id="information">
             <li><a href="#home">Home</a></li>
-            <li><a href="#books">Books</a></li>
+            <li><a href="#books">Kategori Buku</a></li>
             <li><a href="#about">About</a></li>
-            <li><a href="#contact">Contact</a></li>
+            <li><a href="#contact">Kontak</a></li>
             <li><a class="login" href="#">Login</a></li>
         </ul>
     </nav>
 
     <main>
+        <!-- HERO / PROMO BANNER -->
+        <section class="hero" id="home">
+            <div class="hero-content">
+                <h2>Promo Buku Terbaru</h2>
+                <p>Diskon hingga 70% untuk buku pilihan terbaik</p>
+                <button>Lihat Promo</button>
+            </div>
+        </section>
 
-    <!-- HERO / PROMO BANNER -->
-    <section class="hero" id="home">
-        <div class="hero-content">
-            <h2>Promo Buku Terbaru</h2>
-            <p>Diskon hingga 70% untuk buku pilihan terbaik</p>
-            <button>Lihat Promo</button>
-        </div>
-    </section>
+        <!-- CAROUSEL BUKU -->
+        <section class="books">
+            <h2>Buku Terlaris & Rekomendasi</h2>
 
-    <!-- CAROUSEL BUKU -->
-    <section class="books">
-        <h2>Buku Terlaris & Rekomendasi</h2>
+            <div class ="carousel-wrapper">
+                
+                <div class="carousel">
+                    <div class="carousel-track">
+                        <div class="book-card">Buku 1</div>
+                        <div class="book-card">Buku 2</div>
+                        <div class="book-card">Buku 3</div>
+                        <div class="book-card">Buku 4</div>
+                        <div class="book-card">Buku 5</div>
+                        <div class="book-card">Buku 6</div>
+                        <div class="book-card">Buku 7</div>
+                        <div class="book-card">Buku 8</div>
+                        <div class="book-card">Buku 9</div>
+                        <div class="book-card">Buku 10</div>
+                    </div>
+                </div>
+                
+            </div>
+            <div class="carousel-dots">
+                <button class="carousel-button left">&#10094;</button>
+                <span class="dot active"></span>
+                <span class="dot"></span>
+                <span class="dot"></span>
+                <span class="dot"></span>
+                <button class="carousel-button right">&#10095;</button>
+            </div>
+        </section>
 
-        <div class ="carousel-wrapper">
-            
-            <div class="carousel">
-                <div class="carousel-track">
-                    <div class="book-card">Buku 1</div>
-                    <div class="book-card">Buku 2</div>
-                    <div class="book-card">Buku 3</div>
-                    <div class="book-card">Buku 4</div>
-                    <div class="book-card">Buku 5</div>
-                    <div class="book-card">Buku 6</div>
-                    <div class="book-card">Buku 7</div>
-                    <div class="book-card">Buku 8</div>
-                    <div class="book-card">Buku 9</div>
-                    <div class="book-card">Buku 10</div>
+        <!-- KENAPA BELANJA -->
+        <section class="why-us">
+            <h2>Kenapa Belanja di Sini?</h2>
+
+            <div class="why-grid">
+                <div class="why-card">
+                    <h3>Buku Berkualitas</h3>
+                    <p>
+                        Koleksi buku original, terbaru, dan pilihan terbaik dari berbagai kategori.
+                    </p>
+                </div>
+
+                <div class="why-card">
+                    <h3>Baca Offline</h3>
+                    <p>
+                        Unduh buku favoritmu dan baca kapan saja tanpa koneksi internet.
+                    </p>
+                </div>
+
+                <div class="why-card">
+                    <h3>Akses di Mana Saja</h3>
+                    <p>
+                        Nikmati membaca lewat HP, tablet, laptop, atau komputer.
+                    </p>
+                </div>
+
+                <div class="why-card">
+                    <h3>Akun Keluarga</h3>
+                    <p>
+                        Buat profil khusus anak dengan konten edukatif dan aman.
+                    </p>
                 </div>
             </div>
-            
+        </section>
+    </main>
+
+    <footer>
+        <div class="footer-content">
+            <div class="content-top">
+                <div class="content-top1">
+                    <div class="content-top1-list">
+                        <h3>Produk OnBook</h3>
+                        <a href="#">OnBook Affiliate</a>
+                        <a href="#">Mitra OnBook</a>
+                    </div>
+                    <div class="content-top1-list">
+                        <h3>Informasi Belanja</h3>
+                        <a href="#">Berbelanja</a>
+                        <a href="#">Pembayaran</a>
+                        <a href="#">Pengiriman</a>
+                    </div>
+                    <div class="content-top1-list">
+                        <h3>Tentang OnBook</h3>
+                        <a href="#">Tentang Kami</a>
+                        <a href="#">Toko Kami</a>
+                    </div>
+                    <div class="content-top1-list">
+                        <h3>Lainnya</h3>
+                        <a href="#">Blog</a>
+                        <a href="#">Kebijakan Privasi</a>
+                        <a href="#">Hubungi Kami</a>
+                        <a href="#">Kerja Sama</a>
+                    </div>
+                </div>
+                <div class="content-top2">
+                    <h3>Aplikasi Seluler Kami</h3>
+                    <p>Download aplikasi OnBook.com yang tersedia di seluruh perangkat iOS dan Android</p>
+                    <div class="icon-top2">
+                        <i>aaaa</i>
+                        <i>aaaa</i>
+                    </div>
+                </div>
+            </div>
+            <hr>
+            <div class="content-bottom">
+                <p>© 2025 PT OnBook Asri Media</p>
+                <div>
+                    <i>aaaa</i>
+                    <i>aaaa</i>
+                    <i>aaaa</i>
+                    <i>aaaa</i>
+                </div>
+            </div>
         </div>
-        <div class="carousel-dots">
-            <button class="carousel-button left">&#10094;</button>
-            <span class="dot active"></span>
-            <span class="dot"></span>
-            <span class="dot"></span>
-            <span class="dot"></span>
-            <button class="carousel-button right">&#10095;</button>
-        </div>
-    </section>
-
-    <!-- KENAPA BELANJA -->
-    <section class="why-us">
-    <h2>Kenapa Belanja di Sini?</h2>
-
-    <div class="why-grid">
-        <div class="why-card">
-            <h3>Buku Berkualitas</h3>
-            <p>
-                Koleksi buku original, terbaru, dan pilihan terbaik dari berbagai kategori.
-            </p>
-        </div>
-
-        <div class="why-card">
-            <h3>Baca Offline</h3>
-            <p>
-                Unduh buku favoritmu dan baca kapan saja tanpa koneksi internet.
-            </p>
-        </div>
-
-        <div class="why-card">
-            <h3>Akses di Mana Saja</h3>
-            <p>
-                Nikmati membaca lewat HP, tablet, laptop, atau komputer.
-            </p>
-        </div>
-
-        <div class="why-card">
-            <h3>Akun Keluarga</h3>
-            <p>
-                Buat profil khusus anak dengan konten edukatif dan aman.
-            </p>
-        </div>
-    </div>
-</section>
-
-
-</main>
-
-</header>
+    </footer>
+    <script src="app.js"></script>
 </body>
 </html>
