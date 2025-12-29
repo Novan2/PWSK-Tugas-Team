@@ -1,22 +1,74 @@
 body{
     font-family: Arial, sans-serif;
-    background-color: #ffffff;
+    background-color: #EBF4DD;
     margin: 0;
-    padding: 0;
 }
 
-nav {
-    display: flex;
-    justify-content: space-between; 
+.navbar {
+    display: flex; 
     align-items: center;
-    padding: 20px 50px;
-    background-color: #97cffd;
-    color: white;
+    padding: 0px 100px;
+    background-color: #EBF4DD;
+    border-bottom: 1px solid #90AB8B;
+    font-size: small;
 }
 
+.logo {
+    font-weight: bold;
+    font-size: 20px;
+    color: #3B4953;
+    margin-right: 30px;
+}
+
+
+/* Search bar */
+.search {
+    flex: 1;
+    max-width: 300px;
+    padding: 10px 15px;
+    border-radius: 25px;
+    border: 1px solid #90AB8B;
+    background-color: #ffffff;
+    color: #3B4953;
+    outline: none;
+}
+
+.search::placeholder {
+    color: #5A7863;
+}
+
+/* Menu */
 #information {
     display: flex;
     list-style: none;
-    margin: 0 15px;
+    margin-left: auto;
+    padding: 0;
+}
+
+#information li {
+    margin-left: 20px;
+}
+
+#information a {
     text-decoration: none;
+    color: #3B4953;
+    font-weight: 10px;
+    transition: color 0.2s ease;
+}
+
+#information a:hover {
+    color: #5A7863;
+}
+
+/* Login button */
+.login {
+    background-color: #5A7863;
+    color: #EBF4DD !important;
+    padding: 8px 16px;
+    border-radius: 20px;
+    transition: background-color 0.2s ease;
+}
+
+.login:hover {
+    background-color: #3B4953;
 }
