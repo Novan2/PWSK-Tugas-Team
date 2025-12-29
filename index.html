@@ -5,21 +5,36 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Toko Buku Online</title>
     <link rel="stylesheet" href="style.css">
+    <!-- Bootstrap 3 CSS (untuk glyphicon) -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+
 </head>
 <body>
     <!-- NAVBAR -->
     <nav>
-        <h1 class="logo">On-Book</h1>
+        <div class="nav-right">
+            <div class="menu-logo">
+                <div class="logo">On-Book</div>
+    
+                <!-- <input type="text" class="search" placeholder="Search books..."> -->
+                <form class="search-container">
+                    <input id="search-box" type="text" class="search-box" name="q" placeholder="Search books..." />
+                    <label for="search-box"><span class="glyphicon glyphicon-search search-icon"></span></label>
+                    <input type="submit" id="search-submit" />
+                </form>
+            </div>
 
-        <input type="text" class="search" placeholder="Search books...">
+            <div>
+                <ul id="information">
+                    <li><a href="#home">Home</a></li>
+                    <li><a href="#books">Kategori Buku</a></li>
+                    <li><a href="#about">About</a></li>
+                    <li><a href="#contact">Kontak</a></li>
+                    <li><a class="login" href="#">Login</a></li>
+                </ul>
 
-        <ul id="information">
-            <li><a href="#home">Home</a></li>
-            <li><a href="#books">Kategori Buku</a></li>
-            <li><a href="#about">About</a></li>
-            <li><a href="#contact">Kontak</a></li>
-            <li><a class="login" href="#">Login</a></li>
-        </ul>
+            </div>
+        </div>
     </nav>
 
     <main>

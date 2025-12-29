@@ -9,28 +9,107 @@ body{
 
 /*=========== NAVBAR ============== */
 nav {
-    display: flex; 
-    align-items: center;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between; /* logo kiri, nav kanan */
+    padding: 16px 120px; /* kurangi padding agar muat */
     border-bottom: 1px solid #90AB8B;
-    font-size: small;
-    padding: 16px 80px;
+    font-size: 1.3em;
+}
+
+/* Container search + menu */
+.nav-right {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    gap: 20px;
+    flex-wrap: nowrap;
+    flex-grow: 1; /* ambil sisa ruang */
+    justify-content: space-between;
+}
+
+.menu-logo {
+    display: flex;
+    flex-direction: row;
+    gap: 20px;
+    align-items: center;
 }
 
 main {
     padding: 0px 80px;
 }
 
+
 /*================ Logo =============== */
 .logo {
     font-weight: bold;
     font-size: 20px;
     color: #3B4953;
-    margin-right: 30px;
 }
 
-
 /*============== Search bar ============= */
-.search {
+.search-container {
+    flex-shrink: 1;
+}
+
+.search-box {
+    transition: width 0.6s, border-radius 0.6s, background 0.6s, box-shadow 0.6s;
+    width: 39px;
+    height: 40px;
+    border-radius: 20px;
+    border:none;
+    cursor: pointer;
+    background: rgb(235, 235, 235);
+    color: black;
+}
+
+.search-box + label .search-icon {
+    color: black;
+}
+
+.search-box:hover {
+    color: white;
+    background: rgb(200, 200, 200);
+    box-shadow: 0 0 0 5px #5A7863;
+}
+
+.search-box:hover + label .search-icon {
+    color: white;
+}
+
+.search-box:focus { 
+    border: none;
+    outline: none;
+    box-shadow: none;
+    padding-left: 15px;
+    cursor: text;
+    width: 300px;
+    border-radius: auto;
+    background: rgb(235, 235, 235);
+    color: black;
+}
+
+.search-box:focus + label .search-icon {
+    color: black;
+}
+
+.search-box:not(:focus) {
+    text-indent: -5000px;
+}
+
+#search-submit {
+    position: relative;
+    left: -5000px;
+}
+
+.search-icon {
+    position: relative;
+    left: -34px;
+    color: white;
+    cursor: pointer;
+}
+
+ /* .search {
     flex: 1;
     max-width: 300px;
     padding: 10px 15px;
@@ -39,19 +118,23 @@ main {
     background-color: #ffffff;
     color: #3B4953;
     outline: none;
-}
+} */
 
-.search::placeholder {
+/* .search::placeholder {
     color: #5A7863;
-}
+}  */
 
 /*============ Menu =========== */
 #information {
     display: flex;
     list-style: none;
-    margin-left: auto;
+    margin: 0;
     padding: 0;
+    gap: 15px;
+    flex-shrink: 0; /* menu tidak mengecil terlalu kecil */
+    font-size: 1.1em;
 }
+
 
 #information li {
     margin-left: 20px;
@@ -80,7 +163,6 @@ main {
 .login:hover {
     background-color: #3B4953;
 }
-
 /* =========HERO PROMO========= */
 .hero {
     background: linear-gradient(135deg, #90AB8B, #EBF4DD);
@@ -129,7 +211,7 @@ main {
 
 /* VIEWPORT */
 .carousel {
-    overflow: visible;
+    overflow: hidden;
     width: 100%;
 }
 
@@ -251,8 +333,8 @@ main {
 
 /* HOVER EFFECT */
 .why-card:hover {
-    transform: translateY(-5px);
-    box-shadow: 0 15px 30px rgba(0, 0, 0, 0.25);
+    transform: translateY(-12px);
+    box-shadow: 0 20px 30px rgba(0, 0, 0, 0.25);
 }
 
 footer {
@@ -292,6 +374,7 @@ footer {
 
 .content-top1-list a{
     color: #ffffff;
+    text-decoration: underline;
 }
 
 .content-top2 {
