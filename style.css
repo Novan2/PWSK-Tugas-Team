@@ -1,18 +1,19 @@
 body{
     font-family: Arial, sans-serif;
-    background-color: #EBF4DD;
+    background-color: #F5F5F0;
     margin: 0;
+    padding: 0px 80px;
 }
-
+/*=========== NAVBAR ============== */
 .navbar {
     display: flex; 
     align-items: center;
-    padding: 0px 100px;
-    background-color: #EBF4DD;
     border-bottom: 1px solid #90AB8B;
     font-size: small;
+    padding: 16px 0;
 }
 
+/*================ Logo =============== */
 .logo {
     font-weight: bold;
     font-size: 20px;
@@ -21,7 +22,7 @@ body{
 }
 
 
-/* Search bar */
+/*============== Search bar ============= */
 .search {
     flex: 1;
     max-width: 300px;
@@ -37,7 +38,7 @@ body{
     color: #5A7863;
 }
 
-/* Menu */
+/*============ Menu =========== */
 #information {
     display: flex;
     list-style: none;
@@ -71,4 +72,177 @@ body{
 
 .login:hover {
     background-color: #3B4953;
+}
+
+/* =========HERO PROMO========= */
+.hero {
+    background: linear-gradient(135deg, #90AB8B, #EBF4DD);
+    padding: 80px 40px;
+    border-radius: 20px;
+    margin: 30px;
+    color: #ffffff;
+    box-shadow: 0 15px 30px rgba(59, 73, 83, 0.25);
+}
+
+.hero-content h2 {
+    font-size: 36px;
+    margin-bottom: 10px;
+}
+
+.hero-content p {
+    font-size: 18px;
+    margin-bottom: 20px;
+}
+
+.hero-content button {
+    background-color: #5A7863;
+    color: #EBF4DD;
+    border: none;
+    padding: 12px 25px;
+    border-radius: 25px;
+    cursor: pointer;
+}
+/*============ BEST BOOK  ===========*/
+.books {
+    padding: 40px;
+}
+
+.books h2 {
+    color: #3B4953;
+    margin-bottom: 20px;
+}
+
+/* WRAPPER */
+.carousel-wrapper {
+    position: relative;
+    display: flex;
+    align-items: center;
+    padding: 20px;
+}
+
+/* VIEWPORT */
+.carousel {
+    overflow: hidden;
+    width: 100%;
+}
+
+/* TRACK */
+.carousel-track {
+    display: flex;
+    gap: 20px;
+    transition: transform 0.6s ease-in-out;
+}
+
+/* CARD */
+.book-card {
+    min-width: 340px;
+    height: 380px;
+    background-color: #EBF4DD;
+    border: 1px solid #90AB8B;
+    border-radius: 15px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #5A7863;
+    font-weight: bold;
+    box-shadow: 0 8px 20px rgba(59, 73, 83, 0.18);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+/* =============DOTS SLIDER=========== */
+.carousel-dots {
+    display: flex;
+    justify-content: center;
+    margin-top: 0px;
+}
+
+.dot {
+    width: 10px;
+    height: 10px;
+    background-color: #90AB8B;
+    border-radius: 50%;
+    margin: 0 6px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    margin-top: 15px;
+}
+
+.dot.active {
+    width: 20px;
+    border-radius: 10px;
+    background-color: #5A7863;
+}
+
+/* ============BUTTON SLIDER=========== */
+.carousel-button {
+    background-color: rgba(90, 120, 99, 0.85);
+    color: #F5F5F0;
+    border: none;
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    cursor: pointer;
+    font-size: 18px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: background-color 0.3s ease;
+}
+
+.carousel-button:hover {
+    background-color: #3B4953;
+}
+
+.carousel-button.left {
+    margin-right: 10px;
+}
+
+.carousel-button.right {
+    margin-left: 10px;
+}
+
+/* ========WHY US?============ */
+.why-us {
+    padding: 60px 40px;
+}
+
+.why-us h2 {
+    color: #3B4953;
+    margin-bottom: 30px;
+    font-size: 28px;
+}
+
+/* GRID */
+.why-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 25px;
+}
+
+/* CARD */
+.why-card {
+    background: linear-gradient(135deg, #90AB8B, #EBF4DD);
+    border-radius: 20px;
+    padding: 30px;
+    color: #ffffff;
+    min-height: 180px;
+    box-shadow: 0 12px 25px rgba(59, 73, 83, 0.3);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.why-card.h3 {
+    margin-bottom: 15px;
+    font-size: 20px;
+}
+
+.why-card.p {
+    font-size: 14px;
+    line-height: 1.6;
+    opacity: 0.9;
+}
+
+/* HOVER EFFECT */
+.why-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 15px 30px rgba(0, 0, 0, 0.25);
 }
