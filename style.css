@@ -370,6 +370,7 @@ footer {
 
 .content-top1-list h3{
     padding-bottom: 8px;
+    font-size: 1.6em;
 }
 
 .content-top1-list a{
@@ -384,6 +385,10 @@ footer {
     text-align: right;
     align-items: flex-end;
     gap: 8px;
+}
+
+.content-top2 h3{
+    font-size: 1.6em;
 }
 
 .content-top2 i{
