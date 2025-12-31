@@ -1,5 +1,6 @@
 * {
     margin: 0;
+    caret-color: transparent;
 }
 
 body{
@@ -201,6 +202,33 @@ main {
     margin-bottom: 20px;
 }
 
+.book-card {
+    min-width: 256px;
+    min-height: 364px;
+    background-color: #EBF4DD;
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+
+    border: 1px solid #90AB8B;
+    border-radius: 15px;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+    align-items: flex-start;
+    color: #5A7863;
+    font-weight: bold;
+    padding: 20px;
+
+    box-shadow: 0 15px 30px rgba(59, 73, 83, 0.25);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.book-card:hover {
+    transform: translateY(-12px);
+    box-shadow: 0 20px 30px rgba(0, 0, 0, 0.25);
+}
+
 /* WRAPPER */
 .carousel-wrapper {
     position: relative;
@@ -211,7 +239,7 @@ main {
 
 /* VIEWPORT */
 .carousel {
-    overflow: hidden;
+    overflow: visible;
     width: 100%;
 }
 
@@ -222,21 +250,6 @@ main {
     transition: transform 0.6s ease-in-out;
 }
 
-/* CARD */
-.book-card {
-    min-width: 340px;
-    height: 380px;
-    background-color: #EBF4DD;
-    border: 1px solid #90AB8B;
-    border-radius: 15px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    color: #5A7863;
-    font-weight: bold;
-    box-shadow: 0 8px 20px rgba(59, 73, 83, 0.18);
-    transition: transform 0.3s ease, box-shadow 0.3s ease;
-}
 
 /* =============DOTS SLIDER=========== */
 .carousel-dots {    
