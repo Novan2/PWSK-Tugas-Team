@@ -479,13 +479,309 @@ footer {
   background-color: #3B4953;
 }
 
+/* 'Lainnya' button - slightly different style to stand out */
+.lainnya-btn {
+  background-color: transparent;
+  color: #3B4953;
+  border: 1px solid #90AB8B;
+  padding: 8px 14px;
+  border-radius: 18px;
+  position: relative;
+  transition: color .18s ease, transform .12s ease;
+}
+
+.lainnya-btn::after {
+  content: '▾';
+  display: inline-block;
+  margin-left: 8px;
+  font-size: 12px;
+  color: #3B4953;
+  transition: transform .18s ease, color .18s ease;
+}
+
+.lainnya-btn:hover::after {
+  transform: translateY(2px);
+  color: #5A7863;
+}
+
+.lainnya-btn.open::after {
+  transform: rotate(180deg);
+}
+
+/* Modal (mega menu) */
+.modal {
+  position: fixed;
+  top: 28px; /* place just under navbar */
+  left: 0;
+  right: 0;
+  display: none; /* hidden */
+  justify-content: flex-start; /* align to top */
+  background: transparent;
+  z-index: 1200;
+} 
+
+.modal.open::before {
+  content: '';
+  position: fixed;
+  inset: 0;
+  background: rgba(0,0,0,0.06);
+  z-index: 1190;
+}
+
+.modal.open {
+  display: flex;
+}
+
+.modal-content.mega-menu {
+  width: 100%;
+  max-width: 1100px; /* reduced max width so it doesn't fill large screens */
+  margin: 0 auto;
+  background: #F6FBF3; /* soft green-tinted background */
+  border-radius: 10px;
+  box-shadow: 0 8px 22px rgba(0,0,0,0.09);
+  padding: 20px 28px; /* reduced padding */
+  border-top: 3px solid #e6f0e6;
+  position: relative;
+  transform: translateY(-12px);
+  opacity: 0;
+  max-height: 72vh; /* don't exceed viewport height */
+  overflow-y: auto; /* scroll if content is tall */
+  transition: transform 260ms cubic-bezier(.2,.9,.2,1), opacity 260ms ease;
+} 
+
+.modal.open .modal-content.mega-menu {
+  transform: translateY(0);
+  opacity: 1;
+}
+
+.modal-close {
+  position: absolute;
+  right: 20px;
+  top: 12px;
+  background: transparent;
+  border: none;
+  font-size: 28px;
+  cursor: pointer;
+  color: #333;
+}
+
+/* two-column layout: left nav + right content */
+.mega-grid {
+  display: grid;
+  grid-template-columns: 220px 1fr; /* smaller left nav */
+  gap: 18px;
+} 
+
+.mega-left {
+  border-right: 1px solid #eef5ea;
+  padding-right: 20px;
+}
+
+.tabs {
+  display: flex;
+  gap: 8px;
+  margin-bottom: 12px;
+}
+
+.tab {
+  background: #f6faf3;
+  border: 1px solid #e6efe0;
+  padding: 10px 12px;
+  border-radius: 18px;
+  cursor: pointer;
+  color: #3B4953;
+  font-size: 15px;
+}
+
+.tab.active {
+  background: #5A7863;
+  color: #EBF4DD;
+}
+
+.left-list ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.left-list li + li {
+  margin-top: 10px;
+}
+
+.left-list button {
+  background: transparent;
+  border: none;
+  color: #3B4953;
+  text-align: left;
+  padding: 10px 8px;
+  cursor: pointer;
+  transition: color .18s ease, background .18s ease, transform .12s ease, box-shadow .18s ease;
+  border-radius: 6px;
+  font-size: 15px;
+}
+
+.left-list button:hover,
+.left-list button:focus-visible {
+  color: #083f11;
+  background: #f1f8ef;
+  transform: translateX(4px);
+  outline: none;
+}
+
+.left-list button:focus-visible {
+  box-shadow: 0 6px 18px rgba(5,35,10,0.06);
+}
+
+.mega-right {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 28px;
+}
+
+.mega-col h4 {
+  color: #2f3e2f;
+  margin-bottom: 14px;
+  font-size: 20px;
+  font-weight: 600;
+}
+
+.mega-col ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.mega-col li + li {
+  margin-top: 12px;
+}
+
+.mega-col button {
+  background: transparent;
+  border: none;
+  text-align: left;
+  color: #3B4953;
+  cursor: pointer;
+  padding: 10px 6px;
+  font-size: 15px;
+  display: block;
+  transition: color .18s ease, background .18s ease, transform .12s ease, box-shadow .18s ease;
+  border-radius: 6px;
+}
+
+.mega-col button:hover,
+.mega-col button:focus-visible {
+  color: #083f11;
+  background: #f1f8ef;
+  transform: translateX(6px);
+  box-shadow: 0 6px 18px rgba(5,35,10,0.04);
+  outline: none;
+}
+
+.mega-col button:focus-visible {
+  box-shadow: 0 6px 18px rgba(5,35,10,0.08);
+}
+
+/* Dimming / highlight effect when hovering or focusing a category */
+.modal-content.mega-menu.dimmed {
+}
+
+/* Responsive tweaks: keep modal compact on small/medium screens */
+@media (max-width: 1200px) {
+  .modal-content.mega-menu {
+    max-width: 94%;
+    padding: 16px 20px;
+  }
+  .mega-grid {
+    grid-template-columns: 180px 1fr;
+    gap: 12px;
+  }
+  .mega-right {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 16px;
+  }
+}
+
+@media (max-width: 800px) {
+  .modal-content.mega-menu {
+    max-width: 96%;
+    padding: 12px 14px;
+  }
+  .mega-grid {
+    grid-template-columns: 1fr; /* stack on small screens */
+  }
+  .mega-left {
+    border-right: none;
+    padding-right: 0;
+    margin-bottom: 12px;
+  }
+}
+
+
+.modal-content.mega-menu.dimmed .mega-right .mega-col button:not(.highlight),
+.modal-content.mega-menu.dimmed .mega-left button:not(.highlight) {
+  opacity: 0.38;
+  transform: none;
+  transition: opacity .18s ease;
+}
+
+.modal-content.mega-menu .mega-col button.highlight,
+.modal-content.mega-menu .mega-left button.highlight {
+  opacity: 1;
+  background: #f1f8ef;
+  transform: translateX(6px);
+  box-shadow: 0 8px 22px rgba(5,35,10,0.06);
+}
+
 /* GRID BUKU */
 .book-grid {
   max-width: 1200px;
   margin: 40px auto 80px;
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
-  gap: 25px;
+  gap: 20px;
+}
+
+.no-results {
+  grid-column: 1 / -1;
+  text-align: center;
+  background: #fff7f0;
+  border: 1px solid rgba(90,120,99,0.06);
+  padding: 16px;
+  border-radius: 8px;
+  color: #6b6b6b;
+}
+
+/* Detail modal styles */
+.detail-modal {
+  max-width: 760px;
+  padding: 18px 20px;
+}
+
+.detail-body {
+  display: flex;
+  gap: 18px;
+  align-items: flex-start;
+}
+
+.detail-body img {
+  width: 240px;
+  height: 320px;
+  object-fit: cover;
+  border-radius: 8px;
+}
+
+.detail-info h3 {
+  margin-top: 0;
+  margin-bottom: 8px;
+}
+
+.detail-info p {
+  margin: 8px 0;
+}
+
+@media (max-width: 800px) {
+  .detail-body {flex-direction: column; align-items: center}
+  .detail-body img {width: 80%; height: auto}
 }
 
 /* BUKU REKOMENDASI */
@@ -502,8 +798,38 @@ footer {
   max-width: 1200px;
   margin: 0 auto;
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
-  gap: 25px;
+  grid-template-columns: repeat(3, 1fr); /* exactly 3 cards per row */
+  gap: 20px;
+}
+
+/* GRID TERLARIS */
+.terlaris-grid {
+  max-width: 1200px;
+  margin: 0 auto;
+  display: grid;
+  grid-template-columns: repeat(4, 1fr); /* exactly 4 cards per row */
+  gap: 20px;
+}
+
+/* Responsive fallbacks for smaller screens */
+@media (max-width: 900px) {
+  .rekomendasi-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .terlaris-grid {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
+
+@media (max-width: 600px) {
+  .rekomendasi-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .terlaris-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
 }
 
 .book-card {
@@ -528,6 +854,39 @@ footer {
   padding: 15px 15px 5px;
   text-align: center;
   color: #2f3e2f;
+}
+
+.card-title {
+  padding: 0 12px;
+  text-align: center;
+  color: #2f3e2f;
+  font-size: 16px;
+  font-weight: 600;
+  margin: 10px 0 6px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.card-actions {
+  text-align: center;
+  margin-top: 10px;
+}
+
+.detail-btn {
+  background: #5A7863;
+  color: #EBF4DD;
+  border: none;
+  padding: 8px 12px;
+  border-radius: 8px;
+  cursor: pointer;
+  font-size: 14px;
+}
+
+.detail-btn:hover,
+.detail-btn:focus-visible {
+  background: #49614f;
+  outline: none;
 }
 
 .book-description {
@@ -557,23 +916,51 @@ footer {
   margin-bottom: 10px;
 }
 
-.kategori-card img {
+.image-container img {
   width: 100%;
   height: 200px;
   object-fit: cover;
   border-radius: 10px;
+  display: block;
 }
 
-.kategori-card h3 {
+/* subtle separator inside the card below each image */
+.image-container::after {
+  content: "";
+  display: block;
+  height: 1px;
+  background: rgba(90,120,99,0.12);
+  margin: 12px 0;
+  border-radius: 2px;
+}
+
+.image-container .overlay-title {
+  display: none !important; /* Hidden to remove the black overlay bar */
   position: absolute;
-  bottom: 10px;
-  left: 10px;
-  right: 10px;
-  color: white;
-  text-shadow: 2px 2px 4px rgba(0,0,0,0.7);
+  left: 0;
+  right: 0;
+  bottom: 0;
+  padding: 10px 12px;
+  color: #ffffff;
   font-size: 16px;
-  margin: 0;
+  font-weight: 700;
   text-align: center;
+  background: linear-gradient(180deg, rgba(0,0,0,0) 0%, rgba(0,0,0,0.6) 100%);
+  z-index: 3;
+  pointer-events: none;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  overflow: hidden;
+}
+
+/* If images fail to load, hide their alt text by resetting font-size inside image area */
+.image-container img {
+  font-size: 0; /* prevents alt text from displaying prominently */
+}
+
+/* maintain spacing for captions if we ever re-enable them */
+.image-container .caption-placeholder {
+  height: 36px;
 }
 
 .kategori-card p:last-child {
