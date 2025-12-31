@@ -1,0 +1,610 @@
+* {
+    margin: 0;
+}
+
+body{
+    font-family: Arial, sans-serif;
+    background-color: #F5F5F0;
+}
+
+/*=========== NAVBAR ============== */
+nav {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between; /* logo kiri, nav kanan */
+    padding: 16px 120px; /* kurangi padding agar muat */
+    border-bottom: 1px solid #90AB8B;
+    font-size: 1.02em;
+}
+
+/* Container search + menu */
+.nav-right {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    gap: 20px;
+    flex-wrap: nowrap;
+    flex-grow: 1; /* ambil sisa ruang */
+    justify-content: space-between;
+}
+
+.menu-logo {
+    display: flex;
+    flex-direction: row;
+    gap: 20px;
+    align-items: center;
+}
+
+main {
+    padding: 0px 80px;
+}
+
+
+/*================ Logo =============== */
+.logo {
+    font-weight: bold;
+    font-size: 20px;
+    color: #3B4953;
+}
+
+/*============== Search bar ============= */
+.search-container {
+    flex-shrink: 1;
+}
+
+.search-box {
+    transition: width 0.6s, border-radius 0.6s, background 0.6s, box-shadow 0.6s;
+    width: 39px;
+    height: 40px;
+    border-radius: 20px;
+    border:none;
+    cursor: pointer;
+    background: rgb(235, 235, 235);
+    color: black;
+}
+
+.search-box + label .search-icon {
+    color: black;
+}
+
+.search-box:hover {
+    color: white;
+    background: rgb(200, 200, 200);
+    box-shadow: 0 0 0 5px #5A7863;
+}
+
+.search-box:hover + label .search-icon {
+    color: white;
+}
+
+.search-box:focus { 
+    border: none;
+    outline: none;
+    box-shadow: none;
+    padding-left: 15px;
+    cursor: text;
+    width: 300px;
+    border-radius: auto;
+    background: rgb(235, 235, 235);
+    color: black;
+}
+
+.search-box:focus + label .search-icon {
+    color: black;
+}
+
+.search-box:not(:focus) {
+    text-indent: -5000px;
+}
+
+#search-submit {
+    position: relative;
+    left: -5000px;
+}
+
+.search-icon {
+    position: relative;
+    left: -31px;
+    color: white;
+    cursor: pointer;
+}
+
+ /* .search {
+    flex: 1;
+    max-width: 300px;
+    padding: 10px 15px;
+    border-radius: 25px;
+    border: 1px solid #90AB8B;
+    background-color: #ffffff;
+    color: #3B4953;
+    outline: none;
+} */
+
+/* .search::placeholder {
+    color: #5A7863;
+}  */
+
+/*============ Menu =========== */
+#information {
+    display: flex;
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    gap: 15px;
+    flex-shrink: 0; /* menu tidak mengecil terlalu kecil */
+    font-size: 1.1em;
+}
+
+
+#information li {
+    margin-left: 20px;
+}
+
+#information a {
+    text-decoration: none;
+    color: #3B4953;
+    font-weight: 10px;
+    transition: color 0.2s ease;
+}
+
+#information a:hover {
+    color: #5A7863;
+}
+
+/* Login button */
+.login {
+    background-color: #5A7863;
+    color: #EBF4DD !important;
+    padding: 8px 16px;
+    border-radius: 20px;
+    transition: background-color 0.2s ease;
+}
+
+.login:hover {
+    background-color: #3B4953;
+}
+/* =========HERO PROMO========= */
+.hero {
+    background: linear-gradient(135deg, #90AB8B, #EBF4DD);
+    padding: 80px 40px;
+    border-radius: 20px;
+    margin: 30px;
+    color: #ffffff;
+    box-shadow: 0 15px 30px rgba(59, 73, 83, 0.25);
+}
+
+.hero-content h2 {
+    font-size: 36px;
+    margin-bottom: 10px;
+}
+
+.hero-content p {
+    font-size: 18px;
+    margin-bottom: 20px;
+}
+
+.hero-content button {
+    background-color: #5A7863;
+    color: #EBF4DD;
+    border: none;
+    padding: 12px 25px;
+    border-radius: 25px;
+    cursor: pointer;
+}
+/*============ BEST BOOK  ===========*/
+.books {
+    padding: 40px;
+}
+
+.books h2 {
+    color: #3B4953;
+    margin-bottom: 20px;
+}
+
+/* WRAPPER */
+.carousel-wrapper {
+    position: relative;
+    display: flex;
+    align-items: center;
+    padding: 20px;
+}
+
+/* VIEWPORT */
+.carousel {
+    overflow: hidden;
+    width: 100%;
+}
+
+/* TRACK */
+.carousel-track {
+    display: flex;
+    gap: 20px;
+    transition: transform 0.6s ease-in-out;
+}
+
+/* CARD */
+.book-card {
+    min-width: 340px;
+    height: 380px;
+    background-color: #EBF4DD;
+    border: 1px solid #90AB8B;
+    border-radius: 15px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    color: #5A7863;
+    font-weight: bold;
+    box-shadow: 0 8px 20px rgba(59, 73, 83, 0.18);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    overflow: hidden;
+}
+
+/* =============DOTS SLIDER=========== */
+.carousel-dots {    
+    display: flex;
+    justify-content: center;
+    margin-top: 0px;
+}
+
+.dot {
+    width: 10px;
+    height: 10px;
+    background-color: #90AB8B;
+    border-radius: 50%;
+    margin: 0 6px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    margin-top: 15px;
+}
+
+.dot.active {
+    width: 20px;
+    border-radius: 10px;
+    background-color: #5A7863;
+}
+
+/* ============BUTTON SLIDER=========== */
+.carousel-button {
+    background-color: rgba(90, 120, 99, 0.85);
+    color: #F5F5F0;
+    border: none;
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    cursor: pointer;
+    font-size: 18px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: background-color 0.3s ease;
+}
+
+.carousel-button:hover {
+    background-color: #3B4953;
+}
+
+.carousel-button.left {
+    margin-right: 10px;
+}
+
+.carousel-button.right {
+    margin-left: 10px;
+}
+
+/* ========WHY US?============ */
+.why-us {
+    padding: 60px 40px;
+    color: #5A7863;
+}
+
+.why-us h2 {
+    color: #3B4953;
+    margin-bottom: 30px;
+    font-size: 28px;
+}
+
+/* GRID */
+.why-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 25px;
+}
+
+/* CARD */
+.why-card {
+    background: linear-gradient(135deg, #90AB8B, #EBF4DD);
+    border-radius: 20px;
+    padding: 30px;
+    color: #ffffff;
+    min-height: 180px;
+    box-shadow: 0 12px 25px rgba(59, 73, 83, 0.3);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.why-card.h3 {
+    margin-bottom: 15px;
+    font-size: 20px;
+}
+
+.why-card.p {
+    font-size: 14px;
+    line-height: 1.6;
+    opacity: 0.9;
+}
+
+/* HOVER EFFECT */
+.why-card:hover {
+    transform: translateY(-12px);
+    box-shadow: 0 20px 30px rgba(0, 0, 0, 0.25);
+}
+
+footer {
+    background-color: #5A7863;
+    font-size: 0.9em;
+    padding: 28px 80px;
+}
+
+.footer-content {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+}
+
+.content-top {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+}
+
+.content-top1 {
+    display: flex;
+    flex-direction: row;
+    gap: 32px;
+}
+
+.content-top1-list {
+    display: flex;
+    flex-direction: column;
+    color: #ffffff;
+    gap: 8px;
+}
+
+.content-top1-list h3{
+    padding-bottom: 8px;
+    font-size: 1.6em;
+}
+
+.content-top1-list a{
+    color: #ffffff;
+    text-decoration: underline;
+}
+
+.content-top2 {
+    display: flex;
+    flex-direction: column;
+    color: #ffffff;
+    text-align: right;
+    align-items: flex-end;
+    gap: 8px;
+}
+
+.content-top2 h3{
+    font-size: 1.6em;
+}
+
+.content-top2 i{
+    background-color: #ffffff;
+    width: fit-content;
+}
+
+.icon-top2 {
+    display: flex;
+    flex-direction: row;
+    gap: 4px;
+}
+
+.content-bottom {
+    color: #ffffff;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+}
+
+.content-bottom i {
+    background-color: #ffffff;
+}
+
+/* HEADER */
+.kategori-header {
+  max-width: 1200px;
+  margin: 30px auto;
+  padding: 50px 40px;
+  border-radius: 20px;
+  background: linear-gradient(135deg, #90AB8B, #EBF4DD);
+  color: #ffffff;
+  box-shadow: 0 15px 30px rgba(59, 73, 83, 0.25);
+}
+
+.kategori-header h1 {
+  font-size: 32px;
+  margin-bottom: 10px;
+}
+
+.kategori-header p {
+  opacity: 0.9;
+}
+
+/* FILTER */
+.kategori-filter {
+  max-width: 1200px;
+  margin: 30px auto;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 12px;
+  flex-wrap: wrap;
+}
+
+.kategori-filter input {
+  width: 260px;
+  padding: 13px 16px;
+  border-radius: 25px;
+  border: 1px solid #90AB8B;
+  background-color: #ffffff;
+  color: #3B4953;
+  outline: none;
+}
+
+.kategori-filter input::placeholder {
+  color: #5A7863;
+}
+
+/* BUTTON KATEGORI */
+.kategori-btn button {
+  background-color: #5A7863;
+  color: #EBF4DD;
+  border: none;
+  padding: 10px 18px;
+  border-radius: 20px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.kategori-btn button:hover {
+  background-color: #3B4953;
+}
+
+.kategori-btn button.active {
+  background-color: #3B4953;
+}
+
+/* GRID BUKU */
+.book-grid {
+  max-width: 1200px;
+  margin: 40px auto 80px;
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+  gap: 25px;
+}
+
+/* BUKU REKOMENDASI */
+.rekomendasi {
+  padding: 40px;
+}
+
+.rekomendasi h2 {
+  color: #3B4953;
+  margin-bottom: 20px;
+}
+
+.rekomendasi-grid {
+  max-width: 1200px;
+  margin: 0 auto;
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+  gap: 25px;
+}
+
+.book-card {
+  background: white;
+  border-radius: 18px;
+  overflow: hidden;
+  box-shadow: 0 10px 25px rgba(0,0,0,.1);
+  transition: transform .3s;
+}
+
+.book-card:hover {
+  transform: translateY(-6px);
+}
+
+.book-card img {
+  width: 100%;
+  height: 280px;
+  object-fit: cover;
+}
+
+.book-card h3 {
+  padding: 15px 15px 5px;
+  text-align: center;
+  color: #2f3e2f;
+}
+
+.book-description {
+  padding: 0 15px;
+  text-align: center;
+  color: #666;
+  font-size: 14px;
+  margin-bottom: 10px;
+}
+
+/* KATEGORI CARD */
+.kategori-card {
+  background: #EBF4DD;
+  border-radius: 18px;
+  overflow: hidden;
+  box-shadow: 0 10px 25px rgba(0,0,0,.1);
+  transition: transform .3s;
+  padding: 15px;
+}
+
+.kategori-card:hover {
+  transform: translateY(-6px);
+}
+
+.kategori-card .image-container {
+  position: relative;
+  margin-bottom: 10px;
+}
+
+.kategori-card img {
+  width: 100%;
+  height: 200px;
+  object-fit: cover;
+  border-radius: 10px;
+}
+
+.kategori-card h3 {
+  position: absolute;
+  bottom: 10px;
+  left: 10px;
+  right: 10px;
+  color: white;
+  text-shadow: 2px 2px 4px rgba(0,0,0,0.7);
+  font-size: 16px;
+  margin: 0;
+  text-align: center;
+}
+
+.kategori-card p:last-child {
+  text-align: center;
+  color: #3B4953;
+  font-weight: bold;
+}
+
+/* TERLARIS CARD */
+.terlaris-card {
+  background: #EBF4DD;
+  border-radius: 18px;
+  overflow: hidden;
+  box-shadow: 0 10px 25px rgba(0,0,0,.1);
+  transition: transform .3s;
+  padding: 15px;
+}
+
+.terlaris-card:hover {
+  transform: translateY(-6px);
+}
+
+.terlaris-card img {
+  width: 100%;
+  height: 200px;
+  object-fit: cover;
+  border-radius: 10px;
+  margin-bottom: 10px;
+}
+
+.terlaris-card h3 {
+  text-align: center;
+  color: #2f3e2f;
+}

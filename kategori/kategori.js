@@ -1,4 +1,7 @@
-[
+let allBooks = [];
+let activeCategory = "all";
+
+const booksData = [
   {
     "judul": "Pengantar Ilmu Data",
     "deskripsi": "Dasar-dasar ilmu data meliputi pengolahan data, analisis, dan visualisasi untuk pemula.",
@@ -150,4 +153,122 @@
     "deskripsi": "Gambaran umum teknologi informasi dan perannya di berbagai bidang.",
     "harga": 85000
   }
-]
+];
+
+function loadData() {
+  // Tambahkan kategori dummy untuk sementara
+  allBooks = booksData.map(book => ({
+    ...book,
+    kategori: getRandomCategory(),
+    gambar: book.gambar ? "../" + book.gambar : "https://via.placeholder.com/200x280/90AB8B/EBF4DD?text=Buku" // placeholder gambar
+  }));
+  renderKategori(allBooks);
+}
+
+function getRandomCategory() {
+  const categories = ["fiksi", "nonfiksi", "komik", "biografi"];
+  return categories[Math.floor(Math.random() * categories.length)];
+}
+
+function renderKategori(data) {
+  const grid = document.getElementById("kategoriGrid");
+  grid.innerHTML = "";
+
+  data.forEach(book => {
+    const card = document.createElement("div");
+    card.className = "kategori-card";
+
+    card.innerHTML = `
+      <img src="${book.gambar}" alt="${book.judul}">
+      <h3>${book.judul}</h3>
+      <p class="book-description">${book.deskripsi}</p>
+      <p>Rp ${book.harga.toLocaleString()}</p>
+    `;
+
+    grid.appendChild(card);
+  });
+}
+
+function filterKategori(category) {
+  activeCategory = category;
+
+  const filtered =
+    category === "all"
+      ? allBooks
+      : allBooks.filter(b => b.kategori === category);
+
+  renderKategori(filtered);
+}
+
+function searchBooks(query) {
+  const filtered = allBooks.filter(book =>
+    book.judul.toLowerCase().includes(query.toLowerCase()) ||
+    book.deskripsi.toLowerCase().includes(query.toLowerCase())
+  );
+  renderKategori(filtered);
+}
+
+/* EVENT BUTTON */
+document.querySelectorAll(".kategori-filter button").forEach(btn => {
+  btn.addEventListener("click", () => {
+    document
+      .querySelectorAll(".kategori-filter button")
+      .forEach(b => b.classList.remove("active"));
+
+    btn.classList.add("active");
+    filterKategori(btn.dataset.filter);
+  });
+});
+
+/* SEARCH EVENT */
+document.getElementById("searchInput").addEventListener("input", (e) => {
+  searchBooks(e.target.value);
+});
+
+function renderRekomendasi() {
+  const grid = document.getElementById("rekomendasiGrid");
+  grid.innerHTML = "";
+
+  // Ambil 6 buku pertama untuk rekomendasi
+  const rekomendasiBooks = allBooks.slice(0, 6);
+
+  rekomendasiBooks.forEach(book => {
+    const card = document.createElement("div");
+    card.className = "book-card";
+
+    card.innerHTML = `
+      <img src="${book.gambar}" alt="${book.judul}">
+      <h3>${book.judul}</h3>
+      <p class="book-description">${book.deskripsi}</p>
+      <p>Rp ${book.harga.toLocaleString()}</p>
+    `;
+
+    grid.appendChild(card);
+  });
+}
+
+function renderTerlaris() {
+  const grid = document.getElementById("terlarisGrid");
+  grid.innerHTML = "";
+
+  // Ambil 8 buku pertama untuk terlaris
+  const terlarisBooks = allBooks.slice(0, 8);
+
+  terlarisBooks.forEach(book => {
+    const card = document.createElement("div");
+    card.className = "terlaris-card";
+
+    card.innerHTML = `
+      <img src="${book.gambar}" alt="${book.judul}">
+      <h3>${book.judul}</h3>
+    `;
+
+    grid.appendChild(card);
+  });
+}
+
+/* LOAD DATA */
+loadData().then(() => {
+  renderRekomendasi();
+  renderTerlaris();
+});

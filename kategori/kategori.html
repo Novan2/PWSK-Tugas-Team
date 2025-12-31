@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Toko Buku Online</title>
+    <link rel="stylesheet" href="kategori.css">
+    <!-- Bootstrap 3 CSS (untuk glyphicon) -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+
+</head>
+<body>
+    <!-- NAVBAR -->
+    <nav>
+        <div class="nav-right">
+            <div class="menu-logo">
+                <div class="logo">On-Book</div>
+    
+                <!-- <input type="text" class="search" placeholder="Search books..."> -->
+                <form class="search-container">
+                    <input id="search-box" type="text" class="search-box" name="q" placeholder="Search books..." />
+                    <label for="search-box"><span class="glyphicon glyphicon-search search-icon"></span></label>
+                    <input type="submit" id="search-submit" />
+                </form>
+            </div>
+
+            <div>
+                <ul id="information">
+                    <li><a href="#home">Home</a></li>
+                    <li><a href="#books">Kategori Buku</a></li>
+                    <li><a href="#about">About</a></li>
+                    <li><a href="#contact">Kontak</a></li>
+                    <li><a class="login" href="#">Login</a></li>
+                </ul>
+
+            </div>
+        </div>
+    </nav>
+
+    <main>
+    <!-- HEADER KATEGORI -->
+<section class="kategori-header">
+  <h1>Kategori Buku</h1>
+  <p>Jelajahi berbagai pilihan buku dan temukan bacaan yang sesuai dengan minat Anda.</p>
+</section>
+
+<!-- FILTER KATEGORI -->
+<section class="kategori-filter">
+  <input type="text" placeholder="Cari buku..." id="searchInput">
+  <div class="kategori-btn">
+    <button data-filter="all" class="active">Semua</button>
+    <button data-filter="fiksi">Fiksi</button>
+    <button data-filter="nonfiksi">Non Fiksi</button>
+    <button data-filter="komik">Komik</button>
+    <button data-filter="biografi">Biografi</button>
+  </div>
+</section>
+
+<!-- BUKU REKOMENDASI -->
+<section class="rekomendasi">
+  <h2>Buku Rekomendasi</h2>
+  <div class="rekomendasi-grid" id="rekomendasiGrid">
+    <!-- Buku rekomendasi akan di-render oleh JavaScript -->
+  </div>
+</section>
+
+<!-- GRID BUKU -->
+<section class="book-grid" id="kategoriGrid">
+  <!-- Buku akan di-render oleh JavaScript -->
+</section>
+
+<!-- BUKU TERLARIS -->
+<section class="books">
+  <h2>Buku Terlaris & Rekomendasi</h2>
+
+  <div class="terlaris-grid" id="terlarisGrid">
+    <!-- Buku terlaris akan di-render oleh JavaScript -->
+  </div>
+</section>
+
+    <footer>
+        <div class="footer-content">
+            <div class="content-top">
+                <div class="content-top1">
+                    <div class="content-top1-list">
+                        <h3>Produk OnBook</h3>
+                        <a href="#">OnBook Affiliate</a>
+                        <a href="#">Mitra OnBook</a>
+                    </div>
+                    <div class="content-top1-list">
+                        <h3>Informasi Belanja</h3>
+                        <a href="#">Berbelanja</a>
+                        <a href="#">Pembayaran</a>
+                        <a href="#">Pengiriman</a>
+                    </div>
+                    <div class="content-top1-list">
+                        <h3>Tentang OnBook</h3>
+                        <a href="#">Tentang Kami</a>
+                        <a href="#">Toko Kami</a>
+                    </div>
+                    <div class="content-top1-list">
+                        <h3>Lainnya</h3>
+                        <a href="#">Blog</a>
+                        <a href="#">Kebijakan Privasi</a>
+                        <a href="#">Hubungi Kami</a>
+                        <a href="#">Kerja Sama</a>
+                    </div>
+                </div>
+                <div class="content-top2">
+                    <h3>Aplikasi Seluler Kami</h3>
+                    <p>Download aplikasi OnBook.com yang tersedia di seluruh perangkat iOS dan Android</p>
+                    <div class="icon-top2">
+                        <i>aaaa</i>
+                        <i>aaaa</i>
+                    </div>
+                </div>
+            </div>
+            <hr>
+            <div class="content-bottom">
+                <p>© 2025 PT OnBook Asri Media</p>
+                <div>
+                    <i>aaaa</i>
+                    <i>aaaa</i>
+                    <i>aaaa</i>
+                    <i>aaaa</i>
+                </div>
+            </div>
+        </div>
+    </footer>
+    <script src="kategori.js"></script>
+    <div></div>
+</body>
+</html>
