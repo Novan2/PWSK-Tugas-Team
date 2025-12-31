@@ -1,6 +1,6 @@
 /**
  * Load books from Google Books API with pagination.
- 
+ *
  * @param {Object} params
  * @param {string} params.q               - Query string, e.g. "all" or "intitle:excel"
  * @param {number} [params.startIndex=0]  - Pagination offset
@@ -11,7 +11,7 @@
  * @param {AbortSignal} [params.signal]   - Optional abort signal (for cancel request)
  *
  * @returns {Promise<{ totalItems: number, startIndex: number, items: Array }>}
- */
+**/
 
 const normalizeBookItem = (item) => {
   const { id, volumeInfo: info = {}, saleInfo: sale = {}, accessInfo: access = {} } = item;
@@ -63,10 +63,21 @@ export function getHighResCover(info) {
   return "https://via.placeholder.com/400x600?text=No+Cover";
   }
 
-  return url.replace(/zoom=\d/, "zoom=5");
+  return url.replace(/zoom=\d+/i, "zoom=5");
 }
 
-// Contoh penggunaan: Load 10 buku terbaru dan tampilkan di carousel
+export function seperateWords(title, maxWords = 4){
+  if (!title) return "";
+
+  const words = title.split(" ");
+  if (words.length <= maxWords) {
+    return title;
+  }
+
+  return words.slice(0, maxWords).join(" ") + "...";
+}
+
+// Load 10 buku terbaru dan tampilkan di carousel
 const carouselTrack = document.getElementById("carousel-track");
 
 export async function loadTop10NewestBooks() {
@@ -85,54 +96,15 @@ export async function loadTop10NewestBooks() {
     const data = await res.json();
     const items = data.items ?? [];
 
-    // const pricedBooks = items.filter(item => {
-    // const sale = item.saleInfo;
-    // return (
-    //   sale &&
-    //   sale.saleability === "FOR_SALE" &&
-    //   sale.retailPrice &&
-    //   typeof sale.retailPrice.amount === "number"
-    //   );
-    // });
-
     // ngilangin isi lama
     carouselTrack.innerHTML = "";
-
-    // render hanya 10 teratas yang punya harga
-    // pricedBooks.slice(0, 10).forEach((item) => {
-    //   const info = item.volumeInfo ?? {};
-    //   const sale = item.saleInfo ?? {};
-
-    //   const title = info.title ?? "Judul tidak tersedia";
-    //   const authors = info.authors?.join(", ") ?? "Penulis tidak diketahui";
-    //   const thumbnail = getHighResCover(info);
-
-    //   const priceText = `${sale.retailPrice.amount} ${sale.retailPrice.currencyCode}`;
-
-    //   const bookCard = document.createElement("div");
-    //   bookCard.className = "book-card";
-    //   bookCard.style.backgroundImage = `url("${thumbnail}")`;
-
-    //   bookCard.innerHTML = `
-    //     <h4>${title}</h4>
-    //     <p class="author">${authors}</p>
-    //     <p class="price">${priceText}</p>
-    //   `;
-
-    //   carouselTrack.appendChild(bookCard);
-    // });
-
-    // // kalau hasilnya kosong, kasih pesan yang masuk akal
-    // if (pricedBooks.length === 0) {
-    //   carouselTrack.innerHTML =
-    //     "<p style='color:#b00'>Tidak ada buku berharga pada hasil pencarian ini.</p>";
-    // }
-
+    let i = 1;
     items.forEach((item) => {
       const info = item.volumeInfo ?? {};
       const sale = item.saleInfo ?? {};
 
-      const title = info.title ?? "Judul tidak tersedia";
+      const rawtitle = info.title ?? "Judul tidak tersedia";
+      const title = seperateWords(rawtitle, 4);
       const authors = info.authors?.join(", ") ?? "Penulis tidak diketahui";
       const thumbnail = getHighResCover(info);
 
@@ -148,12 +120,13 @@ export async function loadTop10NewestBooks() {
       bookCard.className = "book-card";
       bookCard.style.backgroundImage = `url("${thumbnail}")`;
 
+      // <h4>${title}</h4>
+      // <p class="author">${authors}</p>
+      // <p class="price">${priceText}</p>
       bookCard.innerHTML = `
-        <h4>${title}</h4>
-        <p class="author">${authors}</p>
-        <p class="price">${priceText}</p>
+        <dip class="rank-number">${i}<p>
       `;
-
+      i++;
       carouselTrack.appendChild(bookCard);
     });
   } catch (error) {
