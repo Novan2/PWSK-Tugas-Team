@@ -109,20 +109,7 @@ main {
     cursor: pointer;
 }
 
- /* .search {
-    flex: 1;
-    max-width: 300px;
-    padding: 10px 15px;
-    border-radius: 25px;
-    border: 1px solid #90AB8B;
-    background-color: #ffffff;
-    color: #3B4953;
-    outline: none;
-} */
 
-/* .search::placeholder {
-    color: #5A7863;
-}  */
 
 /*============ Menu =========== */
 #information {
@@ -201,6 +188,7 @@ main {
     margin-bottom: 20px;
 }
 
+/* ===== REKOMENDASI CAROUSEL ===== */
 /* WRAPPER */
 .carousel-wrapper {
     position: relative;
@@ -220,24 +208,73 @@ main {
     display: flex;
     gap: 20px;
     transition: transform 0.6s ease-in-out;
+    align-items: center;
 }
 
-/* CARD */
-.book-card {
-    min-width: 340px;
-    height: 380px;
+/* CARD for carousel */
+.carousel-card {
+    min-width: 260px;
+    height: 360px;
     background-color: #EBF4DD;
     border: 1px solid #90AB8B;
     border-radius: 15px;
     display: flex;
     flex-direction: column;
     align-items: center;
-    justify-content: center;
+    justify-content: flex-start;
     color: #5A7863;
     font-weight: bold;
-    box-shadow: 0 8px 20px rgba(59, 73, 83, 0.18);
-    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    box-shadow: 0 12px 26px rgba(59, 73, 83, 0.16);
+    transition: transform 0.35s ease, box-shadow 0.35s ease, opacity 0.35s ease;
     overflow: hidden;
+    position: relative;
+}
+
+.carousel-card img {
+    width: 92%;
+    height: 280px;
+    object-fit: cover;
+    border-radius: 12px;
+    margin-top: 10px;
+    box-shadow: 0 10px 20px rgba(0,0,0,0.08);
+}
+
+/* big rank number overlay */
+.carousel-card .rank {
+    position: absolute;
+    left: 12px;
+    bottom: 12px;
+    font-size: 64px;
+    line-height: 1;
+    color: rgba(90,120,99,0.95);
+    -webkit-text-stroke: 2px rgba(255,255,255,0.9);
+    text-shadow: 0 6px 12px rgba(0,0,0,0.12);
+    font-weight: 900;
+}
+
+/* center card emphasis */
+.carousel-card.is-center {
+    transform: translateY(-12px) scale(1.06);
+    z-index: 20;
+    box-shadow: 0 20px 40px rgba(59,73,83,0.25);
+    opacity: 1;
+}
+
+/* other cards slightly faded */
+.carousel-card:not(.is-center) {
+    opacity: 0.86;
+}
+
+/* responsive tweaks */
+@media (max-width: 900px) {
+  .carousel-card { min-width: 220px; height: 320px; }
+  .carousel-card .rank { font-size: 46px; }
+}
+
+@media (max-width: 600px) {
+  .carousel-wrapper { padding: 8px; }
+  .carousel-card { min-width: 180px; height: 300px; }
+  .carousel-card .rank { font-size: 38px; left: 8px; bottom: 8px; }
 }
 
 /* =============DOTS SLIDER=========== */
@@ -262,6 +299,17 @@ main {
     width: 20px;
     border-radius: 10px;
     background-color: #5A7863;
+}
+
+/* Accessibility: visible focus outlines for keyboard users */
+.dot:focus-visible {
+  outline: 2px solid #5A7863;
+  outline-offset: 3px;
+}
+
+.carousel-button:focus-visible {
+  box-shadow: 0 0 0 4px rgba(90,120,99,0.12);
+  outline: 2px solid #5A7863;
 }
 
 /* ============BUTTON SLIDER=========== */
@@ -682,8 +730,7 @@ footer {
 }
 
 /* Dimming / highlight effect when hovering or focusing a category */
-.modal-content.mega-menu.dimmed {
-}
+/* applied by JS to dim non-highlighted items */
 
 /* Responsive tweaks: keep modal compact on small/medium screens */
 @media (max-width: 1200px) {
@@ -922,6 +969,7 @@ footer {
   object-fit: cover;
   border-radius: 10px;
   display: block;
+  font-size: 0; /* prevents alt text from displaying prominently if image fails */
 }
 
 /* subtle separator inside the card below each image */
@@ -951,12 +999,9 @@ footer {
   white-space: nowrap;
   text-overflow: ellipsis;
   overflow: hidden;
-}
+} 
 
-/* If images fail to load, hide their alt text by resetting font-size inside image area */
-.image-container img {
-  font-size: 0; /* prevents alt text from displaying prominently */
-}
+
 
 /* maintain spacing for captions if we ever re-enable them */
 .image-container .caption-placeholder {

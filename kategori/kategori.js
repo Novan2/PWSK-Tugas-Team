@@ -178,9 +178,22 @@ function getRandomCategory() {
   return categories[Math.floor(Math.random() * categories.length)];
 }
 
+/* Utility: debounce a function (small helper used for search) */
+function debounce(fn, wait = 220) {
+  let t = null;
+  return function(...args) {
+    if (t) clearTimeout(t);
+    t = setTimeout(() => fn.apply(this, args), wait);
+  };
+}
+
+/**
+ * Render the katalog grid for a list of books
+ * @param {Array} data - array of book objects
+ */
 function renderKategori(data) {
   const grid = document.getElementById("kategoriGrid");
-  grid.innerHTML = "";
+  grid.innerHTML = ""; 
 
   const noResultsEl = document.getElementById('noResults');
   if (!data || data.length === 0) {
@@ -201,7 +214,7 @@ function renderKategori(data) {
       <h3 class="card-title" title="${book.judul}">${book.judul}</h3>
       <p class="price">Rp ${book.harga.toLocaleString()}</p>
       <div class="card-actions">
-        <button class="detail-btn" data-idx="${idxAll}">Lihat Detail</button>
+        <button type="button" class="detail-btn" data-idx="${idxAll}">Lihat Detail</button>
       </div>
     `;
 
@@ -209,23 +222,13 @@ function renderKategori(data) {
   });
 
   // attach detail buttons (scoped to grid)
+  document.querySelectorAll('#kategoriGrid .detail-btn').forEach(btn => btn.type = 'button');
   document.querySelectorAll('#kategoriGrid .detail-btn').forEach(btn => {
     btn.addEventListener('click', (e) => {
       const idx = parseInt(e.currentTarget.dataset.idx, 10);
       openDetailModal(allBooks[idx]);
     });
   });
-} 
-
-function filterKategori(category) {
-  activeCategory = category;
-
-  const filtered =
-    category === "all"
-      ? allBooks
-      : allBooks.filter(b => b.kategori === category);
-
-  renderKategori(filtered);
 }
 
 function searchBooks(query) {
@@ -258,9 +261,11 @@ document.querySelectorAll(".kategori-filter button").forEach(btn => {
 });
 
 /* SEARCH EVENT */
-document.getElementById("searchInput").addEventListener("input", (e) => {
-  searchBooks(e.target.value);
-});
+const _searchInput = document.getElementById("searchInput");
+if (_searchInput) {
+  const _debounced = debounce((q) => searchBooks(q), 200);
+  _searchInput.addEventListener("input", (e) => _debounced(e.target.value));
+}
 
 /* DETAIL MODAL */
 function openDetailModal(book) {
@@ -308,22 +313,29 @@ function openDetailModal(book) {
   });
 })();
 
+/**
+ * Render rekomendasi slides into the carousel track
+ */
 function renderRekomendasi() {
-  const grid = document.getElementById("rekomendasiGrid");
-  grid.innerHTML = "";
+  // use the carousel markup in HTML: track id = rekomendasiTrack
+  const track = document.getElementById('rekomendasiTrack');
+  const dotsContainer = document.getElementById('rekomendasiDots');
+  track.innerHTML = '';
+  dotsContainer.innerHTML = '';
 
-  // Ambil 6 buku pertama untuk rekomendasi
-  const rekomendasiBooks = allBooks.slice(0, 6);
+  // Ambil 5 buku pertama untuk rekomendasi
+  const rekomendasiBooks = allBooks.slice(0, 5);
 
-  rekomendasiBooks.forEach((book) => {
+  rekomendasiBooks.forEach((book, index) => {
     const idxAll = allBooks.indexOf(book);
-    const card = document.createElement("div");
-    card.className = "book-card";
+    const slide = document.createElement('div');
+    slide.className = 'carousel-card';
 
-    card.innerHTML = `
+    slide.innerHTML = `
       <div class="image-container">
         <img src="${book.gambar}" alt="${book.judul}">
       </div>
+      <div class="rank">${index + 1}</div>
       <h3 class="card-title" title="${book.judul}">${book.judul}</h3>
       <p class="price">Rp ${book.harga.toLocaleString()}</p>
       <div class="card-actions">
@@ -331,18 +343,222 @@ function renderRekomendasi() {
       </div>
     `;
 
-    grid.appendChild(card);
+    track.appendChild(slide);
+
+    // create dot
+    const dot = document.createElement('button');
+    dot.type = 'button';
+    dot.className = 'dot';
+    dot.setAttribute('aria-label', `Slide ${index + 1}`);
+    dot.dataset.index = index;
+    dotsContainer.appendChild(dot);
   });
 
-  // attach detail buttons
-  document.querySelectorAll('.rekomendasi-grid .detail-btn').forEach(btn => {
+  // attach detail buttons for slides
+  track.querySelectorAll('.detail-btn').forEach(btn => btn.type = 'button');
+  track.querySelectorAll('.detail-btn').forEach(btn => {
     btn.addEventListener('click', (e) => {
       const idx = parseInt(e.currentTarget.dataset.idx, 10);
       openDetailModal(allBooks[idx]);
     });
   });
-} 
 
+  // init carousel behaviour
+  initRekomCarousel();
+}
+
+// Carousel state and behavior
+let rekState = {
+  current: 0,
+  slides: 0,
+  slideWidth: 0,
+  gap: 20
+};
+
+/**
+ * initRekomCarousel
+ * - Centers the carousel starting at the middle slide
+ * - Handles prev/next/dot navigation, keyboard and wheel interactions
+ * - Manages autoplay with pause-on-interaction and visibility handling
+ */
+function initRekomCarousel() {
+  const track = document.getElementById('rekomendasiTrack');
+  const slides = Array.from(track.children);
+  const dots = Array.from(document.getElementById('rekomendasiDots').children);
+  const prev = document.getElementById('rekPrev');
+  const next = document.getElementById('rekNext');
+
+  rekState.slides = slides.length;
+  rekState.current = Math.floor(rekState.slides / 2); // start centered
+
+  function measure() {
+    if (!slides[0]) return;
+    rekState.slideWidth = slides[0].offsetWidth;
+    const cs = getComputedStyle(track);
+    rekState.gap = parseInt(cs.gap || 20, 10);
+    update();
+  }
+
+  function update() {
+    const viewport = track.parentElement; // .carousel
+    const centerOffset = (viewport.offsetWidth / 2) - (rekState.slideWidth / 2);
+    const translate = centerOffset - rekState.current * (rekState.slideWidth + rekState.gap);
+    track.style.transform = `translateX(${translate}px)`;
+
+    // set center class
+    slides.forEach((s, i) => s.classList.toggle('is-center', i === rekState.current));
+
+    // update dots and aria
+    dots.forEach((d, i) => {
+      const active = i === rekState.current;
+      d.classList.toggle('active', active);
+      d.setAttribute('aria-current', active ? 'true' : 'false');
+    });
+
+    // update prev/next disabled states for accessibility
+    if (prev) {
+      const pDisabled = rekState.current === 0;
+      prev.disabled = pDisabled;
+      prev.setAttribute('aria-disabled', pDisabled);
+    }
+    if (next) {
+      const nDisabled = rekState.current === rekState.slides - 1;
+      next.disabled = nDisabled;
+      next.setAttribute('aria-disabled', nDisabled);
+    }
+  }
+
+  prev.onclick = () => {
+    rekState.current = Math.max(0, rekState.current - 1);
+    update();
+  };
+  next.onclick = () => {
+    rekState.current = Math.min(rekState.slides - 1, rekState.current + 1);
+    update();
+  };
+
+  dots.forEach(d => d.addEventListener('click', (e) => {
+    rekState.current = parseInt(e.currentTarget.dataset.index, 10);
+    update();
+  }));
+
+  // keyboard support + show keyboard hint when user interacts by keyboard
+  function showKeyboardHint() {
+    const hint = document.getElementById('rekKeyboardHint');
+    const wrapper = document.querySelector('.rekom-carousel');
+    if (!hint || !wrapper) return;
+    hint.classList.add('visible');
+    // also remove after short timeout
+    window.clearTimeout(showKeyboardHint._t);
+    showKeyboardHint._t = window.setTimeout(() => hint.classList.remove('visible'), 2200);
+  }
+
+  // ensure we don't add multiple global keydown listeners when re-initializing
+  if (rekState._keydownHandler) document.removeEventListener('keydown', rekState._keydownHandler);
+  rekState._keydownHandler = (e) => {
+    if (e.key === 'ArrowLeft') { prev.click(); showKeyboardHint(); }
+    if (e.key === 'ArrowRight') { next.click(); showKeyboardHint(); }
+  };
+  document.addEventListener('keydown', rekState._keydownHandler);
+
+  // Autoplay controls
+  const autoplayDelay = 3500; // ms
+  let autoTimer = null;
+  let autoplayActive = true;
+
+  function startAutoplay() {
+    stopAutoplay();
+    if (!autoplayActive) return;
+    const wrapper = document.querySelector('.rekom-carousel');
+    if (wrapper) wrapper.classList.remove('paused');
+    autoTimer = window.setInterval(() => {
+      // advance and loop
+      if (rekState.current >= rekState.slides - 1) rekState.current = 0; else rekState.current += 1;
+      update();
+    }, autoplayDelay);
+  }
+
+  function stopAutoplay() {
+    if (autoTimer) { window.clearInterval(autoTimer); autoTimer = null; }
+    const wrapper = document.querySelector('.rekom-carousel');
+    if (wrapper) wrapper.classList.add('paused');
+  }
+
+  function resetAutoplay() {
+    // pause on any user interaction, then resume after a short delay
+    stopAutoplay();
+    window.clearTimeout(resetAutoplay._t);
+    resetAutoplay._t = window.setTimeout(() => {
+      autoplayActive = true;
+      startAutoplay();
+    }, 3500);
+  }
+
+  // pause on hover/focus and support wheel/trackpad navigation
+  const wrapperEl = document.querySelector('.rekom-carousel');
+  if (wrapperEl) {
+    wrapperEl.addEventListener('mouseenter', stopAutoplay);
+    wrapperEl.addEventListener('mouseleave', () => { autoplayActive = true; startAutoplay(); });
+    wrapperEl.addEventListener('focusin', () => { stopAutoplay(); showKeyboardHint(); });
+    wrapperEl.addEventListener('focusout', () => { autoplayActive = true; startAutoplay(); });
+
+    // wheel/trackpad to navigate slides — prevent page scroll when interacting
+    let wheelTimeout = null;
+    // remove previous handler if present
+    if (rekState._wheelHandler) wrapperEl.removeEventListener('wheel', rekState._wheelHandler, { passive: false });
+    rekState._wheelHandler = function(e) {
+      // detect primary scroll axis and ignore very small movements
+      const primaryDelta = Math.abs(e.deltaY) > Math.abs(e.deltaX) ? e.deltaY : e.deltaX;
+      if (Math.abs(primaryDelta) < 8) return;
+
+      // prevent the page from scrolling when controlling the carousel
+      e.preventDefault();
+
+      // throttle rapid wheel events
+      if (wheelTimeout) return;
+
+      if (primaryDelta > 0) {
+        next.click();
+      } else {
+        prev.click();
+      }
+
+      // treat as manual interaction (pause then resume autoplay)
+      resetAutoplay();
+
+      wheelTimeout = setTimeout(() => {
+        wheelTimeout = null;
+      }, 300);
+    };
+    wrapperEl.addEventListener('wheel', rekState._wheelHandler, { passive: false });
+  }
+
+  // pause when page not visible (manage handler to avoid duplicates)
+  if (rekState._visibilityHandler) document.removeEventListener('visibilitychange', rekState._visibilityHandler);
+  rekState._visibilityHandler = () => { if (document.hidden) stopAutoplay(); else { autoplayActive = true; startAutoplay(); } };
+  document.addEventListener('visibilitychange', rekState._visibilityHandler);
+
+  // when user clicks prev/next/dots, treat as manual interaction
+  prev.addEventListener('click', resetAutoplay);
+  next.addEventListener('click', resetAutoplay);
+  dots.forEach(d => d.addEventListener('click', resetAutoplay));
+
+  // re-measure on resize (ensure single handler)
+  if (rekState._resizeHandler) window.removeEventListener('resize', rekState._resizeHandler);
+  rekState._resizeHandler = measure;
+  window.addEventListener('resize', rekState._resizeHandler);
+
+  // initial measure and update
+  measure();
+
+  // start autoplay
+  startAutoplay();
+}
+ 
+
+/**
+ * Render terlaris grid
+ */
 function renderTerlaris() {
   const grid = document.getElementById("terlarisGrid");
   grid.innerHTML = "";
@@ -369,6 +585,7 @@ function renderTerlaris() {
   });
 
   // attach detail buttons
+  document.querySelectorAll('.terlaris-grid .detail-btn').forEach(btn => btn.type = 'button');
   document.querySelectorAll('.terlaris-grid .detail-btn').forEach(btn => {
     btn.addEventListener('click', (e) => {
       const idx = parseInt(e.currentTarget.dataset.idx, 10);
@@ -432,24 +649,27 @@ function renderTerlaris() {
   });
 
 
-// Filter function for rekomendasi (keeps behavior: filter rekomendasi only)
+// Filter function for rekomendasi (updates the carousel slides)
 function filterRekomendasi(category) {
-  const grid = document.getElementById("rekomendasiGrid");
-  grid.innerHTML = "";
+  const track = document.getElementById('rekomendasiTrack');
+  const dotsContainer = document.getElementById('rekomendasiDots');
+  track.innerHTML = '';
+  dotsContainer.innerHTML = '';
 
-  const filtered = category === "all"
-    ? allBooks.slice(0, 6)
-    : allBooks.filter(b => b.kategori === category).slice(0, 6);
+  const filtered = category === 'all'
+    ? allBooks.slice(0, 5)
+    : allBooks.filter(b => b.kategori === category).slice(0, 5);
 
-  filtered.forEach(book => {
+  filtered.forEach((book, index) => {
     const idxAll = allBooks.indexOf(book);
-    const card = document.createElement("div");
-    card.className = "book-card";
+    const slide = document.createElement('div');
+    slide.className = 'carousel-card';
 
-    card.innerHTML = `
+    slide.innerHTML = `
       <div class="image-container">
         <img src="${book.gambar}" alt="${book.judul}">
       </div>
+      <div class="rank">${index + 1}</div>
       <h3 class="card-title" title="${book.judul}">${book.judul}</h3>
       <p class="price">Rp ${book.harga.toLocaleString()}</p>
       <div class="card-actions">
@@ -457,16 +677,28 @@ function filterRekomendasi(category) {
       </div>
     `;
 
-    grid.appendChild(card);
+    track.appendChild(slide);
+
+    // create dot
+    const dot = document.createElement('button');
+    dot.type = 'button';
+    dot.className = 'dot';
+    dot.setAttribute('aria-label', `Slide ${index + 1}`);
+    dot.dataset.index = index;
+    dotsContainer.appendChild(dot);
   });
 
   // attach detail buttons
-  document.querySelectorAll('.rekomendasi-grid .detail-btn').forEach(btn => {
+  track.querySelectorAll('.detail-btn').forEach(btn => btn.type = 'button');
+  track.querySelectorAll('.detail-btn').forEach(btn => {
     btn.addEventListener('click', (e) => {
       const idx = parseInt(e.currentTarget.dataset.idx, 10);
       openDetailModal(allBooks[idx]);
     });
   });
+
+  // re-init the carousel so it measures and centers correctly
+  initRekomCarousel();
 }
 
   // tab toggle behavior (visual only for now)

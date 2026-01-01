@@ -60,6 +60,16 @@ nav {
     color: black;
 }
 
+/* small utility: visually hidden (accessible) */
+.visually-hidden { 
+  position: absolute !important; 
+  height: 1px; width: 1px; overflow: hidden; 
+  clip: rect(1px, 1px, 1px, 1px); white-space: nowrap; border: 0; padding: 0; margin: -1px; }
+
+/* Skip link: visible on keyboard focus */
+.skip-link { position: absolute; left: -999px; top: 8px; background:#fff; color:#333; padding:6px 10px; border-radius:6px; z-index:999; }
+.skip-link:focus { left: 8px; outline:2px solid #5A7863; }
+
 .search-box:focus { 
     border: none;
     outline: none;
@@ -188,8 +198,11 @@ footer {
 
 .small{font-size:.9rem;color:#666}
 
+/* Accessibility helpers */
+.sr-only { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(1px,1px,1px,1px); white-space: nowrap; }
+
 /* Accessibility: keyboard focus outlines toggled by JS */
-.show-focus-outlines a:focus, .show-focus-outlines button:focus, .show-focus-outlines input:focus{outline:2px solid #5A7863;outline-offset:2px}
+.show-focus-outlines a:focus, .show-focus-outlines button:focus, .show-focus-outlines input:focus{outline:2px solid #5A7863;outline-offset:2px} 
 
 /* Subtle entrance animation */
 .about-page section{opacity:0;transform:translateY(8px);transition:opacity .45s ease,transform .45s ease}
