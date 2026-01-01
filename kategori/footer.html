@@ -38,7 +38,7 @@
         </div>
         <hr>
         <div class="content-bottom">
-            <p>© 2025 PT OnBook Asri Media</p>
+            <p>© <span id="year"></span> PT OnBook Asri Media</p>
             <div>
                 <i>aaaa</i>
                 <i>aaaa</i>
@@ -47,4 +47,5 @@
             </div>
         </div>
     </div>
+    <script>(function(){var el=document.getElementById('year'); if(el) el.textContent=new Date().getFullYear();})();</script>
 </footer>
