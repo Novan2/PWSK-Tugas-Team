@@ -6,6 +6,11 @@
   - Clean code comments and keyboard-friendly interactions.
 */
 
+console.log("kategori.js loaded");
+
+const params = new URLSearchParams(window.location.search);
+console.log("Search param:", params.get("search"));
+
 // Variabel global untuk menyimpan semua data buku
 let allBooks = [];
 // Kategori yang sedang aktif, default 'all'
@@ -166,89 +171,70 @@ const booksData = [
 ];
 
 // Fungsi untuk memuat data buku ke dalam aplikasi
-function loadData() {
-  // Prefer data from databuku.js (window.databukuBooks) if available, otherwise fallback to embedded booksData
-  const sampleAuthors = [
-    'A. Rahman', 'Siti Nur', 'Budi Santoso', 'Ani Wijaya', 'Rina Marpaung', 'Teguh Prasetyo'
-  ];
+// Ganti fungsi loadData yang lama dengan versi ini:
+async function loadData() {
+  const params = new URLSearchParams(window.location.search);
+  const keyword = params.get("search");
 
   const resolveImage = (g) => {
     if (!g) return "https://via.placeholder.com/200x280/90AB8B/EBF4DD?text=Buku";
     if (g.startsWith('http') || g.startsWith('//')) return g;
-    if (g.startsWith('./')) return '../' + g.replace(/^\.\//, '');
-    return g;
+    // Menyesuaikan path untuk file lokal di folder kategori
+    return '../' + g.replace(/^\.\//, '');
   };
 
-  const useDatabuku = async () => {
-    if (window.databukuBooks && Array.isArray(window.databukuBooks) && window.databukuBooks.length) return window.databukuBooks;
-    // if databuku is still fetching, wait a bit longer for readiness (API can be slow)
-    if (typeof window.databukuBooksReady === 'undefined' || window.databukuBooksReady === false) {
-      const start = Date.now();
-      while (Date.now() - start < 4000) {
-        // eslint-disable-next-line no-await-in-loop
-        await new Promise(r => setTimeout(r, 150));
-        if (window.databukuBooks && window.databukuBooks.length) return window.databukuBooks;
-        if (window.databukuBooksReady === false) break;
-      }
-    }
-    // final attempt: return array if present, otherwise null
-    return (window.databukuBooks && window.databukuBooks.length) ? window.databukuBooks : null;
-  };
-
-  (async () => {
-    const db = await useDatabuku();
-    // helper to fetch up to `maxResults` books directly from Google Books (used only by kategori)
-    async function fetchGoogleBooks(maxResults = 40) {
+  // Mengembalikan Promise agar .then() bisa digunakan
+  return (async () => {
+    let src = [];
+    
+    if (keyword) {
+      console.log("Mencari di Google Books API:", keyword);
+      const url = `https://www.googleapis.com/books/v1/volumes?q=${encodeURIComponent(keyword)}&maxResults=40`;
       try {
-        const url = `https://www.googleapis.com/books/v1/volumes?q=all&maxResults=${maxResults}`;
         const res = await fetch(url);
-        if (!res.ok) throw new Error('HTTP ' + res.status);
         const data = await res.json();
-        const items = data.items || [];
-        return items.map(item => {
-          const info = item.volumeInfo || {};
-          const sale = item.saleInfo || {};
-          const thumbnail = info.imageLinks?.thumbnail || info.imageLinks?.smallThumbnail || '';
-          return {
-            judul: info.title || 'Judul tidak tersedia',
-            deskripsi: info.description || 'Deskripsi tidak tersedia',
-            penulis: Array.isArray(info.authors) ? info.authors.join(', ') : (info.authors || 'Penulis tidak diketahui'),
-            harga: (sale && sale.retailPrice && sale.retailPrice.amount) ? Number(sale.retailPrice.amount) : 0,
-            gambar: thumbnail
-          };
-        });
+        src = (data.items || []).map(item => ({
+          judul: item.volumeInfo.title,
+          deskripsi: item.volumeInfo.description,
+          penulis: item.volumeInfo.authors?.join(', '),
+          harga: item.saleInfo?.retailPrice?.amount || 0,
+          gambar: item.volumeInfo.imageLinks?.thumbnail
+        }));
+        
+        const titleEl = document.querySelector('.kategori-header h1');
+        if (titleEl) titleEl.innerText = `Hasil Pencarian: "${keyword}"`;
       } catch (e) {
-        console.warn('fetchGoogleBooks failed', e);
-        return null;
+        console.error("Gagal mengambil data dari API", e);
       }
+    } 
+    
+    if (src.length === 0) {
+      // Pastikan variabel booksData sudah terdefinisi (biasanya dari databuku.js)
+      src = typeof booksData !== 'undefined' ? booksData : []; 
     }
 
-    // prefer databuku if it has enough items, otherwise try fetching up to 40 from Google
-    let src = null;
-    if (db && db.length >= 40) src = db.slice(0, 40);
-    else {
-      const google = await fetchGoogleBooks(40);
-      if (google && google.length) src = google.slice(0, 40);
-    }
-
-    if (!src) src = db && db.length ? db : booksData;
-
+    // MAP: Langsung mengembalikan objek (tanpa async di dalam map)
     allBooks = src.map(book => {
-      const rawHarga = Number(book.harga || (book.listPrice && book.listPrice.amount) || 0);
-      // Jika harga tidak valid atau 0 => beri nominal acak Rp20.000 - Rp100.000
-      let finalHarga = Number.isFinite(rawHarga) && rawHarga > 0 ? rawHarga : (Math.floor(Math.random() * (100000 - 20000 + 1)) + 20000);
+      let rawHarga = Number(book.harga || 0);
+      let finalHarga = rawHarga > 0 ? rawHarga : (Math.floor(Math.random() * 80001) + 20000);
+      
       return {
-        judul: book.judul || book.title || 'Judul tidak tersedia',
-        deskripsi: book.deskripsi || book.description || '',
+        judul: book.judul || 'Judul tidak tersedia',
+        deskripsi: book.deskripsi || '',
         harga: finalHarga,
-        penulis: book.penulis || (book.authors ? (Array.isArray(book.authors) ? book.authors.join(', ') : book.authors) : sampleAuthors[Math.floor(Math.random() * sampleAuthors.length)]),
-        kategori: getRandomCategory(),
-        stock: (typeof book.stock === 'number') ? book.stock : Math.floor(Math.random() * 13),
-        gambar: resolveImage(book.gambar || book.thumbnail || book.smallThumbnail)
+        penulis: book.penulis || 'Penulis tidak diketahui',
+        kategori: book.kategori || (typeof getRandomCategory === 'function' ? getRandomCategory() : 'Umum'),
+        stock: Math.floor(Math.random() * 13),
+        gambar: resolveImage(book.gambar)
       };
     });
-    // Render semua buku ke grid kategori
-    renderKategori(allBooks);
+
+    // Jalankan render grid utama segera
+    if (typeof renderKategori === 'function') {
+        renderKategori(allBooks);
+    }
+    
+    return allBooks; 
   })();
 }
 
@@ -350,6 +336,28 @@ function searchBooks(query) {
   // Render hasil pencarian
   renderKategori(filtered);
 }
+
+// Ambil keyword search dari URL (?search=...)
+function applySearchFromURL() {
+  const params = new URLSearchParams(window.location.search);
+  const keyword = params.get("search");
+
+  if (!keyword) return false;
+
+  // Reset kategori ke ALL
+  activeCategory = "all";
+  document.querySelectorAll(".kategori-filter button")
+    .forEach(b => b.classList.remove("active"));
+
+  const allBtn = document.querySelector(".kategori-filter button[data-filter='all']");
+  if (allBtn) allBtn.classList.add("active");
+
+  // Jalankan pencarian
+  searchBooks(keyword);
+
+  return true;
+}
+
 
 // Event listener untuk tombol filter kategori
 document.querySelectorAll(".kategori-filter button").forEach(btn => {
@@ -566,6 +574,7 @@ function openDetailModal(book) {
 // Fungsi untuk menampilkan buku rekomendasi dalam bentuk carousel
 function renderRekomendasi() {
   const track = document.getElementById('rekomendasiTrack');
+  if (!track) return;
   const dotsContainer = document.getElementById('rekomendasiDots');
   track.innerHTML = ''; // Kosongkan track carousel
   dotsContainer.innerHTML = ''; // Kosongkan dots navigasi
@@ -818,12 +827,11 @@ function initRekomCarousel() {
 // Fungsi untuk menampilkan buku terlaris dalam grid
 function renderTerlaris() {
   const grid = document.getElementById("terlarisGrid");
-  grid.innerHTML = ""; // Kosongkan grid
+  if (!grid) return; // Guard clause agar tidak error jika ID tidak ada
+  
+  grid.innerHTML = ""; 
+  const terlarisBooks = allBooks.slice(0, 8); // Mengambil 8 buku teratas
 
-  // Ambil 8 buku pertama untuk ditampilkan sebagai terlaris
-  const terlarisBooks = allBooks.slice(0, 8);
-
-  // Loop setiap buku untuk membuat card terlaris
   terlarisBooks.forEach((book) => {
     const idxAll = allBooks.indexOf(book);
     const card = document.createElement("div");
@@ -1002,9 +1010,41 @@ function filterRekomendasi(category) {
   });
 })();
 
-// Muat data buku saat halaman pertama kali dibuka
-loadData();
-// Render carousel rekomendasi
-renderRekomendasi();
-// Render grid buku terlaris
-renderTerlaris();
+// --- BAGIAN INISIALISASI ---
+
+loadData()
+  .then(() => {
+    console.log("Data berhasil dimuat, memulai proses inisialisasi...");
+
+    // 1. Cek Parameter Pencarian dari URL
+    const params = new URLSearchParams(window.location.search);
+    const keyword = params.get("search");
+
+    if (keyword) {
+      // Jika ada keyword, jalankan fungsi pencarian
+      searchBooks(keyword);
+      
+      // Update judul halaman agar user tahu mereka sedang melihat hasil cari
+      const titleEl = document.querySelector('.kategori-header h1');
+      if (titleEl) titleEl.innerText = `Hasil Pencarian: "${keyword}"`;
+    } else {
+      // Jika tidak ada pencarian, tampilkan semua kategori (default: all)
+      if (typeof renderKategori === 'function') {
+        renderKategori(allBooks);
+      }
+    }
+
+    // 2. Render Komponen Tambahan (Terlaris & Rekomendasi)
+    if (typeof renderTerlaris === 'function') {
+      renderTerlaris();
+    }
+    
+    if (typeof renderRekomendasi === 'function') {
+      renderRekomendasi();
+    }
+
+    console.log("Inisialisasi Halaman Selesai.");
+  })
+  .catch((err) => {
+    console.error("Gagal melakukan inisialisasi halaman:", err);
+  });

@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Toko Buku Online</title>
-    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="Asset/style.css">
     <!-- Bootstrap 3 CSS (untuk glyphicon) -->
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
 
@@ -17,10 +17,10 @@
                 <div href="index.html" class="logo">On-Book</div>
     
                 <!-- <input type="text" class="search" placeholder="Search books..."> -->
-                <form class="search-container">
+                <form id="searchForm" class="search-container">
                     <input id="search-box" type="text" class="search-box" name="q" placeholder="Search books..." />
                     <label for="search-box"><span class="glyphicon glyphicon-search search-icon"></span></label>
-                    <input type="submit" id="search-submit" />
+                    <input type="submit" id="search-submit" style="display: none;" />
                 </form>
             </div>
 
@@ -155,8 +155,9 @@
             </div>
         </div>
     </footer>
-    <script src="databuku.js" type="module"></script>
-    <script src="slider.js" type="module"></script>
+    <script src="/Javascript/databuku.js" type="module"></script>
+    <script src="/Javascript/slider.js" type="module"></script>
+    <script src="/Javascript/search.js"></script>
     <div></div>
 </body>
 </html>
