@@ -16,12 +16,22 @@ loadData()
     const keyword = params.get("search");
 
     if (keyword) {
-      // Jika ada keyword, jalankan fungsi pencarian
+      // Panggil searchBooks, bukan langsung render
       searchBooks(keyword);
-      
-      // Update judul halaman agar user tahu mereka sedang melihat hasil cari
+
+      // Update judul
       const titleEl = document.querySelector('.kategori-header h1');
       if (titleEl) titleEl.innerText = `Hasil Pencarian: "${keyword}"`;
+
+      // Reset tombol kategori ke "Semua" agar grid tidak ter-filter kategori
+      const filterButtons = document.querySelectorAll('.kategori-filter button');
+      filterButtons.forEach(b => b.classList.remove('active'));
+      const allBtn = document.querySelector('.kategori-filter button[data-filter="all"]');
+      if (allBtn) allBtn.classList.add('active');
+      // Pastikan state kategori aktif juga di-reset
+      if (typeof activeCategory !== 'undefined') {
+        activeCategory = 'all';
+      }
     } else {
       // Jika tidak ada pencarian, tampilkan semua kategori (default: all)
       if (typeof renderKategori === 'function') {

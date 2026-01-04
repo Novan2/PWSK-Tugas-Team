@@ -23,8 +23,8 @@ document.addEventListener("submit", (e) => {
                 console.log("Mencari di halaman kategori:", keyword);
                 
                 // Jika loadBooks adalah function global, panggil langsung
-                if (typeof loadBooks === "function") {
-                    loadBooks(keyword);
+                if (typeof searchBooks === "function") {
+                searchBooks(keyword);
                 } else {
                     // Fallback: reload dengan param baru agar loadData() menangkap keyword
                     window.location.search = `?search=${encodeURIComponent(keyword)}`;
