@@ -84,9 +84,11 @@ main {
 .search-box:focus { 
     border: none;
     outline: none;
-    box-shadow: none;
-    padding-left: 15px;
-    cursor: text;
+      display: -webkit-box;
+      -webkit-line-clamp: 2;
+      -webkit-box-orient: vertical;
+      overflow: hidden;
+      text-overflow: ellipsis;
     width: 300px;
     border-radius: auto;
     background: rgb(235, 235, 235);
@@ -95,6 +97,11 @@ main {
 
 .search-box:focus + label .search-icon {
     color: black;
+      display: -webkit-box;
+      -webkit-line-clamp: 2;
+      -webkit-box-orient: vertical;
+      overflow: hidden;
+      text-overflow: ellipsis;
 }
 
 .search-box:not(:focus) {
@@ -1131,9 +1138,10 @@ footer {
   box-shadow: 0 10px 25px rgba(0,0,0,.1);
   transition: transform .28s ease, box-shadow .28s ease;
   position: relative;
-  height: 350px;
+  height: 380px;
   display: flex;
   flex-direction: column;
+  background-color: #EBF4DD;
   cursor: pointer;
 }
 
@@ -1147,18 +1155,20 @@ footer {
 
 .kategori-card .image-container {
   width: 100%;
-  height: 100%;
-  position: absolute;
-  top: 0;
-  left: 0;
+  height: 230px;
+  position: relative;
   z-index: 1;
-  background-size: cover;
-  background-position: center;
-  background-repeat: no-repeat;
+  overflow: hidden;
+  border-radius: 18px 18px 0 0;
+  background-color: #dfe8d0;
+  flex-shrink: 0;
 }
 
-.image-container img {
-  display: none;
+.kategori-card .image-container img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
 }
 
 
@@ -1172,16 +1182,23 @@ footer {
   position: relative;
   z-index: 2;
   margin-top: auto;
-  padding: 20px 15px;
-  background: linear-gradient(to top, rgba(0,0,0,0.95) 0%, rgba(0,0,0,0.8) 50%, transparent 100%);
-  color: white;
+  padding: 16px 15px 18px;
+  background: #90AB8B;
+  color: #EBF4DD;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  gap: 6px;
+  min-height: 150px;
+  flex: 1 0 auto;
+  border-radius: 0 0 18px 18px;
 }
 
 .card-title {
   font-size: 16px;
-  font-weight: bold;
+  font-weight: 700;
   margin-bottom: 5px;
-  color: white !important;
+  color: #EBF4DD !important;
   text-align: left;
   display: -webkit-box;
   -webkit-line-clamp: 2;
@@ -1192,16 +1209,21 @@ footer {
 
 .card-author {
   font-size: 13px;
-  color: #ddd !important;
+  color: #dcebd8 !important;
   margin-bottom: 8px;
   text-align: left;
   opacity: 1;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 
 .price {
   font-size: 18px;
-  font-weight: bold;
-  color: #FFD700 !important;
+  font-weight: 700;
+  color: #FFD57E !important;
   text-align: left;
 }
 

@@ -24,9 +24,10 @@ function renderKategori(books) {
     card.className = 'kategori-card';
     card.tabIndex = 0;
 
-    // Gunakan background-image untuk cover buku
     card.innerHTML = `
-      <div class="image-container" style="background-image: url('${book.gambar}');"></div>
+      <div class="image-container">
+        <img src="${book.gambar}" alt="Sampul ${book.judul}">
+      </div>
       <div class="stock-badge ${book.stock === 0 ? 'out' : (book.stock < 4 ? 'low' : '')}">
         Stok: ${book.stock}
       </div>
