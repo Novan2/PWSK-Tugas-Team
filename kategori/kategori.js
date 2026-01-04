@@ -6,7 +6,9 @@
   - Clean code comments and keyboard-friendly interactions.
 */
 
+// Variabel global untuk menyimpan semua data buku
 let allBooks = [];
+// Kategori yang sedang aktif, default 'all'
 let activeCategory = "all";
 
 const booksData = [
@@ -163,45 +165,51 @@ const booksData = [
   }
 ];
 
+// Fungsi untuk memuat data buku ke dalam aplikasi
 function loadData() {
-  // Tambahkan kategori dummy untuk sementara
+  // Tambahkan kategori random ke setiap buku dan set gambar default jika tidak ada
   allBooks = booksData.map(book => ({
     ...book,
     kategori: getRandomCategory(),
-    gambar: book.gambar ? "../" + book.gambar : "https://via.placeholder.com/200x280/90AB8B/EBF4DD?text=Buku" // placeholder gambar
+    gambar: book.gambar ? "../" + book.gambar : "https://via.placeholder.com/200x280/90AB8B/EBF4DD?text=Buku"
   }));
+  // Render semua buku ke grid kategori
   renderKategori(allBooks);
 }
 
+// Fungsi untuk mengambil kategori secara acak
 function getRandomCategory() {
   const categories = ["fiksi", "nonfiksi", "komik", "biografi", "sains", "sejarah", "psikologi", "anak", "bahasa", "fotografi", "lainnya"];
+  // Pilih kategori random dari array
   return categories[Math.floor(Math.random() * categories.length)];
 }
 
-/* Utility: debounce a function (small helper used for search) */
+// Fungsi debounce untuk menunda eksekusi (dipakai untuk search agar tidak terlalu sering dipanggil)
 function debounce(fn, wait = 220) {
   let t = null;
   return function(...args) {
     if (t) clearTimeout(t);
+    // Tunggu beberapa milidetik sebelum menjalankan fungsi
     t = setTimeout(() => fn.apply(this, args), wait);
   };
 }
 
-/**
- * Render the katalog grid for a list of books
- * @param {Array} data - array of book objects
- */
+// Fungsi untuk menampilkan daftar buku ke dalam grid kategori
+// @param {Array} data - array objek buku yang akan ditampilkan
 function renderKategori(data) {
   const grid = document.getElementById("kategoriGrid");
-  grid.innerHTML = ""; 
+  grid.innerHTML = ""; // Kosongkan grid terlebih dahulu
 
   const noResultsEl = document.getElementById('noResults');
+  // Jika tidak ada data, tampilkan pesan 'tidak ada hasil'
   if (!data || data.length === 0) {
     if (noResultsEl) noResultsEl.style.display = 'block';
     return;
   }
+  // Sembunyikan pesan jika ada data
   if (noResultsEl) noResultsEl.style.display = 'none';
 
+  // Loop setiap buku dan buat card untuk ditampilkan
   data.forEach((book) => {
     const idxAll = allBooks.indexOf(book);
     const card = document.createElement("div");
@@ -221,7 +229,7 @@ function renderKategori(data) {
     grid.appendChild(card);
   });
 
-  // attach detail buttons (scoped to grid)
+  // Pasang event listener ke tombol 'Lihat Detail' untuk membuka modal
   document.querySelectorAll('#kategoriGrid .detail-btn').forEach(btn => btn.type = 'button');
   document.querySelectorAll('#kategoriGrid .detail-btn').forEach(btn => {
     btn.addEventListener('click', (e) => {
@@ -231,23 +239,28 @@ function renderKategori(data) {
   });
 }
 
+// Fungsi untuk mencari buku berdasarkan judul atau deskripsi
 function searchBooks(query) {
+  // Filter buku yang judulnya atau deskripsinya mengandung keyword pencarian
   const filtered = allBooks.filter(book =>
     book.judul.toLowerCase().includes(query.toLowerCase()) ||
     book.deskripsi.toLowerCase().includes(query.toLowerCase())
   );
+  // Render hasil pencarian
   renderKategori(filtered);
 }
 
-/* EVENT BUTTON */
+// Event listener untuk tombol filter kategori
 document.querySelectorAll(".kategori-filter button").forEach(btn => {
   btn.addEventListener("click", () => {
+    // Hapus class 'active' dari semua tombol
     document
       .querySelectorAll(".kategori-filter button")
       .forEach(b => b.classList.remove("active"));
 
+    // Tambahkan class 'active' ke tombol yang diklik
     btn.classList.add("active");
-    // When a category is selected, only filter the rekomendasi section (option A)
+    // Filter section rekomendasi berdasarkan kategori yang dipilih
     filterRekomendasi(btn.dataset.filter);
 
     // update modal active state if modal contains the same category button
@@ -260,14 +273,15 @@ document.querySelectorAll(".kategori-filter button").forEach(btn => {
   });
 });
 
-/* SEARCH EVENT */
+// Event listener untuk input search
 const _searchInput = document.getElementById("searchInput");
 if (_searchInput) {
+  // Gunakan debounce agar fungsi search tidak dipanggil terlalu sering saat user mengetik
   const _debounced = debounce((q) => searchBooks(q), 200);
   _searchInput.addEventListener("input", (e) => _debounced(e.target.value));
 }
 
-/* DETAIL MODAL */
+// Fungsi untuk membuka modal detail buku
 function openDetailModal(book) {
   const modal = document.getElementById('bookDetailModal');
   const img = document.getElementById('detailImage');
@@ -275,34 +289,40 @@ function openDetailModal(book) {
   const desc = document.getElementById('detailDesc');
   const price = document.getElementById('detailPrice');
 
+  // Isi konten modal dengan data buku yang dipilih
   img.src = book.gambar;
   img.alt = book.judul;
   title.textContent = book.judul;
   desc.textContent = book.deskripsi || 'Deskripsi tidak tersedia.';
   price.textContent = 'Rp ' + book.harga.toLocaleString();
 
+  // Tampilkan modal
   modal.classList.add('open');
   modal.setAttribute('aria-hidden', 'false');
 
-  // focus management
+  // Fokus ke tombol close untuk accessibility
   const close = modal.querySelector('.modal-close');
   close.focus();
 }
 
+// Setup event listener untuk modal detail buku
 (function setupDetailModal() {
   const modal = document.getElementById('bookDetailModal');
   if (!modal) return;
   const close = modal.querySelector('.modal-close');
+  // Tombol close untuk menutup modal
   close.addEventListener('click', () => {
     modal.classList.remove('open');
     modal.setAttribute('aria-hidden', 'true');
   });
+  // Klik di luar konten modal untuk menutup
   modal.addEventListener('click', (e) => {
     if (e.target === modal) {
       modal.classList.remove('open');
       modal.setAttribute('aria-hidden', 'true');
     }
   });
+  // Tekan tombol ESC untuk menutup modal
   document.addEventListener('keydown', (e) => {
     if (e.key === 'Escape') {
       if (modal.classList.contains('open')) {
@@ -313,19 +333,17 @@ function openDetailModal(book) {
   });
 })();
 
-/**
- * Render rekomendasi slides into the carousel track
- */
+// Fungsi untuk menampilkan buku rekomendasi dalam bentuk carousel
 function renderRekomendasi() {
-  // use the carousel markup in HTML: track id = rekomendasiTrack
   const track = document.getElementById('rekomendasiTrack');
   const dotsContainer = document.getElementById('rekomendasiDots');
-  track.innerHTML = '';
-  dotsContainer.innerHTML = '';
+  track.innerHTML = ''; // Kosongkan track carousel
+  dotsContainer.innerHTML = ''; // Kosongkan dots navigasi
 
-  // Ambil 5 buku pertama untuk rekomendasi
+  // Ambil 5 buku pertama untuk ditampilkan sebagai rekomendasi
   const rekomendasiBooks = allBooks.slice(0, 5);
 
+  // Loop setiap buku untuk membuat slide carousel
   rekomendasiBooks.forEach((book, index) => {
     const idxAll = allBooks.indexOf(book);
     const slide = document.createElement('div');
@@ -345,7 +363,7 @@ function renderRekomendasi() {
 
     track.appendChild(slide);
 
-    // create dot
+    // Buat dot navigasi untuk setiap slide
     const dot = document.createElement('button');
     dot.type = 'button';
     dot.className = 'dot';
@@ -354,7 +372,7 @@ function renderRekomendasi() {
     dotsContainer.appendChild(dot);
   });
 
-  // attach detail buttons for slides
+  // Pasang event listener ke tombol detail di setiap slide
   track.querySelectorAll('.detail-btn').forEach(btn => btn.type = 'button');
   track.querySelectorAll('.detail-btn').forEach(btn => {
     btn.addEventListener('click', (e) => {
@@ -363,24 +381,20 @@ function renderRekomendasi() {
     });
   });
 
-  // init carousel behaviour
+  // Inisialisasi fungsi carousel (navigasi, autoplay, dll)
   initRekomCarousel();
 }
 
-// Carousel state and behavior
+// State untuk carousel rekomendasi (slide aktif, jumlah slide, lebar, gap)
 let rekState = {
-  current: 0,
-  slides: 0,
-  slideWidth: 0,
-  gap: 20
+  current: 0, // Index slide yang sedang ditampilkan
+  slides: 0, // Total jumlah slide
+  slideWidth: 0, // Lebar satu slide
+  gap: 20 // Jarak antar slide
 };
 
-/**
- * initRekomCarousel
- * - Centers the carousel starting at the middle slide
- * - Handles prev/next/dot navigation, keyboard and wheel interactions
- * - Manages autoplay with pause-on-interaction and visibility handling
- */
+// Fungsi untuk inisialisasi carousel: navigasi, autoplay, keyboard, dan wheel
+// Carousel dimulai dari slide tengah
 function initRekomCarousel() {
   const track = document.getElementById('rekomendasiTrack');
   const slides = Array.from(track.children);
@@ -389,7 +403,7 @@ function initRekomCarousel() {
   const next = document.getElementById('rekNext');
 
   rekState.slides = slides.length;
-  rekState.current = Math.floor(rekState.slides / 2); // start centered
+  rekState.current = Math.floor(rekState.slides / 2); // Mulai dari slide tengah
 
   function measure() {
     if (!slides[0]) return;
@@ -399,23 +413,25 @@ function initRekomCarousel() {
     update();
   }
 
+  // Fungsi untuk update posisi carousel berdasarkan slide aktif
   function update() {
     const viewport = track.parentElement; // .carousel
+    // Hitung offset agar slide aktif berada di tengah viewport
     const centerOffset = (viewport.offsetWidth / 2) - (rekState.slideWidth / 2);
     const translate = centerOffset - rekState.current * (rekState.slideWidth + rekState.gap);
     track.style.transform = `translateX(${translate}px)`;
 
-    // set center class
+    // Tambahkan class 'is-center' ke slide yang sedang aktif
     slides.forEach((s, i) => s.classList.toggle('is-center', i === rekState.current));
 
-    // update dots and aria
+    // Update dots navigasi (active state)
     dots.forEach((d, i) => {
       const active = i === rekState.current;
       d.classList.toggle('active', active);
       d.setAttribute('aria-current', active ? 'true' : 'false');
     });
 
-    // update prev/next disabled states for accessibility
+    // Update disabled state tombol prev/next (untuk accessibility)
     if (prev) {
       const pDisabled = rekState.current === 0;
       prev.disabled = pDisabled;
@@ -428,64 +444,72 @@ function initRekomCarousel() {
     }
   }
 
+  // Event listener untuk tombol prev (previous)
   prev.onclick = () => {
     rekState.current = Math.max(0, rekState.current - 1);
     update();
   };
+  // Event listener untuk tombol next
   next.onclick = () => {
     rekState.current = Math.min(rekState.slides - 1, rekState.current + 1);
     update();
   };
 
+  // Event listener untuk dot navigasi (klik dot untuk pindah ke slide tertentu)
   dots.forEach(d => d.addEventListener('click', (e) => {
     rekState.current = parseInt(e.currentTarget.dataset.index, 10);
     update();
   }));
 
-  // keyboard support + show keyboard hint when user interacts by keyboard
+  // Fungsi untuk menampilkan hint keyboard saat user navigasi dengan keyboard
   function showKeyboardHint() {
     const hint = document.getElementById('rekKeyboardHint');
     const wrapper = document.querySelector('.rekom-carousel');
     if (!hint || !wrapper) return;
     hint.classList.add('visible');
-    // also remove after short timeout
+    // Sembunyikan hint setelah 2.2 detik
     window.clearTimeout(showKeyboardHint._t);
     showKeyboardHint._t = window.setTimeout(() => hint.classList.remove('visible'), 2200);
   }
 
-  // ensure we don't add multiple global keydown listeners when re-initializing
+  // Hapus event listener lama jika ada, lalu tambahkan yang baru
   if (rekState._keydownHandler) document.removeEventListener('keydown', rekState._keydownHandler);
   rekState._keydownHandler = (e) => {
+    // Arrow Left: ke slide sebelumnya
     if (e.key === 'ArrowLeft') { prev.click(); showKeyboardHint(); }
+    // Arrow Right: ke slide berikutnya
     if (e.key === 'ArrowRight') { next.click(); showKeyboardHint(); }
   };
   document.addEventListener('keydown', rekState._keydownHandler);
 
-  // Autoplay controls
+  // Autoplay: carousel berjalan otomatis setiap 3.5 detik
   const autoplayDelay = 3500; // ms
   let autoTimer = null;
   let autoplayActive = true;
 
+  // Fungsi untuk memulai autoplay carousel
   function startAutoplay() {
     stopAutoplay();
     if (!autoplayActive) return;
     const wrapper = document.querySelector('.rekom-carousel');
     if (wrapper) wrapper.classList.remove('paused');
+    // Otomatis pindah slide setiap interval
     autoTimer = window.setInterval(() => {
-      // advance and loop
+      // Loop kembali ke slide pertama jika sudah di akhir
       if (rekState.current >= rekState.slides - 1) rekState.current = 0; else rekState.current += 1;
       update();
     }, autoplayDelay);
   }
 
+  // Fungsi untuk menghentikan autoplay carousel
   function stopAutoplay() {
     if (autoTimer) { window.clearInterval(autoTimer); autoTimer = null; }
     const wrapper = document.querySelector('.rekom-carousel');
     if (wrapper) wrapper.classList.add('paused');
   }
 
+  // Pause autoplay saat user interaksi, lalu resume setelah beberapa detik
   function resetAutoplay() {
-    // pause on any user interaction, then resume after a short delay
     stopAutoplay();
     window.clearTimeout(resetAutoplay._t);
     resetAutoplay._t = window.setTimeout(() => {
@@ -494,36 +518,43 @@ function initRekomCarousel() {
     }, 3500);
   }
 
-  // pause on hover/focus and support wheel/trackpad navigation
+  // Pause autoplay saat hover/focus, dan support navigasi dengan scroll/wheel
   const wrapperEl = document.querySelector('.rekom-carousel');
   if (wrapperEl) {
+    // Pause saat mouse enter
     wrapperEl.addEventListener('mouseenter', stopAutoplay);
+    // Resume autoplay saat mouse leave
     wrapperEl.addEventListener('mouseleave', () => { autoplayActive = true; startAutoplay(); });
+    // Pause saat user focus ke carousel (keyboard navigation)
     wrapperEl.addEventListener('focusin', () => { stopAutoplay(); showKeyboardHint(); });
+    // Resume saat focus keluar
     wrapperEl.addEventListener('focusout', () => { autoplayActive = true; startAutoplay(); });
 
-    // wheel/trackpad to navigate slides — prevent page scroll when interacting
+    // Navigasi carousel dengan scroll wheel/trackpad
     let wheelTimeout = null;
-    // remove previous handler if present
+    // Hapus handler lama jika ada
     if (rekState._wheelHandler) wrapperEl.removeEventListener('wheel', rekState._wheelHandler, { passive: false });
     rekState._wheelHandler = function(e) {
-      // detect primary scroll axis and ignore very small movements
+      // Deteksi arah scroll (vertical atau horizontal)
       const primaryDelta = Math.abs(e.deltaY) > Math.abs(e.deltaX) ? e.deltaY : e.deltaX;
+      // Abaikan gerakan kecil
       if (Math.abs(primaryDelta) < 8) return;
 
-      // prevent the page from scrolling when controlling the carousel
+      // Prevent page scroll saat navigasi carousel
       e.preventDefault();
 
-      // throttle rapid wheel events
+      // Throttle: abaikan event wheel yang terlalu cepat
       if (wheelTimeout) return;
 
+      // Scroll down/right: next slide
       if (primaryDelta > 0) {
         next.click();
       } else {
+        // Scroll up/left: prev slide
         prev.click();
       }
 
-      // treat as manual interaction (pause then resume autoplay)
+      // Pause dan resume autoplay setelah interaksi
       resetAutoplay();
 
       wheelTimeout = setTimeout(() => {
@@ -533,39 +564,36 @@ function initRekomCarousel() {
     wrapperEl.addEventListener('wheel', rekState._wheelHandler, { passive: false });
   }
 
-  // pause when page not visible (manage handler to avoid duplicates)
+  // Pause autoplay saat tab/halaman tidak terlihat (user pindah tab)
   if (rekState._visibilityHandler) document.removeEventListener('visibilitychange', rekState._visibilityHandler);
   rekState._visibilityHandler = () => { if (document.hidden) stopAutoplay(); else { autoplayActive = true; startAutoplay(); } };
   document.addEventListener('visibilitychange', rekState._visibilityHandler);
 
-  // when user clicks prev/next/dots, treat as manual interaction
+  // Saat user klik prev/next/dots, anggap sebagai interaksi manual
   prev.addEventListener('click', resetAutoplay);
   next.addEventListener('click', resetAutoplay);
   dots.forEach(d => d.addEventListener('click', resetAutoplay));
 
-  // re-measure on resize (ensure single handler)
+  // Re-measure saat window di-resize
   if (rekState._resizeHandler) window.removeEventListener('resize', rekState._resizeHandler);
   rekState._resizeHandler = measure;
   window.addEventListener('resize', rekState._resizeHandler);
 
-  // initial measure and update
+  // Ukur lebar slide dan mulai autoplay
   measure();
-
-  // start autoplay
   startAutoplay();
 }
  
 
-/**
- * Render terlaris grid
- */
+// Fungsi untuk menampilkan buku terlaris dalam grid
 function renderTerlaris() {
   const grid = document.getElementById("terlarisGrid");
-  grid.innerHTML = "";
+  grid.innerHTML = ""; // Kosongkan grid
 
-  // Ambil 8 buku pertama untuk terlaris
+  // Ambil 8 buku pertama untuk ditampilkan sebagai terlaris
   const terlarisBooks = allBooks.slice(0, 8);
 
+  // Loop setiap buku untuk membuat card terlaris
   terlarisBooks.forEach((book) => {
     const idxAll = allBooks.indexOf(book);
     const card = document.createElement("div");
@@ -584,7 +612,7 @@ function renderTerlaris() {
     grid.appendChild(card);
   });
 
-  // attach detail buttons
+  // Pasang event listener ke tombol detail
   document.querySelectorAll('.terlaris-grid .detail-btn').forEach(btn => btn.type = 'button');
   document.querySelectorAll('.terlaris-grid .detail-btn').forEach(btn => {
     btn.addEventListener('click', (e) => {
@@ -594,7 +622,7 @@ function renderTerlaris() {
   });
 } 
 
-// Modal: open/close and category clicks
+// Setup modal 'Lainnya' untuk kategori tambahan
 (function setupModal() {
   const moreBtn = document.querySelector('.lainnya-btn');
   const modal = document.getElementById('moreCategoriesModal');
@@ -602,12 +630,14 @@ function renderTerlaris() {
 
   const modalClose = modal.querySelector('.modal-close');
 
+  // Fungsi untuk membuka modal kategori
   function openModal() {
     modal.classList.add('open');
     modal.setAttribute('aria-hidden', 'false');
     moreBtn.classList.add('open');
     moreBtn.setAttribute('aria-expanded', 'true');
   }
+  // Fungsi untuk menutup modal kategori
   function closeModal() {
     modal.classList.remove('open');
     modal.setAttribute('aria-hidden', 'true');
@@ -615,47 +645,52 @@ function renderTerlaris() {
     moreBtn.setAttribute('aria-expanded', 'false');
   }
 
+  // Toggle modal saat tombol 'Lainnya' diklik
   moreBtn.addEventListener('click', (e) => {
-    // toggle modal
     if (modal.classList.contains('open')) closeModal(); else openModal();
   });
+  // Tombol X untuk menutup modal
   modalClose.addEventListener('click', closeModal);
 
+  // Klik di luar konten modal untuk menutup
   modal.addEventListener('click', (e) => {
     if (e.target === modal) closeModal();
   });
 
+  // Tekan ESC untuk menutup modal
   document.addEventListener('keydown', (e) => {
     if (e.key === 'Escape') closeModal();
   });
 
-  // attach to both right-side links and left-nav buttons
+  // Event listener untuk semua tombol kategori di dalam modal
   modal.querySelectorAll('.mega-col button, .mega-left button').forEach(btn => {
     btn.addEventListener('click', () => {
       const category = btn.dataset.filter;
 
-      // clear and add active class in modal
+      // Update active state di modal
       modal.querySelectorAll('.mega-col button, .mega-left button').forEach(b => b.classList.remove('active'));
       btn.classList.add('active');
 
-      // update active state on top filter buttons if exists
+      // Update tombol filter di bagian atas jika ada
       document.querySelectorAll('.kategori-filter button').forEach(b => b.classList.remove('active'));
       const topBtn = document.querySelector(`.kategori-filter button[data-filter='${category}']`);
       if (topBtn) topBtn.classList.add('active');
 
+      // Filter rekomendasi berdasarkan kategori yang dipilih
       filterRekomendasi(category);
       closeModal();
     });
   });
 
 
-// Filter function for rekomendasi (updates the carousel slides)
+// Fungsi untuk filter carousel rekomendasi berdasarkan kategori
 function filterRekomendasi(category) {
   const track = document.getElementById('rekomendasiTrack');
   const dotsContainer = document.getElementById('rekomendasiDots');
-  track.innerHTML = '';
-  dotsContainer.innerHTML = '';
+  track.innerHTML = ''; // Kosongkan carousel
+  dotsContainer.innerHTML = ''; // Kosongkan dots
 
+  // Filter buku berdasarkan kategori, atau ambil semua jika 'all'
   const filtered = category === 'all'
     ? allBooks.slice(0, 5)
     : allBooks.filter(b => b.kategori === category).slice(0, 5);
@@ -697,20 +732,20 @@ function filterRekomendasi(category) {
     });
   });
 
-  // re-init the carousel so it measures and centers correctly
+  // Re-inisialisasi carousel agar ukuran dan posisi benar
   initRekomCarousel();
 }
 
-  // tab toggle behavior (visual only for now)
+  // Toggle tab 'Buku' dan 'Non Buku' di modal
   modal.querySelectorAll('.tab').forEach(t => {
     t.addEventListener('click', () => {
       modal.querySelectorAll('.tab').forEach(x => x.classList.remove('active'));
       t.classList.add('active');
-      // Potential: could switch left-list content based on tab
+      // Bisa digunakan untuk switch konten berdasarkan tab
     });
   });
 
-  // Dimming/highlight effect: hover or focus a category to dim others
+  // Efek dimming dan highlight saat hover/focus kategori di modal
   const modalContent = modal.querySelector('.modal-content.mega-menu');
   modal.querySelectorAll('.mega-col button, .mega-left button').forEach(btn => {
     btn.addEventListener('mouseenter', () => {
@@ -733,14 +768,16 @@ function filterRekomendasi(category) {
     });
   });
 
-  // ensure things clear when moving the mouse out of the content area
+  // Hapus efek dimming saat mouse keluar dari modal content
   modalContent.addEventListener('mouseleave', () => {
     modalContent.classList.remove('dimmed');
     modal.querySelectorAll('.mega-col button, .mega-left button').forEach(b => b.classList.remove('highlight'));
   });
 })();
 
-/* LOAD DATA */
+// Muat data buku saat halaman pertama kali dibuka
 loadData();
+// Render carousel rekomendasi
 renderRekomendasi();
+// Render grid buku terlaris
 renderTerlaris();

@@ -5,21 +5,22 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Toko Buku Online</title>
     <link rel="stylesheet" href="kategori.css">
-    <!-- Bootstrap 3 CSS (untuk glyphicon) -->
+    <!-- Bootstrap 3 CSS untuk icon glyphicon -->
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
 
 </head>
 <body>
+    <!-- Header akan dimuat dari header.html -->
     <div id="site-header" data-include-src="header.html"></div>
 
     <main>
-    <!-- HEADER KATEGORI -->
+    <!-- Header halaman kategori -->
 <section class="kategori-header">
   <h1>Kategori Buku</h1>
   <p>Jelajahi berbagai pilihan buku dan temukan bacaan yang sesuai dengan minat Anda.</p>
 </section>
 
-<!-- FILTER KATEGORI -->
+<!-- Filter dan tombol kategori -->
 <section class="kategori-filter">
   <input type="text" placeholder="Cari buku..." id="searchInput">
   <div class="kategori-btn">
@@ -32,7 +33,7 @@
   </div>
 </section>
 
-<!-- Modal: More Categories (Mega menu with left sidebar) -->
+<!-- Modal untuk kategori tambahan (mega menu) -->
 <div id="moreCategoriesModal" class="modal" role="dialog" aria-modal="true" aria-hidden="true">
   <div class="modal-content mega-menu" role="document">
     <button type="button" class="modal-close" aria-label="Tutup">&times;</button>
@@ -96,7 +97,7 @@
   </div>
 </div>
 
-<!-- BUKU REKOMENDASI -->
+<!-- Carousel buku rekomendasi -->
 <section class="rekomendasi">
   <h2>Buku Rekomendasi</h2>
   <div class="carousel-wrapper rekom-carousel">
@@ -104,7 +105,7 @@
 
     <div class="carousel" aria-roledescription="carousel">
       <div class="carousel-track" id="rekomendasiTrack" role="group" aria-label="Slides">
-        <!-- slides akan di-render oleh JavaScript -->
+        <!-- Slides buku akan di-render oleh JavaScript -->
       </div>
     </div>
 
@@ -115,22 +116,23 @@
 
 </section>
 
-<!-- BUKU TERLARIS -->
+<!-- Grid buku terlaris -->
 <section class="books">
   <h2>Buku Terlaris & Rekomendasi</h2>
 
   <div class="terlaris-grid" id="terlarisGrid">
-    <!-- Buku terlaris akan di-render oleh JavaScript -->
+    <!-- Card buku terlaris akan di-render oleh JavaScript -->
   </div>
 </section>
 
-<!-- GRID BUKU -->
+<!-- Grid semua buku kategori -->
 <section class="book-grid" id="kategoriGrid">
-  <!-- Buku akan di-render oleh JavaScript -->
+  <!-- Card buku akan di-render oleh JavaScript -->
 </section>
+<!-- Pesan jika tidak ada hasil -->
 <div id="noResults" class="no-results" aria-live="polite" style="display:none;">Tidak ada buku untuk kategori/ pencarian ini.</div> 
 
-<!-- Detail Modal (single modal to show book info) -->
+<!-- Modal untuk menampilkan detail buku -->
 <div id="bookDetailModal" class="modal" role="dialog" aria-hidden="true" aria-labelledby="detailTitle">
   <div class="modal-content detail-modal" role="document">
     <button class="modal-close" aria-label="Tutup">&times;</button>
@@ -146,9 +148,11 @@
 </div>
 
 
-
+    <!-- Footer akan dimuat dari footer.html -->
     <div id="site-footer" data-include-src="footer.html"></div>
+    <!-- Script untuk load header dan footer -->
     <script src="includes.js"></script>
+    <!-- Script utama untuk kategori -->
     <script src="kategori.js"></script>
 </body>
 </html>

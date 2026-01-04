@@ -1,22 +1,27 @@
-// Simple client-side include loader for kategori folder
+// Script untuk memuat file HTML eksternal (header.html, footer.html)
+// ke dalam elemen dengan atribut data-include-src
 (function(){
   function loadIncludes(){
+    // Cari semua elemen yang punya atribut data-include-src
     var nodes = document.querySelectorAll('[data-include-src]');
     nodes.forEach(function(node){
       var src = node.getAttribute('data-include-src');
       if(!src) return;
+      // Fetch file HTML yang ditentukan
       fetch(src).then(function(res){
         if(!res.ok) throw new Error('Failed to load ' + src + ': ' + res.status);
         return res.text();
       }).then(function(html){
+        // Masukkan HTML yang di-fetch ke dalam elemen
         node.innerHTML = html;
 
-        // Adjust root-style paths ("/path") so includes work when viewing files locally
+        // Perbaiki path yang dimulai dengan '/' agar bekerja saat viewing file secara lokal
         (async function adjustRootPaths(){
-          var maxDepth = 6; // probe up to 6 levels
+          var maxDepth = 6; // Coba hingga 6 level ke atas
           var siteRootRel = '';
           var found = false;
 
+          // Cari root folder dengan mencoba fetch index.html di tiap level
           for(var i=0;i<=maxDepth;i++){
             try{
               var probe = siteRootRel + 'index.html';
@@ -27,11 +32,11 @@
           }
 
           if(!found){
-            // fallback: use empty prefix (best effort)
+            // fallback: gunakan prefix kosong jika root tidak ditemukan
             siteRootRel = '';
           }
 
-          // Rewrite anchors, images, and form actions that start with '/'
+          // Perbaiki link, gambar, dan form action yang dimulai dengan '/'
           node.querySelectorAll('a[href]').forEach(function(a){
             var href = a.getAttribute('href');
             if(href && href.charAt(0) === '/'){
@@ -53,7 +58,7 @@
             }
           });
         })().then(function(){
-          // Evaluate any scripts inside included html after paths adjusted
+          // Eksekusi script yang ada di dalam HTML yang di-include
           var scripts = node.querySelectorAll('script');
           scripts.forEach(function(s){
             var newScript = document.createElement('script');
@@ -62,6 +67,7 @@
             } else {
               newScript.textContent = s.textContent;
             }
+            // Tambahkan script ke body dan hapus yang lama
             document.body.appendChild(newScript);
             s.parentNode.removeChild(s);
           });
@@ -73,6 +79,7 @@
     });
   }
 
+  // Jalankan loadIncludes saat DOM sudah siap
   if(document.readyState === 'loading'){
     document.addEventListener('DOMContentLoaded', loadIncludes);
   } else {

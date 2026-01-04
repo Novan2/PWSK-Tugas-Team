@@ -1,18 +1,21 @@
+/* Reset margin default */
 * {
     margin: 0;
 }
 
+/* Style dasar untuk body */
 body{
     font-family: Arial, sans-serif;
     background-color: #F5F5F0;
 }
 
-/*=========== NAVBAR ============== */
+/* ========== NAVBAR ========== */
+/* Layout navbar: logo di kiri, menu di kanan */
 nav {
     display: flex;
     flex-direction: row;
-    justify-content: space-between; /* logo kiri, nav kanan */
-    padding: 16px 120px; /* kurangi padding agar muat */
+    justify-content: space-between;
+    padding: 16px 120px;
     border-bottom: 1px solid #90AB8B;
     font-size: 1.02em;
 }
@@ -47,7 +50,8 @@ main {
     color: #3B4953;
 }
 
-/*============== Search bar ============= */
+/* ========== Search bar ========== */
+/* Search box dengan animasi expand saat focus */
 .search-container {
     flex-shrink: 1;
 }
@@ -120,14 +124,14 @@ main {
 
 
 
-/*============ Menu =========== */
+/* ========== Menu navigasi ========== */
 #information {
     display: flex;
     list-style: none;
     margin: 0;
     padding: 0;
     gap: 15px;
-    flex-shrink: 0; /* menu tidak mengecil terlalu kecil */
+    flex-shrink: 0;
     font-size: 1.1em;
 }
 
@@ -147,7 +151,7 @@ main {
     color: #5A7863;
 }
 
-/* Login button */
+/* Tombol Login dengan style hijau */
 .login {
     background-color: #5A7863;
     color: #EBF4DD !important;
@@ -197,8 +201,8 @@ main {
     margin-bottom: 20px;
 }
 
-/* ===== REKOMENDASI CAROUSEL ===== */
-/* WRAPPER */
+/* ========== REKOMENDASI CAROUSEL ========== */
+/* Wrapper carousel dengan posisi relative untuk tombol prev/next */
 .carousel-wrapper {
     position: relative;
     display: flex;
@@ -206,13 +210,13 @@ main {
     padding: 20px;
 }
 
-/* VIEWPORT */
+/* Viewport carousel (overflow hidden) */
 .carousel {
     overflow: hidden;
     width: 100%;
 }
 
-/* TRACK */
+/* Track carousel yang berisi slide-slide */
 .carousel-track {
     display: flex;
     gap: 20px;
@@ -220,7 +224,7 @@ main {
     align-items: center;
 }
 
-/* CARD for carousel */
+/* Card untuk item carousel */
 .carousel-card {
     min-width: 260px;
     height: 360px;
@@ -248,7 +252,7 @@ main {
     box-shadow: 0 10px 20px rgba(0,0,0,0.08);
 }
 
-/* big rank number overlay */
+/* Angka ranking besar di pojok kiri bawah card */
 .carousel-card .rank {
     position: absolute;
     left: 12px;
@@ -261,7 +265,7 @@ main {
     font-weight: 900;
 }
 
-/* center card emphasis */
+/* Card yang di tengah carousel diberi emphasis (lebih besar) */
 .carousel-card.is-center {
     transform: translateY(-12px) scale(1.06);
     z-index: 20;
@@ -269,7 +273,7 @@ main {
     opacity: 1;
 }
 
-/* other cards slightly faded */
+/* Card lain sedikit pudar */
 .carousel-card:not(.is-center) {
     opacity: 0.86;
 }
@@ -286,13 +290,14 @@ main {
   .carousel-card .rank { font-size: 38px; left: 8px; bottom: 8px; }
 }
 
-/* =============DOTS SLIDER=========== */
+/* ========== DOTS SLIDER (Navigasi carousel) ========== */
 .carousel-dots {    
     display: flex;
     justify-content: center;
     margin-top: 0px;
 }
 
+/* Dot individual */
 .dot {
     width: 10px;
     height: 10px;
@@ -304,6 +309,7 @@ main {
     margin-top: 15px;
 }
 
+/* Dot yang aktif (memanjang) */
 .dot.active {
     width: 20px;
     border-radius: 10px;
@@ -321,7 +327,7 @@ main {
   outline: 2px solid #5A7863;
 }
 
-/* ============BUTTON SLIDER=========== */
+/* ========== BUTTON SLIDER (Prev/Next) ========== */
 .carousel-button {
     background-color: rgba(90, 120, 99, 0.85);
     color: #F5F5F0;
@@ -472,7 +478,7 @@ footer {
     background-color: #ffffff;
 }
 
-/* HEADER */
+/* ========== HEADER HALAMAN KATEGORI ========== */
 .kategori-header {
   max-width: 1200px;
   margin: 30px auto;
@@ -492,7 +498,7 @@ footer {
   opacity: 0.9;
 }
 
-/* FILTER */
+/* ========== FILTER DAN SEARCH ========== */
 .kategori-filter {
   max-width: 1200px;
   margin: 30px auto;
@@ -517,7 +523,7 @@ footer {
   color: #5A7863;
 }
 
-/* BUTTON KATEGORI */
+/* Tombol filter kategori */
 .kategori-btn button {
   background-color: #5A7863;
   color: #EBF4DD;
@@ -565,14 +571,14 @@ footer {
   transform: rotate(180deg);
 }
 
-/* Modal (mega menu) */
+/* ========== MODAL KATEGORI (Mega Menu) ========== */
 .modal {
   position: fixed;
-  top: 28px; /* place just under navbar */
+  top: 28px; /* Posisi di bawah navbar */
   left: 0;
   right: 0;
-  display: none; /* hidden */
-  justify-content: flex-start; /* align to top */
+  display: none; /* Tersembunyi secara default */
+  justify-content: flex-start;
   background: transparent;
   z-index: 1200;
 } 
@@ -622,10 +628,10 @@ footer {
   color: #333;
 }
 
-/* two-column layout: left nav + right content */
+/* Layout dua kolom: navigasi kiri + konten kanan */
 .mega-grid {
   display: grid;
-  grid-template-columns: 220px 1fr; /* smaller left nav */
+  grid-template-columns: 220px 1fr;
   gap: 18px;
 } 
 
@@ -788,7 +794,7 @@ footer {
   box-shadow: 0 8px 22px rgba(5,35,10,0.06);
 }
 
-/* GRID BUKU */
+/* ========== GRID BUKU KATEGORI ========== */
 .book-grid {
   max-width: 1200px;
   margin: 40px auto 80px;
@@ -858,12 +864,12 @@ footer {
   gap: 20px;
 }
 
-/* GRID TERLARIS */
+/* ========== GRID TERLARIS (4 kolom) ========== */
 .terlaris-grid {
   max-width: 1200px;
   margin: 0 auto;
   display: grid;
-  grid-template-columns: repeat(4, 1fr); /* exactly 4 cards per row */
+  grid-template-columns: repeat(4, 1fr);
   gap: 20px;
 }
 
@@ -953,7 +959,7 @@ footer {
   margin-bottom: 10px;
 }
 
-/* KATEGORI CARD */
+/* ========== KATEGORI CARD ========== */
 .kategori-card {
   background: #EBF4DD;
   border-radius: 18px;
@@ -963,6 +969,7 @@ footer {
   padding: 15px;
 }
 
+/* Efek hover: card naik sedikit */
 .kategori-card:hover {
   transform: translateY(-6px);
 }
@@ -1023,7 +1030,7 @@ footer {
   font-weight: bold;
 }
 
-/* TERLARIS CARD */
+/* ========== TERLARIS CARD ========== */
 .terlaris-card {
   background: #EBF4DD;
   border-radius: 18px;
@@ -1033,6 +1040,7 @@ footer {
   padding: 15px;
 }
 
+/* Efek hover: card naik sedikit */
 .terlaris-card:hover {
   transform: translateY(-6px);
 }
