@@ -22,7 +22,7 @@ function separateWords(title, maxWords = 4) {
 // Dibuat Global (tanpa export) agar kategori.js bisa memanggilnya
 async function loadBooksFromAPI(query = "all") {
   const searchQuery = query.trim() === "" ? "all" : query;
-  const url = `https://www.googleapis.com/books/v1/volumes?q=${encodeURIComponent(searchQuery)}&orderBy=newest&maxResults=15`;
+  const url = `https://www.googleapis.com/books/v1/volumes?q=${encodeURIComponent(searchQuery)}&orderBy=newest&maxResults=10`;
 
   try {
     const res = await fetch(url);
@@ -53,10 +53,11 @@ function displayCarouselBooks(items) {
     const bookCard = document.createElement("div");
     bookCard.className = "book-card";
     // Menggunakan img tag lebih baik untuk SEO dan Loading daripada background-image
+    bookCard.style.backgroundImage = `url('${thumbnail}')`;
+    // <div class="card-img-wrapper" style="background-image: url('${thumbnail}')"></div>
+    // <h4>${title}</h4>
+    // <p class="author">${info.authors?.join(", ") || "Penulis Unknown"}</p>
     bookCard.innerHTML = `
-      <div class="card-img-wrapper" style="background-image: url('${thumbnail}')"></div>
-      <h4>${title}</h4>
-      <p class="author">${info.authors?.join(", ") || "Penulis Unknown"}</p>
       <div class="rank-number">${i + 1}</div>
     `;
     track.appendChild(bookCard);

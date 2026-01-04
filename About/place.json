@@ -1,0 +1,183 @@
+[
+  {
+    "id": "onbook-balikpapan-mt-haryono",
+    "name": "On-Book Balikpapan MT Haryono",
+    "address": "Jl. MT Haryono No.173, Balikpapan, Kalimantan Timur 76114",
+    "hours": "Senin – Minggu 09:00 – 21:00",
+    "image": "img/img2.jpg",
+    "detailUrl": "#",
+    "mapsUrl": "#"
+  },
+  {
+    "id": "onbook-bali-teuku-umar",
+    "name": "On-Book Bali Teuku Umar",
+    "address": "Jl. Teuku Umar No.19A, Denpasar Barat, Bali",
+    "hours": "Senin – Minggu 09:00 – 22:00",
+    "image": "img/img2.jpg",
+    "detailUrl": "#",
+    "mapsUrl": "#"
+  },
+  {
+    "id": "onbook-bandung-merdeka",
+    "name": "On-Book Bandung Merdeka",
+    "address": "Jl. Merdeka No.43, Bandung, Jawa Barat",
+    "hours": "Senin – Minggu 10:00 – 21:00",
+    "image": "img/img2.jpg",
+    "detailUrl": "#",
+    "mapsUrl": "#"
+  },
+  {
+    "id": "onbook-banda-aceh",
+    "name": "On-Book Banda Aceh",
+    "address": "Jl. T. Panglima Nyak Makam, Banda Aceh, Aceh",
+    "hours": "Senin – Minggu 09:00 – 22:00",
+    "image": "img/img2.jpg",
+    "detailUrl": "#",
+    "mapsUrl": "#"
+  },
+  {
+    "id": "onbook-medan-gatot-subroto",
+    "name": "On-Book Medan Gatot Subroto",
+    "address": "Jl. Gatot Subroto No.201, Medan, Sumatera Utara",
+    "hours": "Senin – Minggu 09:00 – 21:00",
+    "image": "img/img2.jpg",
+    "detailUrl": "#",
+    "mapsUrl": "#"
+  },
+  {
+    "id": "onbook-palembang-pom-ix",
+    "name": "On-Book Palembang POM IX",
+    "address": "Jl. POM IX, Palembang, Sumatera Selatan",
+    "hours": "Senin – Minggu 09:00 – 21:00",
+    "image": "img/img2.jpg",
+    "detailUrl": "#",
+    "mapsUrl": "#"
+  },
+  {
+    "id": "onbook-jakarta-matraman",
+    "name": "On-Book Jakarta Matraman",
+    "address": "Jl. Matraman Raya No.46, Jakarta Timur",
+    "hours": "Senin – Minggu 09:00 – 22:00",
+    "image": "img/img2.jpg",
+    "detailUrl": "#",
+    "mapsUrl": "#"
+  },
+  {
+    "id": "onbook-jakarta-sudirman",
+    "name": "On-Book Jakarta Sudirman",
+    "address": "Jl. Jend. Sudirman, Jakarta Pusat",
+    "hours": "Senin – Minggu 09:00 – 22:00",
+    "image": "img/img2.jpg",
+    "detailUrl": "#",
+    "mapsUrl": "#"
+  },
+  {
+    "id": "onbook-bogor-pajajaran",
+    "name": "On-Book Bogor Pajajaran",
+    "address": "Jl. Pajajaran, Bogor, Jawa Barat",
+    "hours": "Senin – Minggu 09:00 – 21:00",
+    "image": "img/img2.jpg",
+    "detailUrl": "#",
+    "mapsUrl": "#"
+  },
+  {
+    "id": "onbook-depok-margonda",
+    "name": "On-Book Depok Margonda",
+    "address": "Jl. Margonda Raya, Depok, Jawa Barat",
+    "hours": "Senin – Minggu 09:00 – 22:00",
+    "image": "img/img2.jpg",
+    "detailUrl": "#",
+    "mapsUrl": "#"
+  },
+
+  {
+    "id": "onbook-tangerang-summarecon",
+    "name": "On-Book Tangerang Summarecon",
+    "address": "Summarecon Mall Serpong, Tangerang",
+    "hours": "Senin – Minggu 10:00 – 22:00",
+    "image": "img/img2.jpg",
+    "detailUrl": "#",
+    "mapsUrl": "#"
+  },
+  {
+    "id": "onbook-bekasi-metropolitan",
+    "name": "On-Book Bekasi Metropolitan",
+    "address": "Jl. KH Noer Ali, Bekasi",
+    "hours": "Senin – Minggu 10:00 – 22:00",
+    "image": "img/img2.jpg",
+    "detailUrl": "#",
+    "mapsUrl": "#"
+  },
+  {
+    "id": "onbook-cirebon-grage",
+    "name": "On-Book Cirebon Grage",
+    "address": "Grage Mall, Cirebon",
+    "hours": "Senin – Minggu 10:00 – 21:00",
+    "image": "img/img2.jpg",
+    "detailUrl": "#",
+    "mapsUrl": "#"
+  },
+  {
+    "id": "onbook-semarang-pandansari",
+    "name": "On-Book Semarang Pandansari",
+    "address": "Jl. Pandanaran, Semarang",
+    "hours": "Senin – Minggu 09:00 – 21:00",
+    "image": "img/img2.jpg",
+    "detailUrl": "#",
+    "mapsUrl": "#"
+  },
+  {
+    "id": "onbook-solo-slamet-riyadi",
+    "name": "On-Book Solo Slamet Riyadi",
+    "address": "Jl. Slamet Riyadi, Surakarta",
+    "hours": "Senin – Minggu 09:00 – 21:00",
+    "image": "img/img2.jpg",
+    "detailUrl": "#",
+    "mapsUrl": "#"
+  },
+  {
+    "id": "onbook-yogyakarta-malioboro",
+    "name": "On-Book Yogyakarta Malioboro",
+    "address": "Jl. Malioboro, Yogyakarta",
+    "hours": "Senin – Minggu 09:00 – 22:00",
+    "image": "img/img2.jpg",
+    "detailUrl": "#",
+    "mapsUrl": "#"
+  },
+  {
+    "id": "onbook-surabaya-basuki",
+    "name": "On-Book Surabaya Basuki Rahmat",
+    "address": "Jl. Basuki Rahmat, Surabaya",
+    "hours": "Senin – Minggu 09:00 – 22:00",
+    "image": "img/img2.jpg",
+    "detailUrl": "#",
+    "mapsUrl": "#"
+  },
+  {
+    "id": "onbook-malang-ijen",
+    "name": "On-Book Malang Ijen",
+    "address": "Jl. Ijen, Malang",
+    "hours": "Senin – Minggu 09:00 – 21:00",
+    "image": "img/img2.jpg",
+    "detailUrl": "#",
+    "mapsUrl": "#"
+  },
+  {
+    "id": "onbook-denpasar-renon",
+    "name": "On-Book Denpasar Renon",
+    "address": "Jl. Raya Puputan, Denpasar",
+    "hours": "Senin – Minggu 09:00 – 22:00",
+    "image": "img/img2.jpg",
+    "detailUrl": "#",
+    "mapsUrl": "#"
+  },
+  {
+    "id": "onbook-makassar-somba-opu",
+    "name": "On-Book Makassar Somba Opu",
+    "address": "Jl. Somba Opu, Makassar",
+    "hours": "Senin – Minggu 09:00 – 22:00",
+    "image": "img/img2.jpg",
+    "detailUrl": "#",
+    "mapsUrl": "#"
+  }
+]

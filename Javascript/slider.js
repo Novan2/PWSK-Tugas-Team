@@ -11,7 +11,7 @@ if (!carousel || !track || !prevBtn || !nextBtn || !firstDot || !lastDot) {
 
 // ==== UTIL ====
 function getGapPx() {
-  const gap = getComputedStyle(track).gap; // "44px"
+  const gap = getComputedStyle(track).gap;
   const n = parseFloat(gap);
   return Number.isFinite(n) ? n : 0;
 }
