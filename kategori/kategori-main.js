@@ -13,7 +13,20 @@ loadData()
 
     // 1. Cek Parameter Pencarian dari URL
     const params = new URLSearchParams(window.location.search);
-    const keyword = params.get("search");
+    let keyword = params.get("search");
+
+    // Dukung query lama ?q=... sekaligus merapikan URL menjadi ?search=...
+    if (!keyword) {
+      const legacyKeyword = params.get("q");
+      if (legacyKeyword) {
+        keyword = legacyKeyword;
+        params.set("search", legacyKeyword);
+        params.delete("q");
+        const query = params.toString();
+        const normalizedUrl = `${window.location.pathname}${query ? '?' + query : ''}${window.location.hash}`;
+        window.history.replaceState(null, "", normalizedUrl);
+      }
+    }
 
     if (keyword) {
       // Panggil searchBooks, bukan langsung render
