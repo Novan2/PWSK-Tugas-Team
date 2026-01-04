@@ -11,167 +11,6 @@ console.log("kategori.js loaded");
 const params = new URLSearchParams(window.location.search);
 console.log("Search param:", params.get("search"));
 
-// Variabel global untuk menyimpan semua data buku
-let allBooks = [];
-// Kategori yang sedang aktif, default 'all'
-let activeCategory = "all";
-
-const booksData = [
-  {
-    "judul": "Pengantar Ilmu Data",
-    "deskripsi": "Dasar-dasar ilmu data meliputi pengolahan data, analisis, dan visualisasi untuk pemula.",
-    "harga": 85000,
-    "gambar": "./img/1.jpeg"
-  },
-  {
-    "judul": "Pemrograman Python Dasar",
-    "deskripsi": "Panduan praktis belajar Python dari nol hingga memahami logika pemrograman.",
-    "harga": 90000
-  },
-  {
-    "judul": "Algoritma dan Struktur Data",
-    "deskripsi": "Pembahasan konsep algoritma dan struktur data untuk meningkatkan efisiensi program.",
-    "harga": 120000
-  },
-  {
-    "judul": "Dasar-Dasar Kecerdasan Buatan",
-    "deskripsi": "Pengantar AI, machine learning, dan penerapannya dalam kehidupan nyata.",
-    "harga": 135000
-  },
-  {
-    "judul": "Analisis Data dengan Python",
-    "deskripsi": "Teknik analisis data menggunakan library Python seperti Pandas dan NumPy.",
-    "harga": 140000
-  },
-  {
-    "judul": "Machine Learning untuk Pemula",
-    "deskripsi": "Konsep dasar machine learning lengkap dengan studi kasus sederhana.",
-    "harga": 150000
-  },
-  {
-    "judul": "Deep Learning Praktis",
-    "deskripsi": "Pengenalan deep learning dan neural network untuk analisis data lanjutan.",
-    "harga": 165000
-  },
-  {
-    "judul": "Statistika Terapan",
-    "deskripsi": "Statistika yang difokuskan pada penerapan di bidang penelitian dan bisnis.",
-    "harga": 110000
-  },
-  {
-    "judul": "Metodologi Penelitian Ilmiah",
-    "deskripsi": "Panduan menyusun penelitian ilmiah dari perumusan masalah hingga kesimpulan.",
-    "harga": 95000
-  },
-  {
-    "judul": "Manajemen Proyek Modern",
-    "deskripsi": "Konsep dan teknik manajemen proyek berbasis praktik industri.",
-    "harga": 125000
-  },
-  {
-    "judul": "Sistem Informasi Manajemen",
-    "deskripsi": "Pemanfaatan sistem informasi untuk pengambilan keputusan organisasi.",
-    "harga": 115000
-  },
-  {
-    "judul": "Basis Data Relasional",
-    "deskripsi": "Dasar perancangan dan pengelolaan basis data menggunakan SQL.",
-    "harga": 100000
-  },
-  {
-    "judul": "Keamanan Sistem Informasi",
-    "deskripsi": "Prinsip dan teknik dasar dalam menjaga keamanan data dan sistem.",
-    "harga": 145000
-  },
-  {
-    "judul": "Jaringan Komputer",
-    "deskripsi": "Konsep jaringan komputer dari dasar hingga implementasi sederhana.",
-    "harga": 105000
-  },
-  {
-    "judul": "Pemrograman Web Dasar",
-    "deskripsi": "Belajar membangun website menggunakan HTML, CSS, dan JavaScript.",
-    "harga": 95000
-  },
-  {
-    "judul": "Framework Web Modern",
-    "deskripsi": "Pengantar framework web modern untuk pengembangan aplikasi dinamis.",
-    "harga": 130000
-  },
-  {
-    "judul": "Desain UI/UX",
-    "deskripsi": "Prinsip desain antarmuka dan pengalaman pengguna yang efektif.",
-    "harga": 120000
-  },
-  {
-    "judul": "Digital Marketing",
-    "deskripsi": "Strategi pemasaran digital menggunakan media sosial dan platform online.",
-    "harga": 110000
-  },
-  {
-    "judul": "E-Commerce dan Bisnis Digital",
-    "deskripsi": "Konsep dan praktik bisnis digital di era teknologi informasi.",
-    "harga": 125000
-  },
-  {
-    "judul": "Akuntansi Dasar",
-    "deskripsi": "Pengantar akuntansi untuk memahami laporan keuangan.",
-    "harga": 90000
-  },
-  {
-    "judul": "Manajemen Keuangan",
-    "deskripsi": "Teknik pengelolaan keuangan untuk individu dan organisasi.",
-    "harga": 115000
-  },
-  {
-    "judul": "Ekonomi Mikro",
-    "deskripsi": "Pembahasan konsep dasar ekonomi mikro dan perilaku pasar.",
-    "harga": 100000
-  },
-  {
-    "judul": "Ekonomi Makro",
-    "deskripsi": "Analisis ekonomi makro seperti inflasi, pertumbuhan, dan kebijakan fiskal.",
-    "harga": 100000
-  },
-  {
-    "judul": "Hukum Bisnis",
-    "deskripsi": "Dasar-dasar hukum yang berkaitan dengan aktivitas bisnis.",
-    "harga": 105000
-  },
-  {
-    "judul": "Etika Profesi",
-    "deskripsi": "Pembahasan etika dan tanggung jawab profesional di dunia kerja.",
-    "harga": 85000
-  },
-  {
-    "judul": "Kepemimpinan dan Organisasi",
-    "deskripsi": "Konsep kepemimpinan dan pengelolaan organisasi secara efektif.",
-    "harga": 110000
-  },
-  {
-    "judul": "Manajemen Sumber Daya Manusia",
-    "deskripsi": "Strategi pengelolaan SDM untuk meningkatkan kinerja organisasi.",
-    "harga": 120000
-  },
-  {
-    "judul": "Teknik Pengambilan Keputusan",
-    "deskripsi": "Metode dan alat bantu dalam pengambilan keputusan strategis.",
-    "harga": 95000
-  },
-  {
-    "judul": "Inovasi dan Kreativitas",
-    "deskripsi": "Cara mengembangkan inovasi dan kreativitas dalam organisasi.",
-    "harga": 105000
-  },
-  {
-    "judul": "Pengantar Teknologi Informasi",
-    "deskripsi": "Gambaran umum teknologi informasi dan perannya di berbagai bidang.",
-    "harga": 85000
-  }
-];
-
-// Fungsi untuk memuat data buku ke dalam aplikasi
-// Ganti fungsi loadData yang lama dengan versi ini:
 async function loadData() {
   const params = new URLSearchParams(window.location.search);
   const keyword = params.get("search");
@@ -209,9 +48,46 @@ async function loadData() {
     } 
     
     if (src.length === 0) {
-      // Pastikan variabel booksData sudah terdefinisi (biasanya dari databuku.js)
-      src = typeof booksData !== 'undefined' ? booksData : []; 
+  // Fungsi untuk mapping kategori dari Google Books ke bahasa Indonesia
+  function mapKategori(googleCategory) {
+    if (!googleCategory) return 'lainnya';
+    const cat = googleCategory.toLowerCase();
+    
+    // Mapping kategori English ke Indonesia
+    if (cat.includes('fiction') || cat.includes('novel')) return 'fiksi';
+    if (cat.includes('biography') || cat.includes('memoir')) return 'biografi';
+    if (cat.includes('comic') || cat.includes('graphic novel')) return 'komik';
+    if (cat.includes('science') || cat.includes('technology')) return 'sains';
+    if (cat.includes('history')) return 'sejarah';
+    if (cat.includes('psychology')) return 'psikologi';
+    if (cat.includes('children') || cat.includes('juvenile')) return 'anak';
+    if (cat.includes('language') || cat.includes('foreign')) return 'bahasa';
+    if (cat.includes('photography') || cat.includes('art')) return 'fotografi';
+    if (cat.includes('reference')) return 'referensi';
+    if (cat.includes('business') || cat.includes('economics')) return 'nonfiksi';
+    
+    return 'lainnya';
+  }
+  
+  // Ambil data dari Google Books API
+  try {
+    const response = await fetch('https://www.googleapis.com/books/v1/volumes?q=all&orderBy=newest&maxResults=40');
+    const apiData = await response.json();
+    if (apiData.items) {
+      src = apiData.items.map(item => ({
+        judul: item.volumeInfo.title,
+        deskripsi: item.volumeInfo.description || 'Deskripsi tidak tersedia',
+        penulis: item.volumeInfo.authors?.join(', ') || 'Penulis tidak diketahui',
+        harga: item.saleInfo?.retailPrice?.amount || (Math.floor(Math.random() * 80001) + 20000),
+        gambar: item.volumeInfo.imageLinks?.thumbnail || item.volumeInfo.imageLinks?.smallThumbnail,
+        kategori: mapKategori(item.volumeInfo.categories?.[0])
+      }));
     }
+  } catch (error) {
+    console.error('Gagal mengambil data Google Books:', error);
+    src = typeof booksData !== 'undefined' ? booksData : [];
+  }
+}
 
     // MAP: Langsung mengembalikan objek (tanpa async di dalam map)
     allBooks = src.map(book => {
@@ -223,11 +99,15 @@ async function loadData() {
         deskripsi: book.deskripsi || '',
         harga: finalHarga,
         penulis: book.penulis || 'Penulis tidak diketahui',
-        kategori: book.kategori || (typeof getRandomCategory === 'function' ? getRandomCategory() : 'Umum'),
+        kategori: book.kategori || 'lainnya',
         stock: Math.floor(Math.random() * 13),
-        gambar: resolveImage(book.gambar)
+        gambar: book.gambar || 'https://via.placeholder.com/400x600/90AB8B/EBF4DD?text=No+Cover'
       };
     });
+    
+    // Debug: Tampilkan kategori yang tersimpan
+    console.log('Kategori tersimpan:', [...new Set(allBooks.map(b => b.kategori))]);
+    console.log('Total buku:', allBooks.length);
 
     // Jalankan render grid utama segera
     if (typeof renderKategori === 'function') {
@@ -304,16 +184,14 @@ function renderKategori(data) {
     card.className = "kategori-card";
 
     card.innerHTML = `
-      <div class="image-container">
-        <img src="${book.gambar}" alt="${book.judul}" onerror="this.onerror=null;this.src='https://via.placeholder.com/200x280/90AB8B/EBF4DD?text=No+Cover'">
-      </div>
-      <div class="stock-badge ${book.stock === 0 ? 'out' : (book.stock < 4 ? 'low' : '')}">Stok: ${book.stock}</div>
-      <h3 class="card-title" title="${book.judul}">${book.judul}</h3>
-      <div class="card-author">${book.penulis || '-'}</div>
-      <p class="price">Rp ${book.harga.toLocaleString()}</p>
-         <div class="card-actions">
-         </div>
-    `;
+  <div class="image-container" style="background-image: url('${book.gambar}'); background-size: cover; background-position: center; background-repeat: no-repeat;"></div>
+  <div class="stock-badge ${book.stock === 0 ? 'out' : (book.stock < 4 ? 'low' : '')}">Stok: ${book.stock}</div>
+  <div class="card-info">
+    <h3 class="card-title" title="${book.judul}">${book.judul}</h3>
+    <div class="card-author">${book.penulis || '-'}</div>
+    <p class="price">Rp ${book.harga.toLocaleString()}</p>
+  </div>
+`;
 
     grid.appendChild(card);
     // make the whole card clickable (image/title area)
@@ -375,6 +253,7 @@ document.querySelectorAll(".kategori-filter button").forEach(btn => {
     filterRekomendasi(chosen);
     // Render grid utama sesuai pilihan kategori
     const gridFiltered = (chosen === 'all') ? allBooks : allBooks.filter(b => b.kategori === chosen);
+    console.log(`Filter: ${chosen}, Hasil: ${gridFiltered.length} buku`);
     renderKategori(gridFiltered);
 
     // update modal active state if modal contains the same category button
@@ -838,13 +717,14 @@ function renderTerlaris() {
     card.className = "terlaris-card";
 
     card.innerHTML = `
-      <div class="image-container">
-        <img src="${book.gambar}" alt="${book.judul}" onerror="this.onerror=null;this.src='https://via.placeholder.com/200x200/90AB8B/EBF4DD?text=No+Cover'">
-      </div>
-      <h3 class="card-title" title="${book.judul}">${book.judul}</h3>
-      <div class="card-author">${book.penulis || '-'}</div>
-      <div class="card-actions"></div>
-    `;
+  <div class="image-container" style="background-image: url('${book.gambar}');">
+  </div>
+  <div class="card-info">
+    <h3 class="card-title" title="${book.judul}">${book.judul}</h3>
+    <div class="card-author">${book.penulis || '-'}</div>
+    <p class="price">Rp ${book.harga.toLocaleString()}</p>
+  </div>
+`;
 
     grid.appendChild(card);
     // make terlaris card clickable

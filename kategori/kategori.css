@@ -831,6 +831,7 @@ footer {
 /* Enhanced detail modal layout and typography */
 .detail-modal {
   max-width: 900px;
+  max-height: 90vh;
   padding: 22px;
   background: #ffffff;
   border-radius: 12px;
@@ -838,6 +839,7 @@ footer {
   border: 1px solid rgba(90,120,99,0.06);
   transform: translateY(-8px) scale(.995);
   opacity: 0;
+  overflow-y: auto;
   transition: transform 260ms cubic-bezier(.2,.9,.2,1), opacity 220ms ease;
 }
 
@@ -886,6 +888,10 @@ footer {
   font-size: 18px;
   font-weight: 700;
   color: #2f6f43;
+}
+
+#detailDesc {
+  text-align: justify;
 }
 
 /* Buy button */
@@ -987,9 +993,10 @@ footer {
 
 /* Make description area scroll if very long */
 .detail-info .desc-scroll {
-  max-height: 220px;
+  max-height: 40vh;
   overflow-y: auto;
   padding-right: 6px;
+  overscroll-behavior: contain;
 }
 
 @media (max-width: 800px) {
@@ -1119,112 +1126,131 @@ footer {
 
 /* ========== KATEGORI CARD ========== */
 .kategori-card {
-  background: #EBF4DD;
   border-radius: 18px;
   overflow: hidden;
   box-shadow: 0 10px 25px rgba(0,0,0,.1);
-  transition: transform .28s ease, box-shadow .28s ease, background-color .28s ease, border-color .28s ease;
-  padding: 15px;
+  transition: transform .28s ease, box-shadow .28s ease;
   position: relative;
+  height: 350px;
+  display: flex;
+  flex-direction: column;
+  cursor: pointer;
 }
 
-/* Efek hover: card naik sedikit dan background lebih gelap */
+/* Efek hover: card naik sedikit dan shadow lebih kuat */
 .kategori-card:hover,
 .kategori-card:focus-visible {
   transform: translateY(-8px);
-  box-shadow: 0 22px 40px rgba(20,40,25,0.12);
-  background-color: #c6e0cc; /* darker green */
-  border-color: #5a7a59;
+  box-shadow: 0 22px 40px rgba(20,40,25,0.2);
   outline: none;
 }
 
 .kategori-card .image-container {
-  position: relative;
-  margin-bottom: 10px;
+  width: 100%;
+  height: 100%;
+  position: absolute;
+  top: 0;
+  left: 0;
+  z-index: 1;
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
 }
 
 .image-container img {
-  width: 100%;
-  height: 260px; /* slightly taller so cover looks better */
-  object-fit: cover;
-  border-radius: 10px;
-  display: block;
-  font-size: 0; /* prevents alt text from displaying prominently if image fails */
+  display: none;
 }
 
-/* subtle separator inside the card below each image */
+
+/* subtle separator - removed for background design */
 .image-container::after {
-  content: "";
-  display: block;
-  height: 1px;
-  background: rgba(90,120,99,0.12);
-  margin: 12px 0;
-  border-radius: 2px;
+  display: none;
+}
+
+/* Card info overlay - text muncul di bawah dengan background gradient */
+.card-info {
+  position: relative;
+  z-index: 2;
+  margin-top: auto;
+  padding: 20px 15px;
+  background: linear-gradient(to top, rgba(0,0,0,0.95) 0%, rgba(0,0,0,0.8) 50%, transparent 100%);
+  color: white;
+}
+
+.card-title {
+  font-size: 16px;
+  font-weight: bold;
+  margin-bottom: 5px;
+  color: white !important;
+  text-align: left;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.card-author {
+  font-size: 13px;
+  color: #ddd !important;
+  margin-bottom: 8px;
+  text-align: left;
+  opacity: 1;
+}
+
+.price {
+  font-size: 18px;
+  font-weight: bold;
+  color: #FFD700 !important;
+  text-align: left;
 }
 
 .image-container .overlay-title {
-  display: none !important; /* Hidden to remove the black overlay bar */
-  position: absolute;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  padding: 10px 12px;
-  color: #ffffff;
-  font-size: 16px;
-  font-weight: 700;
-  text-align: center;
-  background: linear-gradient(180deg, rgba(0,0,0,0) 0%, rgba(0,0,0,0.6) 100%);
-  z-index: 3;
-  pointer-events: none;
-  white-space: nowrap;
-  text-overflow: ellipsis;
-  overflow: hidden;
+  display: none !important;
 } 
-
 
 
 /* maintain spacing for captions if we ever re-enable them */
 .image-container .caption-placeholder {
-  height: 36px;
+  display: none;
 }
 
 .kategori-card p:last-child {
-  text-align: center;
-  color: #3B4953;
-  font-weight: bold;
+  /* Styling sudah di .price dan .card-info */
 }
+
 
 /* Stock badge on cards */
 .stock-badge {
   position: absolute;
   right: 12px;
   top: 12px;
-  background: #fff4e6;
+  background: rgba(255, 244, 230, 0.95);
   color: #3b4953;
   border: 1px solid rgba(90,120,99,0.08);
-  padding: 6px 8px;
+  padding: 6px 10px;
   border-radius: 10px;
   font-weight: 700;
-  font-size: 13px;
-  box-shadow: 0 6px 18px rgba(20,40,20,0.04);
+  font-size: 12px;
+  box-shadow: 0 6px 18px rgba(20,40,20,0.15);
+  z-index: 3;
+  backdrop-filter: blur(5px);
 }
-.stock-badge.low { background: linear-gradient(180deg,#fff9f0,#fff4e6); color: #b3602e; border-color: rgba(176,42,42,0.08); }
-.stock-badge.out { background: #f8e8e8; color: #9b2a2a; border-color: rgba(176,42,42,0.12); }
-
-.card-author {
-  text-align: center;
-  color: #4a5a47;
-  font-size: 13px;
-  margin-top: 4px;
-  opacity: 0.95;
+.stock-badge.low { 
+  background: rgba(255, 249, 240, 0.95); 
+  color: #b3602e; 
+  border-color: rgba(176,42,42,0.08); 
+}
+.stock-badge.out { 
+  background: rgba(248, 232, 232, 0.95); 
+  color: #9b2a2a; 
+  border-color: rgba(176,42,42,0.12); 
 }
 
-/* Ensure card title and price are centered */
+/* Ensure card title and price styling from .card-info */
 .kategori-card .card-title,
 .kategori-card .price {
-  text-align: center;
-  width: 100%;
-  display: block;
+  /* Styling handled in .card-info section above */
 }
 
 /* ========== TERLARIS CARD ========== */
