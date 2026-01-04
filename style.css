@@ -251,20 +251,27 @@ main {
     position: relative;
     display: flex;
     align-items: center;
-    padding: 20px;
 }
 
 /* VIEWPORT */
 .carousel {
-    overflow: visible;
+    padding: 40px 40px 40px 40px;
+    padding-left: 40px;
+    overflow: hidden;
+    overflow-x: auto;
+    overflow-y: hidden;
+    scroll-behavior: smooth;
     width: 100%;
+}
+
+.carousel::-webkit-scrollbar{
+  display: none;               
 }
 
 /* TRACK */
 .carousel-track {
     display: flex;
     gap: 44px;
-    transition: transform 0.6s ease-in-out;
 }
 
 
@@ -276,6 +283,7 @@ main {
 }
 
 .dot {
+    display: inline-block;
     width: 10px;
     height: 10px;
     background-color: #90AB8B;
