@@ -10,28 +10,28 @@ let allBooks = [];
 
 // Fungsi untuk mapping kategori dari Google Books ke bahasa Indonesia
 function mapKategori(googleCategory) {
-  if (!googleCategory) return 'lainnya';
+  if (!googleCategory) return "lainnya";
   const cat = googleCategory.toLowerCase();
-  
+
   // Mapping kategori English ke Indonesia
-  if (cat.includes('fiction') || cat.includes('novel')) return 'fiksi';
-  if (cat.includes('biography') || cat.includes('memoir')) return 'biografi';
-  if (cat.includes('comic') || cat.includes('graphic novel')) return 'komik';
-  if (cat.includes('science') || cat.includes('technology')) return 'sains';
-  if (cat.includes('history')) return 'sejarah';
-  if (cat.includes('psychology')) return 'psikologi';
-  if (cat.includes('children') || cat.includes('juvenile')) return 'anak';
-  if (cat.includes('language') || cat.includes('foreign')) return 'bahasa';
-  if (cat.includes('photography') || cat.includes('art')) return 'fotografi';
-  if (cat.includes('reference')) return 'referensi';
-  if (cat.includes('business') || cat.includes('economics')) return 'nonfiksi';
-  
-  return 'lainnya';
+  if (cat.includes("fiction") || cat.includes("novel")) return "fiksi";
+  if (cat.includes("biography") || cat.includes("memoir")) return "biografi";
+  if (cat.includes("comic") || cat.includes("graphic novel")) return "komik";
+  if (cat.includes("science") || cat.includes("technology")) return "sains";
+  if (cat.includes("history")) return "sejarah";
+  if (cat.includes("psychology")) return "psikologi";
+  if (cat.includes("children") || cat.includes("juvenile")) return "anak";
+  if (cat.includes("language") || cat.includes("foreign")) return "bahasa";
+  if (cat.includes("photography") || cat.includes("art")) return "fotografi";
+  if (cat.includes("reference")) return "referensi";
+  if (cat.includes("business") || cat.includes("economics")) return "nonfiksi";
+
+  return "lainnya";
 }
 
 // Fungsi untuk format harga ke format Rupiah
 function formatRp(num) {
-  return 'Rp ' + num.toLocaleString('id-ID');
+  return "Rp " + num.toLocaleString("id-ID");
 }
 
 // Fungsi untuk load data dari Google Books API
@@ -46,14 +46,14 @@ async function loadData() {
       params.set("search", legacyKeyword);
       params.delete("q");
       const query = params.toString();
-      const normalizedUrl = `${window.location.pathname}${query ? '?' + query : ''}${window.location.hash}`;
+      const normalizedUrl = `${window.location.pathname}${query ? "?" + query : ""}${window.location.hash}`;
       window.history.replaceState(null, "", normalizedUrl);
     }
   }
 
   return (async () => {
     let src = [];
-    
+
     // Jika ada keyword pencarian, cari di Google Books
     if (keyword) {
       console.log("Mencari di Google Books API:", keyword);
@@ -61,61 +61,74 @@ async function loadData() {
       try {
         const res = await fetch(url);
         const data = await res.json();
-        src = (data.items || []).map(item => ({
+        src = (data.items || []).map((item) => ({
           judul: item.volumeInfo.title,
           deskripsi: item.volumeInfo.description,
-          penulis: item.volumeInfo.authors?.join(', '),
+          penulis: item.volumeInfo.authors?.join(", "),
           harga: item.saleInfo?.retailPrice?.amount || 0,
-          gambar: item.volumeInfo.imageLinks?.thumbnail
+          gambar: item.volumeInfo.imageLinks?.thumbnail,
         }));
-        
-        const titleEl = document.querySelector('.kategori-header h1');
+
+        const titleEl = document.querySelector(".kategori-header h1");
         if (titleEl) titleEl.innerText = `Hasil Pencarian: "${keyword}"`;
       } catch (e) {
         console.error("Gagal mengambil data dari API", e);
       }
     }
-    
+
     // Jika tidak ada hasil pencarian atau tidak ada keyword, ambil data default
     if (src.length === 0) {
       try {
-        const response = await fetch('https://www.googleapis.com/books/v1/volumes?q=all&orderBy=newest&maxResults=40');
+        const response = await fetch(
+          "https://www.googleapis.com/books/v1/volumes?q=all&orderBy=newest&maxResults=40",
+        );
         const apiData = await response.json();
         if (apiData.items) {
-          src = apiData.items.map(item => ({
+          src = apiData.items.map((item) => ({
             judul: item.volumeInfo.title,
-            deskripsi: item.volumeInfo.description || 'Deskripsi tidak tersedia',
-            penulis: item.volumeInfo.authors?.join(', ') || 'Penulis tidak diketahui',
-            harga: item.saleInfo?.retailPrice?.amount || (Math.floor(Math.random() * 80001) + 20000),
-            gambar: item.volumeInfo.imageLinks?.thumbnail || item.volumeInfo.imageLinks?.smallThumbnail,
-            kategori: mapKategori(item.volumeInfo.categories?.[0])
+            deskripsi:
+              item.volumeInfo.description || "Deskripsi tidak tersedia",
+            penulis:
+              item.volumeInfo.authors?.join(", ") || "Penulis tidak diketahui",
+            harga:
+              item.saleInfo?.retailPrice?.amount ||
+              Math.floor(Math.random() * 80001) + 20000,
+            gambar:
+              item.volumeInfo.imageLinks?.thumbnail ||
+              item.volumeInfo.imageLinks?.smallThumbnail,
+            kategori: mapKategori(item.volumeInfo.categories?.[0]),
           }));
         }
       } catch (error) {
-        console.error('Gagal mengambil data Google Books:', error);
+        console.error("Gagal mengambil data Google Books:", error);
         src = [];
       }
     }
 
     // Proses data buku dengan kategori dan stok random
-    allBooks = src.map(book => {
+    allBooks = src.map((book) => {
       let rawHarga = Number(book.harga || 0);
-      let finalHarga = rawHarga > 0 ? rawHarga : (Math.floor(Math.random() * 80001) + 20000);
-      
+      let finalHarga =
+        rawHarga > 0 ? rawHarga : Math.floor(Math.random() * 80001) + 20000;
+
       return {
-        judul: book.judul || 'Judul tidak tersedia',
-        deskripsi: book.deskripsi || '',
+        judul: book.judul || "Judul tidak tersedia",
+        deskripsi: book.deskripsi || "",
         harga: finalHarga,
-        penulis: book.penulis || 'Penulis tidak diketahui',
-        kategori: book.kategori || 'lainnya',
+        penulis: book.penulis || "Penulis tidak diketahui",
+        kategori: book.kategori || "lainnya",
         stock: Math.floor(Math.random() * 13),
-        gambar: book.gambar || 'https://via.placeholder.com/400x600/90AB8B/EBF4DD?text=No+Cover'
+        gambar:
+          book.gambar ||
+          "https://via.placeholder.com/400x600/90AB8B/EBF4DD?text=No+Cover",
       };
     });
 
     console.log(`Total buku dimuat: ${allBooks.length}`);
-    allBooks.forEach(b => console.log(`${b.judul} -> kategori: ${b.kategori}`));
-    
+    allBooks.forEach((b) =>
+      console.log(`${b.judul} -> kategori: ${b.kategori}`),
+    );
+
     return allBooks;
   })();
 }

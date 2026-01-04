@@ -23,7 +23,7 @@ loadData()
         params.set("search", legacyKeyword);
         params.delete("q");
         const query = params.toString();
-        const normalizedUrl = `${window.location.pathname}${query ? '?' + query : ''}${window.location.hash}`;
+        const normalizedUrl = `${window.location.pathname}${query ? "?" + query : ""}${window.location.hash}`;
         window.history.replaceState(null, "", normalizedUrl);
       }
     }
@@ -33,36 +33,40 @@ loadData()
       searchBooks(keyword);
 
       // Update judul
-      const titleEl = document.querySelector('.kategori-header h1');
+      const titleEl = document.querySelector(".kategori-header h1");
       if (titleEl) titleEl.innerText = `Hasil Pencarian: "${keyword}"`;
 
       // Reset tombol kategori ke "Semua" agar grid tidak ter-filter kategori
-      const filterButtons = document.querySelectorAll('.kategori-filter button');
-      filterButtons.forEach(b => b.classList.remove('active'));
-      const allBtn = document.querySelector('.kategori-filter button[data-filter="all"]');
-      if (allBtn) allBtn.classList.add('active');
+      const filterButtons = document.querySelectorAll(
+        ".kategori-filter button",
+      );
+      filterButtons.forEach((b) => b.classList.remove("active"));
+      const allBtn = document.querySelector(
+        '.kategori-filter button[data-filter="all"]',
+      );
+      if (allBtn) allBtn.classList.add("active");
       // Pastikan state kategori aktif juga di-reset
-      if (typeof activeCategory !== 'undefined') {
-        activeCategory = 'all';
+      if (typeof activeCategory !== "undefined") {
+        activeCategory = "all";
       }
     } else {
       // Jika tidak ada pencarian, tampilkan semua kategori (default: all)
-      if (typeof renderKategori === 'function') {
+      if (typeof renderKategori === "function") {
         renderKategori(allBooks);
       }
     }
 
     // 2. Render Komponen Tambahan (Terlaris & Rekomendasi)
-    if (typeof renderTerlaris === 'function') {
+    if (typeof renderTerlaris === "function") {
       renderTerlaris();
     }
-    
-    if (typeof renderRekomendasi === 'function') {
+
+    if (typeof renderRekomendasi === "function") {
       renderRekomendasi();
     }
 
     console.log("Inisialisasi selesai.");
   })
-  .catch(err => {
+  .catch((err) => {
     console.error("Gagal memuat data:", err);
   });

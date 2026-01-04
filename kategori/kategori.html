@@ -1,204 +1,278 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="id">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Kategori Buku - Toko Buku Online</title>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Kategori Buku - Toko Buku Online</title>
 
-  <link rel="stylesheet" href="kategori.css">
-  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
-</head>
+    <link rel="stylesheet" href="kategori.css" />
+    <link
+      rel="stylesheet"
+      href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css"
+    />
+  </head>
 
-<body>
+  <body>
+    <!-- HEADER -->
+    <header
+      id="site-header"
+      data-include-src="../component/header.html"
+    ></header>
 
-  <!-- HEADER -->
-  <header id="site-header" data-include-src="../component/header.html"></header>
+    <main>
+      <!-- HEADER KATEGORI -->
+      <section class="kategori-header">
+        <h1>Kategori Buku</h1>
+        <p>
+          Jelajahi berbagai pilihan buku dan temukan bacaan yang sesuai dengan
+          minat Anda.
+        </p>
+      </section>
 
-  <main>
+      <!-- FILTER -->
+      <section class="kategori-filter">
+        <div class="kategori-btn" role="group" aria-label="Filter Kategori">
+          <button type="button" data-filter="all" class="active">Semua</button>
+          <button type="button" data-filter="fiksi">Fiksi</button>
+          <button type="button" data-filter="nonfiksi">Non Fiksi</button>
+          <button type="button" data-filter="komik">Komik</button>
+          <button type="button" data-filter="biografi">Biografi</button>
+          <button
+            type="button"
+            id="btnMoreCategories"
+            class="lainnya-btn"
+            aria-haspopup="dialog"
+            aria-expanded="false"
+          >
+            Lainnya
+          </button>
+        </div>
+      </section>
 
-    <!-- HEADER KATEGORI -->
-    <section class="kategori-header">
-      <h1>Kategori Buku</h1>
-      <p>Jelajahi berbagai pilihan buku dan temukan bacaan yang sesuai dengan minat Anda.</p>
-    </section>
+      <!-- MODAL KATEGORI LAINNYA -->
+      <div
+        id="moreCategoriesModal"
+        class="modal"
+        role="dialog"
+        aria-modal="true"
+        aria-hidden="true"
+        aria-labelledby="modalTitle"
+      >
+        <div class="modal-content mega-menu">
+          <button type="button" class="modal-close" aria-label="Tutup Modal">
+            &times;
+          </button>
 
-    <!-- FILTER -->
-    <section class="kategori-filter">
-      <div class="kategori-btn" role="group" aria-label="Filter Kategori">
-        <button type="button" data-filter="all" class="active">Semua</button>
-        <button type="button" data-filter="fiksi">Fiksi</button>
-        <button type="button" data-filter="nonfiksi">Non Fiksi</button>
-        <button type="button" data-filter="komik">Komik</button>
-        <button type="button" data-filter="biografi">Biografi</button>
-        <button
-          type="button"
-          id="btnMoreCategories"
-          class="lainnya-btn"
-          aria-haspopup="dialog"
-          aria-expanded="false"
-        >
-          Lainnya
-        </button>
+          <div class="mega-grid">
+            <!-- LEFT -->
+            <aside class="mega-left">
+              <div class="tabs">
+                <button type="button" class="tab active" data-tab="buku">
+                  Buku
+                </button>
+                <button type="button" class="tab" data-tab="nonbuku">
+                  Non Buku
+                </button>
+              </div>
+
+              <nav class="left-list" aria-label="Kategori Utama Modal">
+                <ul>
+                  <li>
+                    <button type="button" data-filter="all">Semua</button>
+                  </li>
+                  <li>
+                    <button type="button" data-filter="fiksi">Fiksi</button>
+                  </li>
+                  <li>
+                    <button type="button" data-filter="nonfiksi">
+                      Non Fiksi
+                    </button>
+                  </li>
+                  <li>
+                    <button type="button" data-filter="komik">Komik</button>
+                  </li>
+                  <li>
+                    <button type="button" data-filter="biografi">
+                      Biografi
+                    </button>
+                  </li>
+                  <li>
+                    <button type="button" data-filter="sains">Sains</button>
+                  </li>
+                </ul>
+              </nav>
+            </aside>
+
+            <!-- RIGHT -->
+            <div class="mega-right">
+              <div class="mega-col">
+                <h4>Ilmu & Pendidikan</h4>
+                <ul>
+                  <li>
+                    <button type="button" data-filter="sains">Sains</button>
+                  </li>
+                  <li>
+                    <button type="button" data-filter="psikologi">
+                      Psikologi
+                    </button>
+                  </li>
+                  <li>
+                    <button type="button" data-filter="anak">Buku Anak</button>
+                  </li>
+                </ul>
+              </div>
+
+              <div class="mega-col">
+                <h4>Sejarah & Budaya</h4>
+                <ul>
+                  <li>
+                    <button type="button" data-filter="sejarah">Sejarah</button>
+                  </li>
+                  <li>
+                    <button type="button" data-filter="biografi">
+                      Biografi
+                    </button>
+                  </li>
+                  <li>
+                    <button type="button" data-filter="fiksi">Fiksi</button>
+                  </li>
+                </ul>
+              </div>
+
+              <div class="mega-col">
+                <h4>Hobi & Kreatif</h4>
+                <ul>
+                  <li>
+                    <button type="button" data-filter="fotografi">
+                      Fotografi
+                    </button>
+                  </li>
+                  <li>
+                    <button type="button" data-filter="bahasa">Bahasa</button>
+                  </li>
+                  <li>
+                    <button type="button" data-filter="komik">Komik</button>
+                  </li>
+                </ul>
+              </div>
+
+              <div class="mega-col">
+                <h4>Lainnya</h4>
+                <ul>
+                  <li>
+                    <button type="button" data-filter="lainnya">Lainnya</button>
+                  </li>
+                  <li>
+                    <button type="button" data-filter="referensi">
+                      Referensi
+                    </button>
+                  </li>
+                  <li>
+                    <button type="button" data-filter="nonfiksi">Bisnis</button>
+                  </li>
+                </ul>
+              </div>
+            </div>
+          </div>
+        </div>
       </div>
-    </section>
 
-    <!-- MODAL KATEGORI LAINNYA -->
+      <!-- GRID KATEGORI -->
+      <section class="book-grid" id="kategoriGrid"></section>
+
+      <!-- NO RESULT -->
+      <div
+        id="noResults"
+        class="no-results"
+        aria-live="polite"
+        style="display: none"
+      >
+        Tidak ada buku untuk kategori atau pencarian ini.
+      </div>
+    </main>
+
+    <!-- DETAIL MODAL -->
     <div
-      id="moreCategoriesModal"
+      id="bookDetailModal"
       class="modal"
       role="dialog"
-      aria-modal="true"
       aria-hidden="true"
-      aria-labelledby="modalTitle"
+      aria-labelledby="detailTitle"
     >
-      <div class="modal-content mega-menu">
-
-        <button type="button" class="modal-close" aria-label="Tutup Modal">
+      <div class="modal-content detail-modal">
+        <button type="button" class="modal-close" aria-label="Tutup Detail">
           &times;
         </button>
 
-        <div class="mega-grid">
-
-          <!-- LEFT -->
-          <aside class="mega-left">
-            <div class="tabs">
-              <button type="button" class="tab active" data-tab="buku">Buku</button>
-              <button type="button" class="tab" data-tab="nonbuku">Non Buku</button>
-            </div>
-
-            <nav class="left-list" aria-label="Kategori Utama Modal">
-              <ul>
-                <li><button type="button" data-filter="all">Semua</button></li>
-                <li><button type="button" data-filter="fiksi">Fiksi</button></li>
-                <li><button type="button" data-filter="nonfiksi">Non Fiksi</button></li>
-                <li><button type="button" data-filter="komik">Komik</button></li>
-                <li><button type="button" data-filter="biografi">Biografi</button></li>
-                <li><button type="button" data-filter="sains">Sains</button></li>
-              </ul>
-            </nav>
-          </aside>
-
-          <!-- RIGHT -->
-          <div class="mega-right">
-
-            <div class="mega-col">
-              <h4>Ilmu & Pendidikan</h4>
-              <ul>
-                <li><button type="button" data-filter="sains">Sains</button></li>
-                <li><button type="button" data-filter="psikologi">Psikologi</button></li>
-                <li><button type="button" data-filter="anak">Buku Anak</button></li>
-              </ul>
-            </div>
-
-            <div class="mega-col">
-              <h4>Sejarah & Budaya</h4>
-              <ul>
-                <li><button type="button" data-filter="sejarah">Sejarah</button></li>
-                <li><button type="button" data-filter="biografi">Biografi</button></li>
-                <li><button type="button" data-filter="fiksi">Fiksi</button></li>
-              </ul>
-            </div>
-
-            <div class="mega-col">
-              <h4>Hobi & Kreatif</h4>
-              <ul>
-                <li><button type="button" data-filter="fotografi">Fotografi</button></li>
-                <li><button type="button" data-filter="bahasa">Bahasa</button></li>
-                <li><button type="button" data-filter="komik">Komik</button></li>
-              </ul>
-            </div>
-
-            <div class="mega-col">
-              <h4>Lainnya</h4>
-              <ul>
-                <li><button type="button" data-filter="lainnya">Lainnya</button></li>
-                <li><button type="button" data-filter="referensi">Referensi</button></li>
-                <li><button type="button" data-filter="nonfiksi">Bisnis</button></li>
-              </ul>
-            </div>
-
-          </div>
-        </div>
-      </div>
-    </div>
-
-    <!-- GRID KATEGORI -->
-    <section class="book-grid" id="kategoriGrid"></section>
-
-    <!-- NO RESULT -->
-    <div
-      id="noResults"
-      class="no-results"
-      aria-live="polite"
-      style="display: none;"
-    >
-      Tidak ada buku untuk kategori atau pencarian ini.
-    </div>
-
-  </main>
-
-  <!-- DETAIL MODAL -->
-  <div
-    id="bookDetailModal"
-    class="modal"
-    role="dialog"
-    aria-hidden="true"
-    aria-labelledby="detailTitle"
-  >
-    <div class="modal-content detail-modal">
-      <button type="button" class="modal-close" aria-label="Tutup Detail">
-        &times;
-      </button>
-
         <div class="detail-body">
-        <img id="detailImage" src="" alt="Cover Buku">
-        <div class="detail-info">
-          <h3 id="detailTitle">Judul Buku</h3>
-          <p id="detailAuthor" class="author">Penulis: -</p>
-          <div id="detailDesc" class="book-description desc-scroll">Deskripsi buku...</div>
-          <p id="detailPrice" class="price">Rp 0</p>
-          <p id="detailStock" class="stock">Stok: -</p>
-
-          <div class="purchase-controls">
-            <label for="qtyInput">Jumlah:</label>
-            <div class="qty">
-              <button type="button" id="qtyMinus" aria-label="Kurangi">−</button>
-              <input id="qtyInput" type="number" min="1" value="1" aria-label="Jumlah buku">
-              <button type="button" id="qtyPlus" aria-label="Tambah">+</button>
+          <img id="detailImage" src="" alt="Cover Buku" />
+          <div class="detail-info">
+            <h3 id="detailTitle">Judul Buku</h3>
+            <p id="detailAuthor" class="author">Penulis: -</p>
+            <div id="detailDesc" class="book-description desc-scroll">
+              Deskripsi buku...
             </div>
-            <div class="subtotal">Subtotal: <strong id="detailSubtotal">Rp 0</strong></div>
-          </div>
+            <p id="detailPrice" class="price">Rp 0</p>
+            <p id="detailStock" class="stock">Stok: -</p>
 
-          <div class="modal-actions">
-            <button id="addToCartBtn" class="add-cart">Tambah ke Keranjang</button>
-            <button id="buyNowBtn" class="buy-now">Beli Sekarang</button>
-          </div>
+            <div class="purchase-controls">
+              <label for="qtyInput">Jumlah:</label>
+              <div class="qty">
+                <button type="button" id="qtyMinus" aria-label="Kurangi">
+                  −
+                </button>
+                <input
+                  id="qtyInput"
+                  type="number"
+                  min="1"
+                  value="1"
+                  aria-label="Jumlah buku"
+                />
+                <button type="button" id="qtyPlus" aria-label="Tambah">
+                  +
+                </button>
+              </div>
+              <div class="subtotal">
+                Subtotal: <strong id="detailSubtotal">Rp 0</strong>
+              </div>
+            </div>
 
-          <div class="payment-icons" aria-hidden="true">
-            <span class="p-icon">💳</span>
-            <span class="p-icon">🏦</span>
-            <span class="p-icon">📲</span>
-            <small style="margin-left:8px;color:#666;">Metode pembayaran populer</small>
+            <div class="modal-actions">
+              <button id="addToCartBtn" class="add-cart">
+                Tambah ke Keranjang
+              </button>
+              <button id="buyNowBtn" class="buy-now">Beli Sekarang</button>
+            </div>
+
+            <div class="payment-icons" aria-hidden="true">
+              <span class="p-icon">💳</span>
+              <span class="p-icon">🏦</span>
+              <span class="p-icon">📲</span>
+              <small style="margin-left: 8px; color: #666"
+                >Metode pembayaran populer</small
+              >
+            </div>
           </div>
         </div>
       </div>
     </div>
-  </div>
 
-  <!-- FOOTER -->
-  <footer id="site-footer" data-include-src="../component/footer.html"></footer>
+    <!-- FOOTER -->
+    <footer
+      id="site-footer"
+      data-include-src="../component/footer.html"
+    ></footer>
 
-  <!-- SCRIPT -->
-  <script src="/Javascript/includes.js"></script>
-  <script src="../Javascript/databuku.js"></script>
-  
-  <!-- Kategori Scripts - Modular -->
-  <script src="kategori-data.js"></script>
-  <script src="kategori-filter.js"></script>
-  <script src="kategori-modal.js"></script>
-  <script src="kategori-carousel.js"></script>
-  <script src="kategori-render.js"></script>
-  <script src="kategori-main.js"></script>
+    <!-- SCRIPT -->
+    <script src="/Javascript/includes.js"></script>
+    <script src="../Javascript/databuku.js"></script>
 
-</body>
+    <!-- Kategori Scripts - Modular -->
+    <script src="kategori-data.js"></script>
+    <script src="kategori-filter.js"></script>
+    <script src="kategori-modal.js"></script>
+    <script src="kategori-carousel.js"></script>
+    <script src="kategori-render.js"></script>
+    <script src="kategori-main.js"></script>
+  </body>
 </html>
