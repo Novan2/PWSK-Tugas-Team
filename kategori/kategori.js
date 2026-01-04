@@ -167,14 +167,94 @@ const booksData = [
 
 // Fungsi untuk memuat data buku ke dalam aplikasi
 function loadData() {
-  // Tambahkan kategori random ke setiap buku dan set gambar default jika tidak ada
-  allBooks = booksData.map(book => ({
-    ...book,
-    kategori: getRandomCategory(),
-    gambar: book.gambar ? "../" + book.gambar : "https://via.placeholder.com/200x280/90AB8B/EBF4DD?text=Buku"
-  }));
-  // Render semua buku ke grid kategori
-  renderKategori(allBooks);
+  // Prefer data from databuku.js (window.databukuBooks) if available, otherwise fallback to embedded booksData
+  const sampleAuthors = [
+    'A. Rahman', 'Siti Nur', 'Budi Santoso', 'Ani Wijaya', 'Rina Marpaung', 'Teguh Prasetyo'
+  ];
+
+  const resolveImage = (g) => {
+    if (!g) return "https://via.placeholder.com/200x280/90AB8B/EBF4DD?text=Buku";
+    if (g.startsWith('http') || g.startsWith('//')) return g;
+    if (g.startsWith('./')) return '../' + g.replace(/^\.\//, '');
+    return g;
+  };
+
+  const useDatabuku = async () => {
+    if (window.databukuBooks && Array.isArray(window.databukuBooks) && window.databukuBooks.length) return window.databukuBooks;
+    // if databuku is still fetching, wait a bit longer for readiness (API can be slow)
+    if (typeof window.databukuBooksReady === 'undefined' || window.databukuBooksReady === false) {
+      const start = Date.now();
+      while (Date.now() - start < 4000) {
+        // eslint-disable-next-line no-await-in-loop
+        await new Promise(r => setTimeout(r, 150));
+        if (window.databukuBooks && window.databukuBooks.length) return window.databukuBooks;
+        if (window.databukuBooksReady === false) break;
+      }
+    }
+    // final attempt: return array if present, otherwise null
+    return (window.databukuBooks && window.databukuBooks.length) ? window.databukuBooks : null;
+  };
+
+  (async () => {
+    const db = await useDatabuku();
+    // helper to fetch up to `maxResults` books directly from Google Books (used only by kategori)
+    async function fetchGoogleBooks(maxResults = 40) {
+      try {
+        const url = `https://www.googleapis.com/books/v1/volumes?q=all&maxResults=${maxResults}`;
+        const res = await fetch(url);
+        if (!res.ok) throw new Error('HTTP ' + res.status);
+        const data = await res.json();
+        const items = data.items || [];
+        return items.map(item => {
+          const info = item.volumeInfo || {};
+          const sale = item.saleInfo || {};
+          const thumbnail = info.imageLinks?.thumbnail || info.imageLinks?.smallThumbnail || '';
+          return {
+            judul: info.title || 'Judul tidak tersedia',
+            deskripsi: info.description || 'Deskripsi tidak tersedia',
+            penulis: Array.isArray(info.authors) ? info.authors.join(', ') : (info.authors || 'Penulis tidak diketahui'),
+            harga: (sale && sale.retailPrice && sale.retailPrice.amount) ? Number(sale.retailPrice.amount) : 0,
+            gambar: thumbnail
+          };
+        });
+      } catch (e) {
+        console.warn('fetchGoogleBooks failed', e);
+        return null;
+      }
+    }
+
+    // prefer databuku if it has enough items, otherwise try fetching up to 40 from Google
+    let src = null;
+    if (db && db.length >= 40) src = db.slice(0, 40);
+    else {
+      const google = await fetchGoogleBooks(40);
+      if (google && google.length) src = google.slice(0, 40);
+    }
+
+    if (!src) src = db && db.length ? db : booksData;
+
+    allBooks = src.map(book => {
+      const rawHarga = Number(book.harga || (book.listPrice && book.listPrice.amount) || 0);
+      // Jika harga tidak valid atau 0 => beri nominal acak Rp20.000 - Rp100.000
+      let finalHarga = Number.isFinite(rawHarga) && rawHarga > 0 ? rawHarga : (Math.floor(Math.random() * (100000 - 20000 + 1)) + 20000);
+      return {
+        judul: book.judul || book.title || 'Judul tidak tersedia',
+        deskripsi: book.deskripsi || book.description || '',
+        harga: finalHarga,
+        penulis: book.penulis || (book.authors ? (Array.isArray(book.authors) ? book.authors.join(', ') : book.authors) : sampleAuthors[Math.floor(Math.random() * sampleAuthors.length)]),
+        kategori: getRandomCategory(),
+        stock: (typeof book.stock === 'number') ? book.stock : Math.floor(Math.random() * 13),
+        gambar: resolveImage(book.gambar || book.thumbnail || book.smallThumbnail)
+      };
+    });
+    // Render semua buku ke grid kategori
+    renderKategori(allBooks);
+  })();
+}
+
+// Utility: format number to Indonesian Rupiah string
+function formatRp(n) {
+  return 'Rp ' + (Number(n) || 0).toLocaleString('id-ID');
 }
 
 // Fungsi untuk mengambil kategori secara acak
@@ -200,14 +280,36 @@ function renderKategori(data) {
   const grid = document.getElementById("kategoriGrid");
   grid.innerHTML = ""; // Kosongkan grid terlebih dahulu
 
+  // update count badge under header for user feedback
+  const header = document.querySelector('.kategori-header');
+  if (header) {
+    let cntEl = document.getElementById('kategoriCount');
+    if (!cntEl) {
+      cntEl = document.createElement('div');
+      cntEl.id = 'kategoriCount';
+      cntEl.style.marginTop = '10px';
+      cntEl.style.color = '#23492b';
+      cntEl.style.fontWeight = '600';
+      header.appendChild(cntEl);
+    }
+    cntEl.textContent = 'Menampilkan 0 buku';
+  }
+
   const noResultsEl = document.getElementById('noResults');
   // Jika tidak ada data, tampilkan pesan 'tidak ada hasil'
   if (!data || data.length === 0) {
     if (noResultsEl) noResultsEl.style.display = 'block';
+    // update count
+    const cntEl2 = document.getElementById('kategoriCount');
+    if (cntEl2) cntEl2.textContent = 'Menampilkan 0 buku';
     return;
   }
   // Sembunyikan pesan jika ada data
   if (noResultsEl) noResultsEl.style.display = 'none';
+
+  // update count
+  const cntEl3 = document.getElementById('kategoriCount');
+  if (cntEl3) cntEl3.textContent = `Menampilkan ${data.length} buku`;
 
   // Loop setiap buku dan buat card untuk ditampilkan
   data.forEach((book) => {
@@ -217,26 +319,25 @@ function renderKategori(data) {
 
     card.innerHTML = `
       <div class="image-container">
-        <img src="${book.gambar}" alt="${book.judul}">
+        <img src="${book.gambar}" alt="${book.judul}" onerror="this.onerror=null;this.src='https://via.placeholder.com/200x280/90AB8B/EBF4DD?text=No+Cover'">
       </div>
+      <div class="stock-badge ${book.stock === 0 ? 'out' : (book.stock < 4 ? 'low' : '')}">Stok: ${book.stock}</div>
       <h3 class="card-title" title="${book.judul}">${book.judul}</h3>
+      <div class="card-author">${book.penulis || '-'}</div>
       <p class="price">Rp ${book.harga.toLocaleString()}</p>
-      <div class="card-actions">
-        <button type="button" class="detail-btn" data-idx="${idxAll}">Lihat Detail</button>
-      </div>
+         <div class="card-actions">
+         </div>
     `;
 
     grid.appendChild(card);
-  });
-
-  // Pasang event listener ke tombol 'Lihat Detail' untuk membuka modal
-  document.querySelectorAll('#kategoriGrid .detail-btn').forEach(btn => btn.type = 'button');
-  document.querySelectorAll('#kategoriGrid .detail-btn').forEach(btn => {
-    btn.addEventListener('click', (e) => {
-      const idx = parseInt(e.currentTarget.dataset.idx, 10);
-      openDetailModal(allBooks[idx]);
+    // make the whole card clickable (image/title area)
+    card.tabIndex = 0;
+    card.addEventListener('click', () => openDetailModal(allBooks[idxAll]));
+    card.addEventListener('keydown', (e) => {
+      if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); openDetailModal(allBooks[idxAll]); }
     });
   });
+
 }
 
 // Fungsi untuk mencari buku berdasarkan judul atau deskripsi
@@ -260,8 +361,13 @@ document.querySelectorAll(".kategori-filter button").forEach(btn => {
 
     // Tambahkan class 'active' ke tombol yang diklik
     btn.classList.add("active");
-    // Filter section rekomendasi berdasarkan kategori yang dipilih
-    filterRekomendasi(btn.dataset.filter);
+    // Simpan kategori aktif dan filter rekomendasi + grid berdasarkan kategori
+    const chosen = btn.dataset.filter || 'all';
+    activeCategory = chosen;
+    filterRekomendasi(chosen);
+    // Render grid utama sesuai pilihan kategori
+    const gridFiltered = (chosen === 'all') ? allBooks : allBooks.filter(b => b.kategori === chosen);
+    renderKategori(gridFiltered);
 
     // update modal active state if modal contains the same category button
     const modal = document.getElementById('moreCategoriesModal');
@@ -273,28 +379,37 @@ document.querySelectorAll(".kategori-filter button").forEach(btn => {
   });
 });
 
-// Event listener untuk input search
-const _searchInput = document.getElementById("searchInput");
-if (_searchInput) {
-  // Gunakan debounce agar fungsi search tidak dipanggil terlalu sering saat user mengetik
-  const _debounced = debounce((q) => searchBooks(q), 200);
-  _searchInput.addEventListener("input", (e) => _debounced(e.target.value));
-}
+// Search is provided by the site header; local search input removed.
+// If you want to re-enable page-local search, recreate an input with id="searchInput"
+// and reattach a debounced listener that calls `searchBooks(query)`.
 
 // Fungsi untuk membuka modal detail buku
 function openDetailModal(book) {
   const modal = document.getElementById('bookDetailModal');
   const img = document.getElementById('detailImage');
   const title = document.getElementById('detailTitle');
+  const authorEl = document.getElementById('detailAuthor');
   const desc = document.getElementById('detailDesc');
   const price = document.getElementById('detailPrice');
+  const stockEl = document.getElementById('detailStock');
+  const qtyInput = document.getElementById('qtyInput');
+  const subtotalEl = document.getElementById('detailSubtotal');
+  const buyBtn = document.getElementById('buyNowBtn');
+  const addCartBtn = document.getElementById('addToCartBtn');
 
   // Isi konten modal dengan data buku yang dipilih
   img.src = book.gambar;
   img.alt = book.judul;
   title.textContent = book.judul;
+  authorEl.textContent = 'Penulis: ' + (book.penulis || 'Penulis tidak tersedia');
   desc.textContent = book.deskripsi || 'Deskripsi tidak tersedia.';
-  price.textContent = 'Rp ' + book.harga.toLocaleString();
+  price.textContent = formatRp(book.harga);
+  stockEl.textContent = 'Stok: ' + (typeof book.stock === 'number' ? book.stock : '—');
+  stockEl.classList.toggle('out', book.stock === 0);
+
+  // reset quantity & subtotal
+  if (qtyInput) qtyInput.value = 1;
+  if (subtotalEl) subtotalEl.textContent = formatRp(book.harga);
 
   // Tampilkan modal
   modal.classList.add('open');
@@ -303,6 +418,23 @@ function openDetailModal(book) {
   // Fokus ke tombol close untuk accessibility
   const close = modal.querySelector('.modal-close');
   close.focus();
+
+  // set buy button dataset
+  if (buyBtn) {
+    buyBtn.dataset.idx = allBooks.indexOf(book);
+    buyBtn.style.display = '';
+  }
+  if (addCartBtn) addCartBtn.dataset.idx = allBooks.indexOf(book);
+  // disable purchase buttons if out of stock
+  const outOfStock = (book.stock === 0);
+  if (buyBtn) {
+    buyBtn.disabled = outOfStock;
+    buyBtn.textContent = outOfStock ? 'Habis' : 'Beli Sekarang';
+  }
+  if (addCartBtn) {
+    addCartBtn.disabled = outOfStock;
+    addCartBtn.textContent = outOfStock ? 'Stok Habis' : 'Tambah ke Keranjang';
+  }
 }
 
 // Setup event listener untuk modal detail buku
@@ -331,6 +463,104 @@ function openDetailModal(book) {
       }
     }
   });
+
+  // Purchase controls: quantity, subtotal, add-to-cart, buy-now
+  const qtyMinus = modal.querySelector('#qtyMinus');
+  const qtyPlus = modal.querySelector('#qtyPlus');
+  const qtyInput = modal.querySelector('#qtyInput');
+  const subtotalEl = modal.querySelector('#detailSubtotal');
+  const buyNowBtn = modal.querySelector('#buyNowBtn');
+  const addToCartBtn = modal.querySelector('#addToCartBtn');
+  const stockEl = modal.querySelector('#detailStock');
+
+  function getIdxFromBtn() {
+    const idx = buyNowBtn && buyNowBtn.dataset && buyNowBtn.dataset.idx ? parseInt(buyNowBtn.dataset.idx, 10) : null;
+    return Number.isInteger(idx) ? idx : null;
+  }
+
+  function updateSubtotalForIdx(idx) {
+    if (idx === null) return;
+    const book = allBooks[idx];
+    const qty = Math.max(1, Math.min(parseInt(qtyInput.value || 1, 10), book.stock || 0));
+    qtyInput.value = qty;
+    const total = (book.harga || 0) * qty;
+    if (subtotalEl) subtotalEl.textContent = formatRp(total);
+  }
+
+  if (qtyPlus) qtyPlus.addEventListener('click', () => {
+    const idx = getIdxFromBtn();
+    if (idx === null) return;
+    const book = allBooks[idx];
+    let qty = parseInt(qtyInput.value || 1, 10);
+    qty = Math.min(qty + 1, Math.max(1, book.stock || 0));
+    qtyInput.value = qty;
+    updateSubtotalForIdx(idx);
+  });
+
+  if (qtyMinus) qtyMinus.addEventListener('click', () => {
+    const idx = getIdxFromBtn();
+    if (idx === null) return;
+    let qty = parseInt(qtyInput.value || 1, 10);
+    qty = Math.max(1, qty - 1);
+    qtyInput.value = qty;
+    updateSubtotalForIdx(idx);
+  });
+
+  if (qtyInput) qtyInput.addEventListener('input', () => {
+    const idx = getIdxFromBtn();
+    if (idx === null) return;
+    const book = allBooks[idx];
+    let qty = parseInt(qtyInput.value || 1, 10);
+    if (!Number.isFinite(qty) || qty < 1) qty = 1;
+    qty = Math.min(qty, Math.max(0, book.stock || 0));
+    qtyInput.value = qty;
+    updateSubtotalForIdx(idx);
+  });
+
+  if (addToCartBtn) addToCartBtn.addEventListener('click', () => {
+    const idx = addToCartBtn.dataset.idx ? parseInt(addToCartBtn.dataset.idx, 10) : null;
+    if (idx === null) return alert('Tidak ada buku yang dipilih.');
+    const book = allBooks[idx];
+    const qty = Math.max(1, parseInt((qtyInput && qtyInput.value) || 1, 10));
+    if (qty > (book.stock || 0)) return alert('Stok tidak mencukupi.');
+    const cartRaw = localStorage.getItem('cart');
+    const cart = cartRaw ? JSON.parse(cartRaw) : [];
+    const existing = cart.find(i => i.idx === idx);
+    if (existing) existing.qty = Math.min((existing.qty || 0) + qty, book.stock || existing.qty + qty);
+    else cart.push({ idx, judul: book.judul, harga: book.harga, qty });
+    localStorage.setItem('cart', JSON.stringify(cart));
+    alert('Berhasil ditambahkan ke keranjang.');
+  });
+
+  if (buyNowBtn) buyNowBtn.addEventListener('click', () => {
+    const idx = buyNowBtn.dataset.idx ? parseInt(buyNowBtn.dataset.idx, 10) : null;
+    if (idx === null) return alert('Tidak ada buku yang dipilih.');
+    const book = allBooks[idx];
+    const qty = Math.max(1, parseInt((qtyInput && qtyInput.value) || 1, 10));
+    if (qty > (book.stock || 0)) return alert('Stok tidak mencukupi.');
+    const proceed = confirm(`Konfirmasi pembelian:\n${book.judul}\nJumlah: ${qty}\nTotal: ${formatRp(book.harga * qty)}\n\nLanjutkan ke pembayaran?`);
+    if (!proceed) return;
+    // Simulate payment processing
+    buyNowBtn.disabled = true;
+    buyNowBtn.textContent = 'Memproses...';
+    setTimeout(() => {
+      // decrement stock
+      book.stock = Math.max(0, (book.stock || 0) - qty);
+      // update stock display if modal open
+      if (stockEl) {
+        stockEl.textContent = 'Stok: ' + book.stock;
+        stockEl.classList.toggle('out', book.stock === 0);
+      }
+      alert('Pembayaran berhasil. Terima kasih!');
+      buyNowBtn.disabled = false;
+      buyNowBtn.textContent = 'Beli Sekarang';
+      modal.classList.remove('open');
+      modal.setAttribute('aria-hidden', 'true');
+      // re-render grids to reflect stock change (optional)
+      renderKategori(allBooks);
+      renderTerlaris();
+    }, 900);
+  });
 })();
 
 // Fungsi untuk menampilkan buku rekomendasi dalam bentuk carousel
@@ -351,35 +581,35 @@ function renderRekomendasi() {
 
     slide.innerHTML = `
       <div class="image-container">
-        <img src="${book.gambar}" alt="${book.judul}">
+        <img src="${book.gambar}" alt="${book.judul}" onerror="this.onerror=null;this.src='https://via.placeholder.com/260x280/90AB8B/EBF4DD?text=No+Cover'">
       </div>
       <div class="rank">${index + 1}</div>
       <h3 class="card-title" title="${book.judul}">${book.judul}</h3>
+      <div class="card-author">${book.penulis || '-'}</div>
       <p class="price">Rp ${book.harga.toLocaleString()}</p>
-      <div class="card-actions">
-        <button class="detail-btn" data-idx="${idxAll}">Lihat Detail</button>
-      </div>
+      <div class="stock-badge ${book.stock === 0 ? 'out' : (book.stock < 4 ? 'low' : '')}">Stok: ${book.stock}</div>
+      <div class="card-actions"></div>
     `;
 
     track.appendChild(slide);
+
+    // make whole slide clickable
+    slide.tabIndex = 0;
+    slide.addEventListener('click', () => openDetailModal(allBooks[idxAll]));
+    slide.addEventListener('keydown', (e) => {
+      if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); openDetailModal(allBooks[idxAll]); }
+    });
 
     // Buat dot navigasi untuk setiap slide
     const dot = document.createElement('button');
     dot.type = 'button';
     dot.className = 'dot';
-    dot.setAttribute('aria-label', `Slide ${index + 1}`);
+    dot.setAttribute('aria-label', `Slide ke ${index + 1}`);
     dot.dataset.index = index;
     dotsContainer.appendChild(dot);
   });
 
-  // Pasang event listener ke tombol detail di setiap slide
-  track.querySelectorAll('.detail-btn').forEach(btn => btn.type = 'button');
-  track.querySelectorAll('.detail-btn').forEach(btn => {
-    btn.addEventListener('click', (e) => {
-      const idx = parseInt(e.currentTarget.dataset.idx, 10);
-      openDetailModal(allBooks[idx]);
-    });
-  });
+  
 
   // Inisialisasi fungsi carousel (navigasi, autoplay, dll)
   initRekomCarousel();
@@ -583,7 +813,7 @@ function initRekomCarousel() {
   measure();
   startAutoplay();
 }
- 
+
 
 // Fungsi untuk menampilkan buku terlaris dalam grid
 function renderTerlaris() {
@@ -601,25 +831,22 @@ function renderTerlaris() {
 
     card.innerHTML = `
       <div class="image-container">
-        <img src="${book.gambar}" alt="${book.judul}">
+        <img src="${book.gambar}" alt="${book.judul}" onerror="this.onerror=null;this.src='https://via.placeholder.com/200x200/90AB8B/EBF4DD?text=No+Cover'">
       </div>
       <h3 class="card-title" title="${book.judul}">${book.judul}</h3>
-      <div class="card-actions">
-        <button class="detail-btn" data-idx="${idxAll}">Lihat Detail</button>
-      </div>
+      <div class="card-author">${book.penulis || '-'}</div>
+      <div class="card-actions"></div>
     `;
 
     grid.appendChild(card);
-  });
-
-  // Pasang event listener ke tombol detail
-  document.querySelectorAll('.terlaris-grid .detail-btn').forEach(btn => btn.type = 'button');
-  document.querySelectorAll('.terlaris-grid .detail-btn').forEach(btn => {
-    btn.addEventListener('click', (e) => {
-      const idx = parseInt(e.currentTarget.dataset.idx, 10);
-      openDetailModal(allBooks[idx]);
+    // make terlaris card clickable
+    card.tabIndex = 0;
+    card.addEventListener('click', () => openDetailModal(allBooks[idxAll]));
+    card.addEventListener('keydown', (e) => {
+      if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); openDetailModal(allBooks[idxAll]); }
     });
   });
+  
 } 
 
 // Setup modal 'Lainnya' untuk kategori tambahan
@@ -676,8 +903,11 @@ function renderTerlaris() {
       const topBtn = document.querySelector(`.kategori-filter button[data-filter='${category}']`);
       if (topBtn) topBtn.classList.add('active');
 
-      // Filter rekomendasi berdasarkan kategori yang dipilih
+      // Set kategori aktif, filter rekomendasi, dan render grid utama
+      activeCategory = category || 'all';
       filterRekomendasi(category);
+      const gridFiltered = (category === 'all') ? allBooks : allBooks.filter(b => b.kategori === category);
+      renderKategori(gridFiltered);
       closeModal();
     });
   });
@@ -707,30 +937,27 @@ function filterRekomendasi(category) {
       <div class="rank">${index + 1}</div>
       <h3 class="card-title" title="${book.judul}">${book.judul}</h3>
       <p class="price">Rp ${book.harga.toLocaleString()}</p>
-      <div class="card-actions">
-        <button class="detail-btn" data-idx="${idxAll}">Lihat Detail</button>
-      </div>
+      <div class="card-actions"></div>
     `;
 
     track.appendChild(slide);
+    // make slide clickable
+    slide.tabIndex = 0;
+    slide.addEventListener('click', () => openDetailModal(allBooks[idxAll]));
+    slide.addEventListener('keydown', (e) => {
+      if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); openDetailModal(allBooks[idxAll]); }
+    });
 
     // create dot
     const dot = document.createElement('button');
     dot.type = 'button';
     dot.className = 'dot';
-    dot.setAttribute('aria-label', `Slide ${index + 1}`);
+    dot.setAttribute('aria-label', `Slide ke ${index + 1}`);
     dot.dataset.index = index;
     dotsContainer.appendChild(dot);
   });
 
-  // attach detail buttons
-  track.querySelectorAll('.detail-btn').forEach(btn => btn.type = 'button');
-  track.querySelectorAll('.detail-btn').forEach(btn => {
-    btn.addEventListener('click', (e) => {
-      const idx = parseInt(e.currentTarget.dataset.idx, 10);
-      openDetailModal(allBooks[idx]);
-    });
-  });
+  
 
   // Re-inisialisasi carousel agar ukuran dan posisi benar
   initRekomCarousel();

@@ -108,23 +108,28 @@ export async function loadTop10NewestBooks() {
       const authors = info.authors?.join(", ") ?? "Penulis tidak diketahui";
       const thumbnail = getHighResCover(info);
 
-      // let priceText = "Tidak dijual"; // versi sebelumnya
+      // Harga: jika tersedia dan > 0 pakai harga asli, kalau tidak (FREE atau 0)
+      // tampilkan nominal acak antara Rp20.000 - Rp100.000
       let priceText = "Gratis";
-      if (sale.saleability === "FOR_SALE" && sale.retailPrice) {
+      const hasPrice = sale.saleability === "FOR_SALE" && sale.retailPrice && typeof sale.retailPrice.amount === 'number' && sale.retailPrice.amount > 0;
+      if (hasPrice) {
         priceText = `${sale.retailPrice.amount} ${sale.retailPrice.currencyCode}`;
-      } else if (sale.saleability === "FREE") {
-        priceText = "Gratis";
+      } else {
+        const min = 20000;
+        const max = 100000;
+        const rand = Math.floor(Math.random() * (max - min + 1)) + min;
+        priceText = "Rp " + rand.toLocaleString("id-ID");
       }
 
       const bookCard = document.createElement("div");
       bookCard.className = "book-card";
       bookCard.style.backgroundImage = `url("${thumbnail}")`;
 
-      // <h4>${title}</h4>
-      // <p class="author">${authors}</p>
-      // <p class="price">${priceText}</p>
       bookCard.innerHTML = `
-        <dip class="rank-number">${i}<p>
+      <h4>${title}</h4>
+      <p class="author">${authors}</p>
+      <p class="price">${priceText}</p>
+      <dip class="rank-number">${i}<p>
       `;
       i++;
       carouselTrack.appendChild(bookCard);

@@ -226,21 +226,21 @@ main {
 
 /* Card untuk item carousel */
 .carousel-card {
-    min-width: 260px;
-    height: 360px;
-    background-color: #EBF4DD;
-    border: 1px solid #90AB8B;
-    border-radius: 15px;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: flex-start;
-    color: #5A7863;
-    font-weight: bold;
-    box-shadow: 0 12px 26px rgba(59, 73, 83, 0.16);
-    transition: transform 0.35s ease, box-shadow 0.35s ease, opacity 0.35s ease;
-    overflow: hidden;
-    position: relative;
+  min-width: 260px;
+  height: 360px;
+  background-color: #EBF4DD;
+  border: 1px solid #90AB8B;
+  border-radius: 15px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-start;
+  color: #5A7863;
+  font-weight: bold;
+  box-shadow: 0 12px 26px rgba(59, 73, 83, 0.16);
+  transition: transform 0.28s ease, box-shadow 0.28s ease, opacity 0.28s ease, background-color 0.28s ease, border-color 0.28s ease;
+  overflow: hidden;
+  position: relative;
 }
 
 .carousel-card img {
@@ -267,10 +267,20 @@ main {
 
 /* Card yang di tengah carousel diberi emphasis (lebih besar) */
 .carousel-card.is-center {
-    transform: translateY(-12px) scale(1.06);
-    z-index: 20;
-    box-shadow: 0 20px 40px rgba(59,73,83,0.25);
-    opacity: 1;
+  transform: translateY(-12px) scale(1.06);
+  z-index: 20;
+  box-shadow: 0 20px 40px rgba(59,73,83,0.25);
+  opacity: 1;
+}
+
+/* hover / focus: lift and slightly darker green background */
+.carousel-card:hover,
+.carousel-card:focus-visible {
+  transform: translateY(-10px) scale(1.02);
+  box-shadow: 0 26px 48px rgba(30,55,35,0.18);
+  background-color: #c6e0cc; /* darker green */
+  border-color: #5a7a59;
+  outline: none;
 }
 
 /* Card lain sedikit pudar */
@@ -574,14 +584,13 @@ footer {
 /* ========== MODAL KATEGORI (Mega Menu) ========== */
 .modal {
   position: fixed;
-  top: 28px; /* Posisi di bawah navbar */
-  left: 0;
-  right: 0;
+  inset: 0; /* cover whole viewport */
   display: none; /* Tersembunyi secara default */
-  justify-content: flex-start;
+  align-items: center; /* center vertically */
+  justify-content: center; /* center horizontally */
   background: transparent;
   z-index: 1200;
-} 
+}
 
 .modal.open::before {
   content: '';
@@ -819,31 +828,176 @@ footer {
   padding: 18px 20px;
 }
 
+/* Enhanced detail modal layout and typography */
+.detail-modal {
+  max-width: 900px;
+  padding: 22px;
+  background: #ffffff;
+  border-radius: 12px;
+  box-shadow: 0 30px 80px rgba(25,40,30,0.18);
+  border: 1px solid rgba(90,120,99,0.06);
+  transform: translateY(-8px) scale(.995);
+  opacity: 0;
+  transition: transform 260ms cubic-bezier(.2,.9,.2,1), opacity 220ms ease;
+}
+
+.modal.open .modal-content.detail-modal {
+  transform: translateY(0) scale(1);
+  opacity: 1;
+}
+
 .detail-body {
   display: flex;
-  gap: 18px;
+  gap: 26px;
   align-items: flex-start;
 }
 
 .detail-body img {
-  width: 240px;
-  height: 320px;
+  width: 280px;
+  height: 420px;
   object-fit: cover;
-  border-radius: 8px;
+  border-radius: 10px;
+  box-shadow: 0 14px 40px rgba(20,35,20,0.12);
+  flex-shrink: 0;
+}
+
+.detail-info {
+  flex: 1 1 auto;
+  padding-right: 6px;
 }
 
 .detail-info h3 {
   margin-top: 0;
   margin-bottom: 8px;
+  font-size: 26px;
+  color: #21382b;
+  line-height: 1.12;
 }
 
 .detail-info p {
-  margin: 8px 0;
+  margin: 10px 0 14px;
+  color: #424242;
+  font-size: 15px;
+  line-height: 1.6;
+}
+
+.detail-info .price {
+  margin: 8px 0 18px;
+  font-size: 18px;
+  font-weight: 700;
+  color: #2f6f43;
+}
+
+/* Buy button */
+.buy-now {
+  display: inline-block;
+  background: linear-gradient(180deg,#5A7863,#3B5950);
+  color: #EBF4DD;
+  border: none;
+  padding: 10px 18px;
+  border-radius: 10px;
+  cursor: pointer;
+  box-shadow: 0 8px 18px rgba(40,70,45,0.14);
+  font-weight: 700;
+  transition: transform 160ms ease, box-shadow 160ms ease, opacity 160ms ease;
+}
+
+/* Purchase controls inside modal */
+.purchase-controls {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 12px;
+}
+
+.purchase-controls label { color: #3b4953; font-weight: 600; }
+
+.qty {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.qty button {
+  width: 34px;
+  height: 34px;
+  border-radius: 8px;
+  border: 1px solid rgba(60,80,60,0.12);
+  background: #f6faf3;
+  cursor: pointer;
+  font-size: 18px;
+}
+
+.qty input[type="number"] {
+  width: 64px;
+  padding: 8px 10px;
+  border-radius: 8px;
+  border: 1px solid #e6efe0;
+  text-align: center;
+}
+
+.modal-actions { display: flex; gap: 12px; align-items: center; margin-bottom: 10px; }
+.add-cart {
+  background: #fff4e6;
+  color: #3b4953;
+  border: 1px solid rgba(90,120,99,0.08);
+  padding: 9px 14px;
+  border-radius: 10px;
+  cursor: pointer;
+  font-weight: 700;
+}
+.add-cart:hover { transform: translateY(-2px); }
+
+.stock { color: #3b5a3f; font-weight: 600; margin: 6px 0; }
+.stock.out { color: #b02a2a; }
+
+.payment-icons { display: flex; align-items: center; gap: 8px; margin-top: 10px; }
+.payment-icons .p-icon { display: inline-flex; width: 36px; height: 24px; align-items: center; justify-content: center; background: #f6f9f4; border-radius: 6px; border:1px solid rgba(90,120,99,0.06); }
+
+.desc-scroll { max-height: 180px; overflow:auto; padding-right:6px; }
+
+.buy-now:hover,
+.buy-now:focus-visible {
+  transform: translateY(-3px);
+  box-shadow: 0 16px 32px rgba(30,60,40,0.18);
+  outline: none;
+}
+
+/* Disabled button states */
+.buy-now:disabled,
+.add-cart:disabled {
+  opacity: 0.56;
+  transform: none;
+  cursor: not-allowed;
+  box-shadow: none;
+}
+
+/* Close button styling inside detail modal */
+.modal-content.detail-modal .modal-close {
+  position: absolute;
+  right: 18px;
+  top: 12px;
+  background: transparent;
+  border: none;
+  font-size: 24px;
+  color: #333;
+  cursor: pointer;
+}
+
+/* Make description area scroll if very long */
+.detail-info .desc-scroll {
+  max-height: 220px;
+  overflow-y: auto;
+  padding-right: 6px;
 }
 
 @media (max-width: 800px) {
   .detail-body {flex-direction: column; align-items: center}
-  .detail-body img {width: 80%; height: auto}
+  .detail-body img {width: 84%; height: auto}
+  .detail-info h3 {text-align: center}
+  .detail-info .price {text-align: center}
+  .detail-info {padding: 0}
 }
 
 /* BUKU REKOMENDASI */
@@ -899,11 +1053,15 @@ footer {
   border-radius: 18px;
   overflow: hidden;
   box-shadow: 0 10px 25px rgba(0,0,0,.1);
-  transition: transform .3s;
+  transition: transform .28s ease, box-shadow .28s ease, background-color .28s ease, border-color .28s ease;
 }
 
-.book-card:hover {
-  transform: translateY(-6px);
+.book-card:hover,
+.book-card:focus-visible {
+  transform: translateY(-8px);
+  box-shadow: 0 22px 40px rgba(20,40,25,0.12);
+  background-color: #c6e0cc; /* darker green */
+  outline: none;
 }
 
 .book-card img {
@@ -965,13 +1123,19 @@ footer {
   border-radius: 18px;
   overflow: hidden;
   box-shadow: 0 10px 25px rgba(0,0,0,.1);
-  transition: transform .3s;
+  transition: transform .28s ease, box-shadow .28s ease, background-color .28s ease, border-color .28s ease;
   padding: 15px;
+  position: relative;
 }
 
-/* Efek hover: card naik sedikit */
-.kategori-card:hover {
-  transform: translateY(-6px);
+/* Efek hover: card naik sedikit dan background lebih gelap */
+.kategori-card:hover,
+.kategori-card:focus-visible {
+  transform: translateY(-8px);
+  box-shadow: 0 22px 40px rgba(20,40,25,0.12);
+  background-color: #c6e0cc; /* darker green */
+  border-color: #5a7a59;
+  outline: none;
 }
 
 .kategori-card .image-container {
@@ -981,7 +1145,7 @@ footer {
 
 .image-container img {
   width: 100%;
-  height: 200px;
+  height: 260px; /* slightly taller so cover looks better */
   object-fit: cover;
   border-radius: 10px;
   display: block;
@@ -1030,19 +1194,57 @@ footer {
   font-weight: bold;
 }
 
+/* Stock badge on cards */
+.stock-badge {
+  position: absolute;
+  right: 12px;
+  top: 12px;
+  background: #fff4e6;
+  color: #3b4953;
+  border: 1px solid rgba(90,120,99,0.08);
+  padding: 6px 8px;
+  border-radius: 10px;
+  font-weight: 700;
+  font-size: 13px;
+  box-shadow: 0 6px 18px rgba(20,40,20,0.04);
+}
+.stock-badge.low { background: linear-gradient(180deg,#fff9f0,#fff4e6); color: #b3602e; border-color: rgba(176,42,42,0.08); }
+.stock-badge.out { background: #f8e8e8; color: #9b2a2a; border-color: rgba(176,42,42,0.12); }
+
+.card-author {
+  text-align: center;
+  color: #4a5a47;
+  font-size: 13px;
+  margin-top: 4px;
+  opacity: 0.95;
+}
+
+/* Ensure card title and price are centered */
+.kategori-card .card-title,
+.kategori-card .price {
+  text-align: center;
+  width: 100%;
+  display: block;
+}
+
 /* ========== TERLARIS CARD ========== */
 .terlaris-card {
   background: #EBF4DD;
   border-radius: 18px;
   overflow: hidden;
   box-shadow: 0 10px 25px rgba(0,0,0,.1);
-  transition: transform .3s;
+  transition: transform .28s ease, box-shadow .28s ease, background-color .28s ease, border-color .28s ease;
   padding: 15px;
 }
 
-/* Efek hover: card naik sedikit */
-.terlaris-card:hover {
-  transform: translateY(-6px);
+/* Efek hover: card naik sedikit dan gelapkan background */
+.terlaris-card:hover,
+.terlaris-card:focus-visible {
+  transform: translateY(-8px);
+  box-shadow: 0 22px 40px rgba(20,40,25,0.12);
+  background-color: #c6e0cc; /* darker green */
+  border-color: #5a7a59;
+  outline: none;
 }
 
 .terlaris-card img {
