@@ -88,6 +88,8 @@ Project ini dapat dijalankan dengan mudah karena merupakan static web:
     *   Klik kanan pada file `index.html`.
     *   Pilih "Open with Live Server".
     *   Website akan terbuka otomatis di browser default Anda (biasanya di `http://127.0.0.1:5500`).
+4. **Dapat diakses di GitHub Pages:**
+    *   [https://novan2.github.io/PWSK-Tugas-Team/](https://novan2.github.io/PWSK-Tugas-Team/)
 
 ## F. Tautan GitHub Pages
 Website dapat diakses secara online melalui link berikut:
