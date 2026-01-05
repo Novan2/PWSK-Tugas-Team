@@ -9,26 +9,21 @@ document.addEventListener("DOMContentLoaded", function () {
     const totalSlides = cards.length;
     let autoPlayInterval;
 
-    function updateSlider() {
-        // 1. Geser track seperti kereta api
-        // Ambil gap dari CSS secara dinamis
-        const style = window.getComputedStyle(slider);
-        const gap = parseFloat(style.gap) || 30; // default 30 if parsing fails
+  function updateSlider() {
+    const containerWidth = slider.parentElement.offsetWidth;
+    const cardWidth = cards[currentIndex].offsetWidth;
+    const centerOffset = (containerWidth / 2) - (cardWidth / 2);
+    const cardRect = cards[currentIndex].offsetLeft;
+    const finalOffset = centerOffset - cardRect;
 
-        const cardWidth = cards[0].offsetWidth + gap;
-        const offset = -(currentIndex * cardWidth);
-        slider.style.transform = `translateX(${offset}px)`;
-
-        // 2. Update Class Active untuk efek kartu fokus
-        cards.forEach((card, index) => {
-            card.classList.toggle("active", index === currentIndex);
-        });
-
-        // 3. Update Dots
-        dots.forEach((dot, index) => {
-            dot.classList.toggle("active", index === currentIndex);
-        });
-    }
+    slider.style.transform = `translateX(${finalOffset}px)`;
+    cards.forEach((card, index) => {
+        card.classList.toggle("active", index === currentIndex);
+    });
+    dots.forEach((dot, index) => {
+        dot.classList.toggle("active", index === currentIndex);
+    });
+}
 
     function moveNext() {
         currentIndex = (currentIndex + 1) % totalSlides;
@@ -65,11 +60,6 @@ document.addEventListener("DOMContentLoaded", function () {
     // Pause saat kursor masuk
     slider.addEventListener("mouseenter", () => clearInterval(autoPlayInterval));
     slider.addEventListener("mouseleave", startTimer);
-
-    // Update saat resize agar responsif
-    window.addEventListener("resize", () => {
-        updateSlider();
-    });
 
     // Jalankan pertama kali
     updateSlider();
