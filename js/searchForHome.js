@@ -40,9 +40,13 @@ document.addEventListener("submit", (e) => {
                  **/
                 console.log("Redirect ke halaman kategori...");
 
-                // Gunakan path relatif agar aman di subdirectory (GitHub Pages)
-                // Asumsi: searchForHome.js dipanggil di index.html yang sejajar dengan kategori.html
-                window.location.href = `kategori.html?search=${encodeURIComponent(keyword)}`;
+                // Gunakan URL API untuk membangun full URL secara robust
+                // Ini akan menangani path relatif terhadap halaman saat ini (baik itu root / atau /index.html)
+                // sehingga aman untuk GitHub Pages dengan subdirectory.
+                const targetUrl = new URL("kategori.html", window.location.href);
+                targetUrl.searchParams.set("search", keyword);
+
+                window.location.href = targetUrl.toString();
             }
         }
     }
