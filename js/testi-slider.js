@@ -11,8 +11,11 @@ document.addEventListener("DOMContentLoaded", function () {
 
     function updateSlider() {
         // 1. Geser track seperti kereta api
-        // Kita hitung lebar kartu + gap (kira-kira 380px)
-        const cardWidth = cards[0].offsetWidth + 30; 
+        // Ambil gap dari CSS secara dinamis
+        const style = window.getComputedStyle(slider);
+        const gap = parseFloat(style.gap) || 30; // default 30 if parsing fails
+
+        const cardWidth = cards[0].offsetWidth + gap;
         const offset = -(currentIndex * cardWidth);
         slider.style.transform = `translateX(${offset}px)`;
 
@@ -62,6 +65,11 @@ document.addEventListener("DOMContentLoaded", function () {
     // Pause saat kursor masuk
     slider.addEventListener("mouseenter", () => clearInterval(autoPlayInterval));
     slider.addEventListener("mouseleave", startTimer);
+
+    // Update saat resize agar responsif
+    window.addEventListener("resize", () => {
+        updateSlider();
+    });
 
     // Jalankan pertama kali
     updateSlider();

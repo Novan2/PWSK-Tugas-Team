@@ -131,17 +131,41 @@
 
 /* Responsif untuk ukuran layar kecil */
 @media screen and (max-width: 768px) {
-    .input-group {
-        flex-direction: column;
-        /* Pastikan form input responsif pada layar kecil */
+    .sec-wraper {
+        padding: 20px 15px;
+        /* Reduce padding significantly */
     }
 
     .contact-section {
-        padding: 20px;
+        padding: 20px 15px;
+        margin: 0;
+        /* Remove extra margin */
+    }
+
+    .contact-section h2 {
+        font-size: 2rem;
+        /* Smaller title */
+    }
+
+    .input-group {
+        flex-direction: column;
+        gap: 15px;
     }
 
     .submit-btn {
         width: 100%;
+        font-size: 1.1rem;
+        padding: 12px;
+    }
+
+    .social-media p {
+        font-size: 1.5rem;
+    }
+
+    .social-icons a {
+        font-size: 1rem;
+        display: inline-block;
+        margin: 5px;
     }
 }
 

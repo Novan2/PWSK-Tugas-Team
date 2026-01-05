@@ -520,15 +520,40 @@ footer {
 /* Mobile Devices */
 @media screen and (max-width: 768px) {
 
+    /* Prevent horizontal scroll */
+    html,
+    body {
+        overflow-x: hidden;
+        width: 100%;
+        position: relative;
+    }
+
     /* Navbar Mobile */
     nav {
-        padding: 16px 20px;
+        padding: 12px 20px;
         position: relative;
+        justify-content: space-between;
+    }
+
+    .nav-right {
+        gap: 10px;
+        width: 100%;
+        justify-content: space-between;
+        /* Ensure logo/search is left, burger is right */
+    }
+
+    /* Menu Wrapper */
+    .menu-logo {
+        flex-grow: 1;
+        /* Allow to take space but not push burger off if wrapped */
+        max-width: calc(100% - 40px);
+        /* Reserve space for burger */
     }
 
     .hamburger {
         display: flex;
-        margin-left: 20px;
+        margin-left: 0;
+        /* Space handled by justify-between */
     }
 
     /* Hide menu by default */
@@ -540,11 +565,13 @@ footer {
         left: 0;
         right: 0;
         background-color: #ffffff;
-        box-shadow: 0 10px 15px rgba(0, 0, 0, 0.1);
-        padding: 20px;
-        z-index: 1000;
-        text-align: center;
+        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        padding: 0;
+        /* Reset padding */
+        z-index: 9999;
+        text-align: left;
         border-top: 1px solid #90AB8B;
+        width: 100%;
     }
 
     /* Show menu when active */
@@ -553,30 +580,42 @@ footer {
     }
 
     #information li {
-        margin: 15px 0;
+        margin: 0;
+        border-bottom: 1px solid #f0f0f0;
         width: 100%;
+    }
+
+    #information li a {
+        display: block;
+        padding: 15px 20px;
+        width: 100%;
+    }
+
+    #information li a.login {
+        display: inline-block;
+        margin: 15px 20px;
+        width: auto;
     }
 
     /* Adjust Search Box for Mobile */
     .search-box:focus {
-        width: 180px;
-        /* Smaller width on mobile */
-    }
-
-    .nav-right {
-        gap: 10px;
-        justify-content: flex-end;
+        width: 160px;
+        /* Smaller width on mobile to prevent overflow */
+        position: absolute;
+        z-index: 10;
     }
 
     /* Hero Section Mobile */
     .hero {
         padding: 40px 20px;
-        margin: 20px 0;
+        margin: 20px 10px;
+        /* Add margin to not touch edges */
         text-align: center;
     }
 
     .hero-content h2 {
-        font-size: 28px;
+        font-size: 26px;
+        /* Slightly smaller */
     }
 
     .hero-content p {
@@ -585,11 +624,17 @@ footer {
 
     /* Book Cards Mobile */
     .books {
-        padding: 20px 0;
+        padding: 20px 10px;
     }
 
     .carousel {
-        padding: 20px;
+        padding: 20px 0;
+        /* Maximize width */
+    }
+
+    .carousel-track {
+        gap: 20px;
+        /* Reduce gap */
     }
 
     /* Footer Mobile */
