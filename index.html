@@ -11,32 +11,8 @@
 </head>
 <body>
     <!-- NAVBAR -->
-    <nav>
-        <div class="nav-right">
-            <div class="menu-logo">
-                <div href="index.html" class="logo">On-Book</div>
-    
-                <!-- <input type="text" class="search" placeholder="Search books..."> -->
-                <form id="searchForm" class="search-container">
-                    <input id="search-box" type="text" class="search-box" name="q" placeholder="Search books..." />
-                    <label for="search-box"><span class="glyphicon glyphicon-search search-icon"></span></label>
-                    <input type="submit" id="search-submit" style="display: none;" />
-                </form>
-            </div>
+    <header id="site-header"data-include-src="../component/header.html"></header>
 
-            <div>
-                <ul id="information">
-                    <li><a href="./index.html">Home</a></li>
-                    <li><a href="kategori/kategori.html">Kategori Buku</a></li>
-                    <li><a href="About/about.html">About</a></li>
-                    <li><a href="Testimoni/testi.html">Ulasan</a></li>
-                    <li><a href="#contact">Kontak</a></li>
-                    <li><a class="login" href="#">Login</a></li>
-                </ul>
-
-            </div>
-        </div>
-    </nav>
 
     <main>
         <!-- HERO / PROMO BANNER -->
@@ -107,58 +83,12 @@
         </section>
     </main>
 
-    <footer>
-        <div class="footer-content">
-            <div class="content-top">
-                <div class="content-top1">
-                    <div class="content-top1-list">
-                        <h3>Produk OnBook</h3>
-                        <a href="#">OnBook Affiliate</a>
-                        <a href="#">Mitra OnBook</a>
-                    </div>
-                    <div class="content-top1-list">
-                        <h3>Informasi Belanja</h3>
-                        <a href="#">Berbelanja</a>
-                        <a href="#">Pembayaran</a>
-                        <a href="#">Pengiriman</a>
-                    </div>
-                    <div class="content-top1-list">
-                        <h3>Tentang OnBook</h3>
-                        <a href="#">Tentang Kami</a>
-                        <a href="#">Toko Kami</a>
-                    </div>
-                    <div class="content-top1-list">
-                        <h3>Lainnya</h3>
-                        <a href="#">Blog</a>
-                        <a href="#">Kebijakan Privasi</a>
-                        <a href="#">Hubungi Kami</a>
-                        <a href="#">Kerja Sama</a>
-                    </div>
-                </div>
-                <div class="content-top2">
-                    <h3>Aplikasi Seluler Kami</h3>
-                    <p>Download aplikasi OnBook.com yang tersedia di seluruh perangkat iOS dan Android</p>
-                    <div class="icon-top2">
-                        <i>aaaa</i>
-                        <i>aaaa</i>
-                    </div>
-                </div>
-            </div>
-            <hr>
-            <div class="content-bottom">
-                <p>© 2025 PT OnBook Asri Media</p>
-                <div>
-                    <i>aaaa</i>
-                    <i>aaaa</i>
-                    <i>aaaa</i>
-                    <i>aaaa</i>
-                </div>
-            </div>
-        </div>
+  <footer id="site-footer"data-include-src="../component/footer.html"></footer>
     </footer>
     <script src="/Javascript/databuku.js" type="module"></script>
     <script src="/Javascript/slider.js" type="module"></script>
     <script src="/Javascript/search.js" type="module"></script>
+    <script type="module" src="/Javascript/includes.js"></script>
     <div></div>
 </body>
 </html>

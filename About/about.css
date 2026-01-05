@@ -49,13 +49,6 @@ nav {
 }
 
 /* =========================
-   MAIN LAYOUT
-========================= */
-main {
-    padding: 0px 80px;
-}
-
-/* =========================
    LOGO
 ========================= */
 .logo {
@@ -408,8 +401,8 @@ main {
 }
 
 .about-section img {
-    max-width: 600px;
-    height: 360px; 
+    max-width: 44%; /* Membuat gambar responsif */
+    height: auto; /* Menjaga aspek rasio gambar */
     border-radius: 15px;
     box-shadow: 0 15px 30px rgba(59, 73, 83, 0.25);
 }
@@ -476,8 +469,13 @@ main {
     transition: transform 0.3s ease, box-shadow 0.3s ease;
 }
 
-.store-card img {
-    width: 80%;
+.store-thumb {
+    min-width: 20%;
+}
+
+.store-name {
+    margin: 0;
+    margin-bottom: 10px;
 }
 
 .store-cards:hover {
@@ -498,7 +496,7 @@ main {
 footer {
     background-color: #5A7863;
     font-size: 0.9em;
-    padding: 28px 80px;
+    padding: 20px 80px;
 }
 
 .footer-content {
