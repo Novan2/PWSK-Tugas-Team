@@ -69,6 +69,10 @@ main {
     }
 }
 
+.about-text p {
+    text-align: left;
+}
+
 .store-header {
     margin-top: 60px;
     display: flex;
@@ -135,6 +139,10 @@ main {
         width: 100%;
         margin-bottom: 15px;
     }
+
+    .store-card-body {
+        text-align: left;
+    }
 }
 
 .store-cards {
@@ -178,7 +186,7 @@ main {
 /* =========================
    FOOTER
 ========================= */
-footer {
+/* footer {
     background-color: #5A7863;
     font-size: 0.9em;
     padding: 20px 80px;
@@ -259,7 +267,7 @@ hr {
 
 .content-bottom i {
     background-color: #ffffff;
-}
+} */
 
 .more-buttons {
     display: flex;
@@ -296,39 +304,60 @@ hr {
     main {
         padding: 0px 40px;
     }
-
-    footer {
-        padding: 28px 40px;
-    }
 }
 
 @media (max-width: 768px) {
+
+    /* Navbar Mobile - Reset to match global style.css if needed, or ensure it flows correctly */
     nav {
-        padding: 14px 20px;
+        padding: 12px 20px;
     }
 
     .nav-right {
-        flex-direction: column;
-        align-items: flex-start;
-        gap: 12px;
+        /* Ensure global styles take precedence or duplicate here if about.css isolated */
+        /* Since about.css is loaded AFTER style.css, we must be careful */
+        flex-direction: row;
+        /* reset towards global style if that was the intent, but wait, style.css has nav-right as flex row with gap. */
+        width: 100%;
+        justify-content: space-between;
+        align-items: center;
+        /* fix alignment */
+    }
+
+    /* Fix search box overlap */
+    .search-box:focus {
+        width: 160px;
+        position: absolute;
+        z-index: 10;
     }
 
     #information {
-        flex-wrap: wrap;
-        gap: 10px;
-        font-size: 1em;
+        /* Hamburger menu logic rely on style.css, but ensure no overwrites here */
+        /* If we want the menu to appear below, we need to ensure it's not flex-wrap: wrap inline */
+        flex-direction: column;
+        width: 100%;
+        gap: 0;
+        /* Reset any specific about.css styling that breaks the global mobile menu */
     }
 
     #information li {
-        margin-left: 0;
-    }
-
-    .search-box:focus {
-        width: 220px;
+        margin: 0;
     }
 
     main {
         padding: 0px 20px;
+    }
+
+    .about-section {
+        flex-direction: column-reverse;
+        text-align: center;
+        margin-top: 20px;
+    }
+
+    .about-section img {
+        max-width: 100%;
+        height: auto;
+        margin-top: 20px;
     }
 
     .content-top {
@@ -336,14 +365,6 @@ hr {
         gap: 24px;
     }
 
-    .content-top2 {
-        align-items: flex-start;
-        text-align: left;
-    }
-
-    .content-bottom {
-        flex-direction: column;
-        gap: 10px;
-        align-items: flex-start;
-    }
+    /* Content bottom handled by style.css */
+    /* .content-top2, .content-bottom removed */
 }

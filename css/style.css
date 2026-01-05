@@ -261,9 +261,8 @@ main {
 
 /* VIEWPORT */
 .carousel {
-    padding: 40px 40px 40px 40px;
-    padding-left: 40px;
-    overflow: hidden;
+    padding: 50px 40px;
+    /* Increased vertical padding to prevent shadow clipping */
     overflow-x: auto;
     overflow-y: hidden;
     scroll-behavior: smooth;
@@ -338,12 +337,18 @@ main {
 .why-us {
     padding: 60px 40px;
     color: #5A7863;
+    text-align: center;
+    /* Center the section title and content */
 }
 
 .why-us h2 {
     color: #3B4953;
     margin-bottom: 30px;
     font-size: 28px;
+    text-align: left;
+    /* Align title to left as requested */
+    width: 100%;
+    display: block;
 }
 
 /* GRID */
@@ -362,6 +367,8 @@ main {
     min-height: 180px;
     box-shadow: 0 12px 25px rgba(59, 73, 83, 0.3);
     transition: transform 0.3s ease, box-shadow 0.3s ease;
+    text-align: center;
+    /* Center card content as requested for "rapi" */
 }
 
 .why-card.h3 {
@@ -628,7 +635,7 @@ footer {
     }
 
     .carousel {
-        padding: 20px 0;
+        padding: 20px 40px;
         /* Maximize width */
     }
 
@@ -662,5 +669,30 @@ footer {
         gap: 20px;
         align-items: center;
         text-align: center;
+    }
+
+    /* Why Us Compact Mobile */
+    .why-us {
+        padding: 30px 20px;
+    }
+
+    .why-grid {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 12px;
+    }
+
+    .why-card {
+        padding: 15px;
+        min-height: auto;
+    }
+
+    .why-card h3 {
+        font-size: 16px;
+        margin-bottom: 8px;
+    }
+
+    .why-card p {
+        font-size: 12px;
+        line-height: 1.4;
     }
 }

@@ -20,11 +20,21 @@
     margin-bottom: 20px
 }
 
+
 .contact-section p {
     padding: 0px 60px;
     margin: 10px 0;
     font-size: 1.em;
     color: #555;
+}
+
+@media (max-width: 768px) {
+    .contact-section p {
+        padding: 0px 10px;
+        margin: 10px 0;
+        font-size: 1.em;
+        color: #555;
+    }
 }
 
 .contact-form {

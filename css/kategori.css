@@ -630,26 +630,90 @@ main {
 }
 
 @media (max-width: 800px) {
+  .detail-modal {
+    padding: 20px 16px;
+    max-width: 95%;
+    /* Better than 100% to show it's a modal */
+    width: 100%;
+    margin: 10px auto;
+    border-radius: 12px;
+    max-height: 85vh;
+    /* Allow some space outside */
+    display: flex;
+    flex-direction: column;
+  }
+
   .detail-body {
     flex-direction: column;
     align-items: center;
+    gap: 16px;
   }
 
   .detail-body img {
-    width: 84%;
+    width: 140px;
+    /* Smaller image to save space */
     height: auto;
-  }
-
-  .detail-info h3 {
-    text-align: center;
-  }
-
-  .detail-info .price {
-    text-align: center;
+    max-height: 220px;
+    box-shadow: 0 6px 16px rgba(0, 0, 0, 0.15);
+    border-radius: 8px;
   }
 
   .detail-info {
     padding: 0;
+    width: 100%;
+    text-align: center;
+  }
+
+  .detail-info h3 {
+    text-align: center;
+    font-size: 20px;
+    /* Smaller title */
+    margin-bottom: 6px;
+  }
+
+  .detail-info .author {
+    font-size: 14px;
+    margin-bottom: 10px;
+  }
+
+  .detail-info .price {
+    text-align: center;
+    font-size: 22px;
+    margin: 10px 0;
+  }
+
+  .detail-info .desc-scroll {
+    max-height: 120px;
+    /* Shorter scroll area */
+    font-size: 13px;
+    margin-bottom: 15px;
+    text-align: justify;
+    /* Keep justified for reading */
+  }
+
+  /* Purchase controls better stacking */
+  .purchase-controls {
+    flex-direction: column;
+    gap: 10px;
+    justify-content: center;
+    width: 100%;
+  }
+
+  .modal-actions {
+    flex-direction: column;
+    width: 100%;
+    gap: 10px;
+  }
+
+  .modal-actions button {
+    width: 100%;
+    /* Full width buttons */
+    padding: 12px;
+  }
+
+  .payment-icons {
+    justify-content: center;
+    margin-top: 15px;
   }
 }
 

@@ -14,23 +14,6 @@ document.addEventListener("submit", (e) => {
         if (keyword) {
             // Cek lokasi file saat ini
             const currentPath = window.location.pathname;
-
-            if (currentPath.includes("kategori.html")) {
-                /** * JIKA DI HALAMAN KATEGORI:
-                 * Tidak perlu pindah halaman, cukup panggil fungsi loadBooks 
-                 * yang ada di kategori.js atau databuku.js
-                 **/
-                console.log("Mencari di halaman kategori:", keyword);
-                
-                // Jika loadBooks adalah function global, panggil langsung
-                if (typeof searchBooks === "function") {
-                searchBooks(keyword);
-                } else {
-                    // Fallback: reload dengan param baru agar loadData() menangkap keyword
-                    window.location.search = `?search=${encodeURIComponent(keyword)}`;
-                }
-
-            } else {
                 /** * JIKA DI HALAMAN INDEX / LAINNYA:
                  * Pindah ke halaman kategori dengan membawa parameter search
                  **/
@@ -38,8 +21,7 @@ document.addEventListener("submit", (e) => {
                 
                 // Gunakan path relatif yang aman menuju folder kategori
                 // Jika index.html sejajar dengan folder kategori/
-                window.location.href = `kategori/kategori.html?search=${encodeURIComponent(keyword)}`;
-            }
+                window.location.href = `?search=${encodeURIComponent(keyword)}`;
         }
     }
 });
