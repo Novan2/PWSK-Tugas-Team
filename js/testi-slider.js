@@ -51,7 +51,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
     // Auto Play
     function startTimer() {
-        autoPlayInterval = setInterval(moveNext, 4000);
+        autoPlayInterval = setInterval(moveNext, 3000);
     }
 
     function resetTimer() {
