@@ -1,48 +1,39 @@
-document.getElementById('contactForm').addEventListener('submit', function(e) {
-    e.preventDefault(); // Menghentikan form agar tidak reload
+function validateForm() {
+    // Ambil nilai dari setiap input
+    var name = document.getElementById("name").value;
+    var company = document.getElementById("company").value;
+    var phone = document.getElementById("phone").value;
+    var email = document.getElementById("email").value;
+    var subject = document.getElementById("subject").value;
+    var message = document.getElementById("message").value;
 
-    // Ambil nilai input
-    const nama = document.getElementById('nama').value.trim();
-    const email = document.getElementById('email').value.trim();
-    const pesan = document.getElementById('pesan').value.trim();
-
-    // Ambil elemen error
-    const namaErr = document.getElementById('namaError');
-    const emailErr = document.getElementById('emailError');
-    const pesanErr = document.getElementById('pesanError');
-
-    let valid = true;
-
-    // Validasi Nama
-    if (nama.length < 3) {
-        namaErr.style.display = 'block';
-        valid = false;
-    } else {
-        namaErr.style.display = 'none';
+    // Validasi: Cek apakah semua field sudah diisi
+    if (name === "" || company === "" || phone === "" || email === "" || subject === "" || message === "") {
+        showAlert("Semua field harus diisi!", "error");
+        return false;
     }
 
-    // Validasi Email (Regex)
-    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-    if (!emailRegex.test(email)) {
-        emailErr.style.display = 'block';
-        valid = false;
-    } else {
-        emailErr.style.display = 'none';
+    // Validasi Email
+    var emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    if (!emailPattern.test(email)) {
+        showAlert("Alamat email tidak valid!", "error");
+        return false;
     }
 
-    // Validasi Pesan
-    if (pesan === "") {
-        pesanErr.style.display = 'block';
-        valid = false;
-    } else {
-        pesanErr.style.display = 'none';
-    }
+    // Jika semua validasi lulus, tampilkan alert sukses
+    showAlert("Pesan Anda telah dikirim dengan sukses!", "success");
+    document.getElementById("contact-form").reset(); // Reset form setelah kirim
+}
 
-    // Jika semua valid
-    if (valid) {
-        alert("Pesan Berhasil Terkirim!\n\nNama: " + nama + "\nEmail: " + email);
-        
-        // Reset form setelah sukses
-        document.getElementById('contactForm').reset();
-    }
-});
+// Fungsi untuk menampilkan alert
+function showAlert(message, type) {
+    var alertMessage = document.getElementById("alert-message");
+    alertMessage.textContent = message;
+    alertMessage.className = "alert " + type; // Menambahkan kelas berdasarkan tipe
+    alertMessage.style.display = "block"; // Menampilkan alert
+
+    // Menghilangkan alert setelah 5 detik
+    setTimeout(function() {
+        alertMessage.style.display = "none";
+    }, 5000);
+}

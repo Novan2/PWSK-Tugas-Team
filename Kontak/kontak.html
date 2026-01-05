@@ -10,39 +10,46 @@
 </head>
 
 <body>
-    <header id="site-header"data-include-src="../component/header.html"></header>
+    <header id="site-header" data-include-src="../component/header.html"></header>
 
-    <section class="contact-section">
-        <h2>Send us a message</h2>
-        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut elit tellus, luctus nec ullamcorper mattis, pulvinar dapibus leo.</p>
-        <form action="#" method="post" class="contact-form">
-            <div class="input-group">
-                <input type="text" name="name" placeholder="Name" required>
-            </div>
-            <div class="input-group">
-                <input type="tel" name="phone" placeholder="Phone" required>
-                <input type="email" name="email" placeholder="Email" required>
-            </div>
-            <div class="input-group">
-                <input type="text" name="subject" placeholder="Subject" required>
-            </div>
-            <div class="input-group">
-                <textarea name="message" placeholder="Message" required></textarea>
-            </div>
-            <button type="submit" class="submit-btn">SEND MESSAGE</button>
-        </form>
-        <div class="social-media">
-            <p>Follow our social media</p>
-            <div class="social-icons">
-                <a href="#">Facebook</a>
-                <a href="#">Instagram</a>
-                <a href="#">YouTube</a>
-            </div>
-        </div>
-    </section>
+    <div class="sec-wraper">
+        <section class="contact-section">
+            <h2>Send us a message</h2>
+            <p>Terima kasih telah mengunjungi Toko Buku Online kami! Jika Anda memiliki pertanyaan, membutuhkan rekomendasi buku, atau ingin memberikan masukan, silakan kirimkan pesan melalui formulir di bawah ini. Kami akan segera merespons pertanyaan Anda dalam waktu 24 jam.</p>
+            <form id="contact-form" class="contact-form">
+                <div class="input-group">
+                    <input type="text" id="name" name="name" placeholder="Name" required>
+                    <input type="text" id="company" name="company" placeholder="Company" required>
+                </div>
+                <div class="input-group">
+                    <input type="tel" id="phone" name="phone" placeholder="Phone" required>
+                    <input type="email" id="email" name="email" placeholder="Email" required>
+                </div>
+                <div class="input-group">
+                    <input type="text" id="subject" name="subject" placeholder="Subject" required>
+                </div>
+                <div class="input-group">
+                    <textarea id="message" name="message" placeholder="Message" required></textarea>
+                </div>
+                <button type="button" class="submit-btn" onclick="validateForm()">SEND MESSAGE</button>
+            </form>
 
+            <!-- Alert Section -->
+            <div id="alert-message" class="alert" style="display: none;"></div>
 
-    <footer id="site-footer"data-include-src="../component/footer.html"></footer>
+            <div class="social-media">
+                <p>Follow our social media</p>
+                <div class="social-icons">
+                    <a href="#">Facebook</a>
+                    <a href="#">Instagram</a>
+                    <a href="#">YouTube</a>
+                </div>
+            </div>
+        </section>
+
+    </div>
+        
+        <footer id="site-footer" data-include-src="../component/footer.html"></footer>
 
     <script src="../Javascript/kontak.js" type="module"></script>
     <script type="module" src="../Javascript/includes.js"></script>
