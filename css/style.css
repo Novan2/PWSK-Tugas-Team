@@ -1,11 +1,15 @@
 * {
     margin: 0;
     caret-color: transparent;
+    
 }
 
 body {
     font-family: Arial, sans-serif;
     background-color: #F5F5F0;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
 }
 
 /*=========== NAVBAR ============== */
@@ -390,6 +394,7 @@ main {
 
 footer {
     background-color: #5A7863;
+    margin-top: auto;
     font-size: 0.9em;
     padding: 20px 80px;
 }
