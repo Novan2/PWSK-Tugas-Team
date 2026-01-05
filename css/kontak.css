@@ -35,8 +35,7 @@
 
 .input-group {
     display: flex;
-    flex-direction: column;
-    /* Ganti row ke column agar form lebih responsif */
+    flex-direction: row;
     gap: 20px;
     margin-bottom: 15px;
 }

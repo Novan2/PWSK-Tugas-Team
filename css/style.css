@@ -3,7 +3,7 @@
     caret-color: transparent;
 }
 
-body{
+body {
     font-family: Arial, sans-serif;
     background-color: #F5F5F0;
 }
@@ -12,8 +12,10 @@ body{
 nav {
     display: flex;
     flex-direction: row;
-    justify-content: space-between; /* logo kiri, nav kanan */
-    padding: 16px 120px; /* kurangi padding agar muat */
+    justify-content: space-between;
+    /* logo kiri, nav kanan */
+    padding: 16px 120px;
+    /* kurangi padding agar muat */
     border-bottom: 1px solid #90AB8B;
     font-size: 1.02em;
 }
@@ -25,7 +27,8 @@ nav {
     align-items: center;
     gap: 20px;
     flex-wrap: nowrap;
-    flex-grow: 1; /* ambil sisa ruang */
+    flex-grow: 1;
+    /* ambil sisa ruang */
     justify-content: space-between;
 }
 
@@ -58,13 +61,13 @@ main {
     width: 39px;
     height: 40px;
     border-radius: 20px;
-    border:none;
+    border: none;
     cursor: pointer;
     background: rgb(235, 235, 235);
     color: black;
 }
 
-.search-box + label .search-icon {
+.search-box+label .search-icon {
     color: black;
 }
 
@@ -74,11 +77,11 @@ main {
     box-shadow: 0 0 0 5px #5A7863;
 }
 
-.search-box:hover + label .search-icon {
+.search-box:hover+label .search-icon {
     color: white;
 }
 
-.search-box:focus { 
+.search-box:focus {
     border: none;
     outline: none;
     box-shadow: none;
@@ -90,7 +93,7 @@ main {
     color: black;
 }
 
-.search-box:focus + label .search-icon {
+.search-box:focus+label .search-icon {
     color: black;
 }
 
@@ -110,7 +113,7 @@ main {
     cursor: pointer;
 }
 
- /* .search {
+/* .search {
     flex: 1;
     max-width: 300px;
     padding: 10px 15px;
@@ -132,7 +135,8 @@ main {
     margin: 0;
     padding: 0;
     gap: 15px;
-    flex-shrink: 0; /* menu tidak mengecil terlalu kecil */
+    flex-shrink: 0;
+    /* menu tidak mengecil terlalu kecil */
     font-size: 1.1em;
 }
 
@@ -164,6 +168,7 @@ main {
 .login:hover {
     background-color: #3B4953;
 }
+
 /* =========HERO PROMO========= */
 .hero {
     background: linear-gradient(135deg, #90AB8B, #EBF4DD);
@@ -192,6 +197,7 @@ main {
     border-radius: 25px;
     cursor: pointer;
 }
+
 /*============ BEST BOOK  ===========*/
 .books {
     padding: 40px;
@@ -227,7 +233,7 @@ main {
 
 .rank-number {
     position: absolute;
-    left: -38px;             
+    left: -38px;
     bottom: 16px;
 
     font-size: 120px;
@@ -235,7 +241,7 @@ main {
     line-height: 1;
     color: #5A7863;
 
-    -webkit-text-stroke: 3px #ffffff; 
+    -webkit-text-stroke: 3px #ffffff;
     text-shadow: 0 15px 30px rgba(59, 73, 83, 0.636);
     z-index: 10;
     pointer-events: none;
@@ -264,8 +270,8 @@ main {
     width: 100%;
 }
 
-.carousel::-webkit-scrollbar{
-  display: none;               
+.carousel::-webkit-scrollbar {
+    display: none;
 }
 
 /* TRACK */
@@ -276,7 +282,7 @@ main {
 
 
 /* =============DOTS SLIDER=========== */
-.carousel-dots {    
+.carousel-dots {
     display: flex;
     justify-content: center;
     margin-top: 0px;
@@ -406,12 +412,12 @@ footer {
     gap: 8px;
 }
 
-.content-top1-list h3{
+.content-top1-list h3 {
     padding-bottom: 8px;
     font-size: 1.6em;
 }
 
-.content-top1-list a{
+.content-top1-list a {
     color: #ffffff;
     text-decoration: underline;
 }
@@ -425,11 +431,11 @@ footer {
     gap: 8px;
 }
 
-.content-top2 h3{
+.content-top2 h3 {
     font-size: 1.6em;
 }
 
-.content-top2 i{
+.content-top2 i {
     background-color: #ffffff;
     width: fit-content;
 }
@@ -449,4 +455,167 @@ footer {
 
 .content-bottom i {
     background-color: #ffffff;
+}
+
+/* =========================
+   HAMBURGER MENU UTILS
+========================= */
+.hamburger {
+    display: none;
+    flex-direction: column;
+    justify-content: space-around;
+    width: 30px;
+    height: 25px;
+    background: transparent;
+    border: none;
+    cursor: pointer;
+    padding: 0;
+    z-index: 1001;
+    /* Above menu */
+}
+
+.hamburger span {
+    width: 30px;
+    height: 3px;
+    background: #3B4953;
+    border-radius: 10px;
+    transition: all 0.3s linear;
+    position: relative;
+    transform-origin: 1px;
+}
+
+/* Hamburger Animation */
+.hamburger.active span:first-child {
+    transform: rotate(45deg);
+}
+
+.hamburger.active span:nth-child(2) {
+    opacity: 0;
+    transform: translateX(20px);
+}
+
+.hamburger.active span:nth-child(3) {
+    transform: rotate(-45deg);
+}
+
+/* =========================
+   RESPONSIVE DESIGN
+========================= */
+
+/* Tablet & Mobile */
+@media screen and (max-width: 1024px) {
+    nav {
+        padding: 16px 40px;
+    }
+
+    main {
+        padding: 0 40px;
+    }
+
+    footer {
+        padding: 20px 40px;
+    }
+}
+
+/* Mobile Devices */
+@media screen and (max-width: 768px) {
+
+    /* Navbar Mobile */
+    nav {
+        padding: 16px 20px;
+        position: relative;
+    }
+
+    .hamburger {
+        display: flex;
+        margin-left: 20px;
+    }
+
+    /* Hide menu by default */
+    #information {
+        display: none;
+        flex-direction: column;
+        position: absolute;
+        top: 100%;
+        left: 0;
+        right: 0;
+        background-color: #ffffff;
+        box-shadow: 0 10px 15px rgba(0, 0, 0, 0.1);
+        padding: 20px;
+        z-index: 1000;
+        text-align: center;
+        border-top: 1px solid #90AB8B;
+    }
+
+    /* Show menu when active */
+    #information.active {
+        display: flex;
+    }
+
+    #information li {
+        margin: 15px 0;
+        width: 100%;
+    }
+
+    /* Adjust Search Box for Mobile */
+    .search-box:focus {
+        width: 180px;
+        /* Smaller width on mobile */
+    }
+
+    .nav-right {
+        gap: 10px;
+        justify-content: flex-end;
+    }
+
+    /* Hero Section Mobile */
+    .hero {
+        padding: 40px 20px;
+        margin: 20px 0;
+        text-align: center;
+    }
+
+    .hero-content h2 {
+        font-size: 28px;
+    }
+
+    .hero-content p {
+        font-size: 16px;
+    }
+
+    /* Book Cards Mobile */
+    .books {
+        padding: 20px 0;
+    }
+
+    .carousel {
+        padding: 20px;
+    }
+
+    /* Footer Mobile */
+    footer {
+        padding: 30px 20px;
+    }
+
+    .content-top {
+        flex-direction: column;
+        gap: 30px;
+    }
+
+    .content-top1 {
+        flex-direction: column;
+        gap: 20px;
+    }
+
+    .content-top2 {
+        align-items: flex-start;
+        text-align: left;
+    }
+
+    .content-bottom {
+        flex-direction: column-reverse;
+        gap: 20px;
+        align-items: center;
+        text-align: center;
+    }
 }

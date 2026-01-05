@@ -12,373 +12,19 @@ body {
 }
 
 /* Optional: biar input tetap bisa lihat caret */
-input, textarea {
+input,
+textarea {
     caret-color: auto;
 }
 
 /* =========================
-   NAVBAR
+   About Page Specific Styles
 ========================= */
-nav {
-    display: flex;
-    flex-direction: row;
-    justify-content: space-between; /* logo kiri, nav kanan */
-    align-items: center;
-    padding: 16px 120px; /* desktop */
-    border-bottom: 1px solid #90AB8B;
-    font-size: 1.02em;
-    background-color: #ffffff;
-}
 
-/* Container search + menu */
-.nav-right {
-    display: flex;
-    flex-direction: row;
-    align-items: center;
-    gap: 20px;
-    flex-wrap: nowrap;
-    flex-grow: 1; /* ambil sisa ruang */
-    justify-content: space-between;
-}
-
-.menu-logo {
-    display: flex;
-    flex-direction: row;
-    gap: 20px;
-    align-items: center;
-}
-
-/* =========================
-   LOGO
-========================= */
-.logo {
-    font-weight: bold;
-    font-size: 20px;
-    color: #3B4953;
-}
-
-/* =========================
-   SEARCH BAR
-========================= */
-.search-container {
-    flex-shrink: 1;
-    position: relative;
-}
-
-.search-box {
-    transition: width 0.6s, border-radius 0.6s, background 0.6s, box-shadow 0.6s;
-    width: 39px;
-    height: 40px;
-    border-radius: 20px;
-    border: none;
-    cursor: pointer;
-    background: rgb(235, 235, 235);
-    color: black;
-}
-
-/* default icon color */
-.search-box + label .search-icon {
-    color: black;
-}
-
-.search-box:hover {
-    color: white;
-    background: rgb(200, 200, 200);
-    box-shadow: 0 0 0 5px #5A7863;
-}
-
-.search-box:hover + label .search-icon {
-    color: white;
-}
-
-.search-box:focus {
-    border: none;
-    outline: none;
-    box-shadow: none;
-    padding-left: 15px;
-    cursor: text;
-    width: 300px;
-    /* border-radius: auto; <-- ini tidak valid, saya buang */
-    background: rgb(235, 235, 235);
-    color: black;
-}
-
-/* icon color when focus */
-.search-box:focus + label .search-icon {
-    color: black;
-}
-
-/* sembunyikan teks input saat belum fokus */
-.search-box:not(:focus) {
-    text-indent: -5000px;
-}
-
-/* sembunyikan submit button */
-#search-submit {
-    position: relative;
-    left: -5000px;
-}
-
-/* posisi icon */
-.search-icon {
-    position: relative;
-    left: -31px;
-    color: white;
-    cursor: pointer;
-}
-
-/* =========================
-   MENU NAV
-========================= */
-#information {
-    display: flex;
-    list-style: none;
-    margin: 0;
-    padding: 0;
-    gap: 15px;
-    flex-shrink: 0; /* menu tidak mengecil terlalu kecil */
-    font-size: 1.1em;
-}
-
-#information li {
-    margin-left: 20px;
-}
-
-#information a {
-    text-decoration: none;
-    color: #3B4953;
-    font-weight: 400; /* "10px" itu salah; font-weight itu angka 100-900 */
-    transition: color 0.2s ease;
-}
-
-#information a:hover {
-    color: #5A7863;
-}
-
-/* Login button */
-.login {
-    background-color: #5A7863;
-    color: #EBF4DD !important;
-    padding: 8px 16px;
-    border-radius: 20px;
-    transition: background-color 0.2s ease;
-}
-
-.login:hover {
-    background-color: #3B4953;
-}
-
-/* =========================
-   HERO PROMO
-========================= */
-.hero {
-    background: linear-gradient(135deg, #90AB8B, #EBF4DD);
-    padding: 80px 40px;
-    border-radius: 20px;
-    color: #ffffff;
-}
-
-.hero-content h2 {
-    font-size: 36px;
-    margin-bottom: 10px;
-}
-
-.hero-content p {
-    font-size: 18px;
-    margin-bottom: 20px;
-}
-
-.hero-content button {
-    background-color: #5A7863;
-    color: #EBF4DD;
-    border: none;
-    padding: 12px 25px;
-    border-radius: 25px;
-    cursor: pointer;
-}
-
-/* =========================
-   BEST BOOK
-========================= */
-.books {
-    padding: 40px;
-}
-
-.books h2 {
-    color: #3B4953;
-    margin-bottom: 20px;
-}
-
-.book-card {
-    min-width: 256px;
-    min-height: 364px;
-    background-color: #EBF4DD;
-    background-size: cover;
-    background-position: center;
-    background-repeat: no-repeat;
-    position: relative;
-
-    border: 1px solid #90AB8B;
-    border-radius: 15px;
-    color: #5A7863;
-    font-weight: bold;
-    padding: 20px;
-
-    transition: transform 0.3s ease, box-shadow 0.3s ease;
-}
-
-.rank-number {
-    position: absolute;
-    left: -38px;
-    bottom: 16px;
-
-    font-size: 120px;
-    font-weight: 900;
-    line-height: 1;
-    color: #5A7863;
-
-    -webkit-text-stroke: 3px #ffffff;
-    z-index: 10;
-    pointer-events: none;
-}
-
-.book-card:hover {
-    transform: translateY(-12px);
-}
-
-/* =========================
-   CAROUSEL
-========================= */
-.carousel-wrapper {
-    position: relative;
-    display: flex;
-    align-items: center;
-}
-
-.carousel {
-    padding: 40px 40px 40px 40px;
-    padding-left: 40px;
-    overflow: hidden;
-    overflow-x: auto;
-    overflow-y: hidden;
-    scroll-behavior: smooth;
-    width: 100%;
-}
-
-.carousel::-webkit-scrollbar {
-    display: none;
-}
-
-.carousel-track {
-    display: flex;
-    gap: 44px;
-}
-
-/* =========================
-   DOTS SLIDER
-========================= */
-.carousel-dots {
-    display: flex;
-    justify-content: center;
-    margin-top: 0px;
-}
-
-.dot {
-    display: inline-block;
-    width: 10px;
-    height: 10px;
-    background-color: #90AB8B;
-    border-radius: 50%;
-    margin: 0 6px;
-    cursor: pointer;
-    transition: all 0.3s ease;
-    margin-top: 15px;
-}
-
-.dot.active {
-    width: 20px;
-    border-radius: 10px;
-    background-color: #5A7863;
-}
-
-/* =========================
-   BUTTON SLIDER
-========================= */
-.carousel-button {
-    background-color: rgba(90, 120, 99, 0.85);
-    color: #F5F5F0;
-    border: none;
-    width: 40px;
-    height: 40px;
-    border-radius: 50%;
-    cursor: pointer;
-    font-size: 18px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    transition: background-color 0.3s ease;
-}
-
-.carousel-button:hover {
-    background-color: #3B4953;
-}
-
-.carousel-button.left {
-    margin-right: 10px;
-}
-
-.carousel-button.right {
-    margin-left: 10px;
-}
-
-/* =========================
-   WHY US
-========================= */
-.why-us {
-    padding: 60px 40px;
-    color: #5A7863;
-}
-
-.why-us h2 {
-    color: #3B4953;
-    font-size: 28px;
-}
-
-/* GRID */
-.why-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-    gap: 25px;
-}
-
-/* CARD */
-.why-card {
-    background: linear-gradient(135deg, #90AB8B, #EBF4DD);
-    border-radius: 20px;
-    color: #ffffff;
-    min-height: 180px;
-    box-shadow: 0 12px 25px rgba(59, 73, 83, 0.3);
-    transition: transform 0.3s ease, box-shadow 0.3s ease;
-}
-
-/* FIX: tadinya .why-card.h3 (salah), harusnya elemen h3 di dalam */
-.why-card h3 {
-    margin-bottom: 15px;
-    font-size: 20px;
-}
-
-/* FIX: tadinya .why-card.p (salah), harusnya elemen p di dalam */
-.why-card p {
-    font-size: 14px;
-    line-height: 1.6;
-    opacity: 0.9;
-}
-
-/* HOVER EFFECT */
-.why-card:hover {
-    transform: translateY(-12px);
-}
-
+/* Hero Section override if needed, or rely on style.css */
+/* If about.css hero is identical, remove it. If different, keep specific parts. 
+   Looking at the file, it seems to duplicate everything. 
+   I will remove the duplicates and only keep what is unique or needed overrides. */
 
 /* MAIN */
 main {
@@ -401,10 +47,26 @@ main {
 }
 
 .about-section img {
-    max-width: 44%; /* Membuat gambar responsif */
-    height: auto; /* Menjaga aspek rasio gambar */
+    max-width: 44%;
+    /* Membuat gambar responsif */
+    height: auto;
+    /* Menjaga aspek rasio gambar */
     border-radius: 15px;
     box-shadow: 0 15px 30px rgba(59, 73, 83, 0.25);
+}
+
+/* Responsive About Section */
+@media screen and (max-width: 768px) {
+    .about-section {
+        flex-direction: column-reverse;
+        /* Text on top or bottom? usually text first then image or image then text. Let's stack them. */
+        text-align: center;
+    }
+
+    .about-section img {
+        max-width: 100%;
+        margin-top: 20px;
+    }
 }
 
 .store-header {
@@ -442,7 +104,7 @@ main {
 
 .store-search input {
     width: 100%;
-    padding: 12px 16px 12px 40px; 
+    padding: 12px 16px 12px 40px;
     border-radius: 16px;
     border: 1.5px solid #90AB8B;
     outline: none;
@@ -455,6 +117,24 @@ main {
     grid-template-columns: repeat(2, minmax(0, 1fr));
     gap: 24px;
     color: #ffffff;
+}
+
+/* Responsive Store List */
+@media screen and (max-width: 768px) {
+    .store-list {
+        grid-template-columns: 1fr;
+        /* Single column on mobile */
+    }
+
+    .store-cards {
+        flex-direction: column;
+        text-align: center;
+    }
+
+    .store-thumb {
+        width: 100%;
+        margin-bottom: 15px;
+    }
 }
 
 .store-cards {
@@ -471,6 +151,11 @@ main {
 
 .store-thumb {
     min-width: 20%;
+}
+
+.store-thumb img {
+    width: 100%;
+    border-radius: 10px;
 }
 
 .store-name {

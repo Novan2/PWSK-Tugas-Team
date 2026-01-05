@@ -27,5 +27,27 @@
             </ul>
 
         </div>
+
+        <!-- Hamburger Menu Button -->
+        <button class="hamburger" aria-label="Menu">
+            <span></span>
+            <span></span>
+            <span></span>
+        </button>
     </div>
 </nav>
+
+<script>
+    (function () {
+        // Toggle Menu Mobile
+        const hamburger = document.querySelector('.hamburger');
+        const menu = document.getElementById('information');
+
+        if (hamburger && menu) {
+            hamburger.addEventListener('click', function () {
+                menu.classList.toggle('active');
+                hamburger.classList.toggle('active');
+            });
+        }
+    })();
+</script>```
