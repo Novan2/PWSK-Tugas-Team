@@ -1,5 +1,8 @@
 
-<h1 align="center"> Toko Buku Online (On-Book) <br> <sub>Tugas PWSK - Proyek Website</sub></h1>
+<div align="center" style="padding: 0px 10px;">
+  <p style="font-weight: bold; font-size: 24px; margin-bottom: 0px;">Toko Buku Online (On-Book)</p>
+  <sub style="font-size: 16px;">Tugas PWSK - Proyek Website</sub>
+</div>
 
 ## A. Deskripsi Singkat
 On-Book adalah sebuah website toko buku online yang menyediakan berbagai koleksi buku berkualitas mulai dari fiksi, non-fiksi, edukasi, hingga buku anak. Website ini dirancang untuk memudahkan pengguna dalam mencari, melihat detail, dan memilih buku favorit mereka dengan antarmuka yang responsif dan interaktif.
@@ -7,11 +10,11 @@ On-Book adalah sebuah website toko buku online yang menyediakan berbagai koleksi
 ## B. Daftar Anggota
 Berikut adalah anggota tim yang berkontribusi dalam pengembangan project ini:
 
-| Nama | NIM | Username GitHub | Peran / Tugas |
-|------|-----|-----------------|---------------|
-| Kadek Novan Suhaliem Chandra | 240040107 | [Novan2](https://github.com/username1) | Frontend (Home, About & Kontak Kategori, Footer), Backend (API Goggle Books, Slider, Contact Form, Map Search Feature On-Book)|
-| [I Gede Sandi Pujanta] | [240040129] | [@SandiPujanta](https://github.com/SandiPujanta) | Frontend (Home,Header, menu ulasan/testimoni, bootstrap) Backend (Search bar pada menu home & kategori, carousel) 
-| [Nama Anggota 3] | [NIM 3] | [@username3](https://github.com/username3) | JavaScript Logic & API |
+| Nama                         | NIM         | Username GitHub                                  | Peran / Tugas                                                                                                                  |
+| ---------------------------- | ----------- | ------------------------------------------------ | ------------------------------------------------------------------------------------------------------------------------------ |
+| Kadek Novan Suhaliem Chandra | 240040107   | [Novan2](https://github.com/username1)           | Frontend (Home, About & Kontak Kategori, Footer), Backend (API Goggle Books, Slider, Contact Form, Map Search Feature On-Book) |
+| [I Gede Sandi Pujanta]       | [240040129] | [@SandiPujanta](https://github.com/SandiPujanta) | Frontend (Home,Header, menu ulasan/testimoni, bootstrap) Backend (Search bar pada menu home & kategori, carousel)              |
+| [Nama Anggota 3]             | [NIM 3]     | [@username3](https://github.com/username3)       | JavaScript Logic & API                                                                                                         |
 
 ## C. Teknologi yang Digunakan
 Website ini dibangun menggunakan teknologi web modern:
@@ -88,4 +91,4 @@ Project ini dapat dijalankan dengan mudah karena merupakan static web:
 
 ## F. Tautan GitHub Pages
 Website dapat diakses secara online melalui link berikut:
-[https://github.com/Novan2/PWSK-Tugas-Team.git](https://github.com/Novan2/PWSK-Tugas-Team.git)
+[https://novan2.github.io/PWSK-Tugas-Team/](https://novan2.github.io/PWSK-Tugas-Team/)
