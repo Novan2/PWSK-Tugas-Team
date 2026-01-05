@@ -27,7 +27,7 @@ document.addEventListener("submit", (e) => {
                     searchBooks(keyword);
                 } else {
                     // Fallback: reload dengan param baru agar loadData() menangkap keyword
-                    window.location.search = `?search=${encodeURIComponent(keyword)}`;
+                    window.location.search = `PWSK-Tugas-Team/kategori.html?search=${encodeURIComponent(keyword)}`;
                 }
 
             } else {
