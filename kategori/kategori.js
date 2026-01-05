@@ -19,4 +19,6 @@
 */
 
 console.warn("⚠️ kategori.js sudah dipecah menjadi modul-modul terpisah!");
-console.info("Gunakan: kategori-data.js, kategori-filter.js, kategori-modal.js, kategori-carousel.js, kategori-render.js, kategori-main.js");
+console.info(
+  "Gunakan: kategori-data.js, kategori-filter.js, kategori-modal.js, kategori-carousel.js, kategori-render.js, kategori-main.js",
+);
