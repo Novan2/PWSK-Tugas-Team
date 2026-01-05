@@ -27,26 +27,37 @@ document.addEventListener("submit", (e) => {
                     searchBooks(keyword);
                 } else {
                     // Fallback: reload dengan param baru agar loadData() menangkap keyword
-                    window.location.search = `PWSK-Tugas-Team/kategori.html?search=${encodeURIComponent(keyword)}`;
+                    window.location.search = `?search=${encodeURIComponent(keyword)}`;
                 }
 
             } else {
-                /** * JIKA DI HALAMAN INDEX / LAINNYA:
-                 * Pindah ke halaman kategori dengan membawa parameter search
-                 *
-                 * GITHUB PAGES FIX:
-                 * Gunakan path 'kategori.html' atau './kategori.html' (relatif),
-                 * jangan '/kategori.html' (absolut ke root domain).
-                 **/
-                console.log("Redirect ke halaman kategori...");
+                // JIKA DI HALAMAN INDEX / LAINNYA:
+                // Pindah ke halaman kategori dengan membawa parameter search
+                // GITHUB PAGES & LOCALHOST FIX:
+                // Kita perlu mendapatkan "root" directory dari file HTML saat ini.
+                // Logika: Ambil pathname saat ini, hapus 'index.html' jika ada,
+                // lalu tempel 'kategori.html'.
 
-                // Gunakan URL API untuk membangun full URL secara robust
-                // Ini akan menangani path relatif terhadap halaman saat ini (baik itu root / atau /index.html)
-                // sehingga aman untuk GitHub Pages dengan subdirectory.
-                const targetUrl = new URL("kategori.html", window.location.href);
-                targetUrl.searchParams.set("search", keyword);
+                let currentPath = window.location.pathname;
 
-                window.location.href = targetUrl.toString();
+                // 1. Hapus 'index.html', 'about.html', dll jika ada di akhir URL
+                // Ex: /PWSK-Tugas-Team/index.html -> /PWSK-Tugas-Team/
+                // Ex: /index.html -> /
+                if (currentPath.endsWith(".html")) {
+                    currentPath = currentPath.substring(0, currentPath.lastIndexOf("/") + 1);
+                }
+
+                // 2. Pastikan diakhiri slash (untuk root path seperti /PWSK-Tugas-Team)
+                if (!currentPath.endsWith("/")) {
+                    currentPath += "/";
+                }
+
+                // 3. Bangun URL absolut untuk kategori.html
+                // window.location.origin = https://novan2.github.io atau http://127.0.0.1:5500
+                const targetUrl = window.location.origin + currentPath + "kategori.html?search=" + encodeURIComponent(keyword);
+
+                console.log("Redirecting to:", targetUrl);
+                window.location.href = targetUrl;
             }
         }
     }
