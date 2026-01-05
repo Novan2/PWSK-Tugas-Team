@@ -1,6 +1,11 @@
 /* Reset margin default */
 * {
   margin: 0;
+  caret-color: transparent;
+}
+
+input, textarea {
+  caret-color: auto;
 }
 
 /* Style dasar untuk body */
@@ -1276,7 +1281,7 @@ footer {
   margin-top: auto;
   padding: 16px 15px 18px;
   background: #90ab8b;
-  color: #ebf4dd;
+  color: #ffffff;
   display: flex;
   flex-direction: column;
   justify-content: flex-start;
@@ -1291,7 +1296,7 @@ footer {
   font-size: 16px;
   font-weight: 700;
   margin-bottom: 5px;
-  color: #ebf4dd !important;
+  color: #ffffff !important;
   text-align: left;
   display: -webkit-box;
   -webkit-line-clamp: 2;
@@ -1316,7 +1321,7 @@ footer {
 .price {
   font-size: 18px;
   font-weight: 700;
-  color: #ffd57e !important;
+  /* color: #ffffff !important; */
   text-align: left;
 }
 
