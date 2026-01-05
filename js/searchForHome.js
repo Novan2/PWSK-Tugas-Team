@@ -7,10 +7,10 @@ document.addEventListener("submit", (e) => {
     // Memastikan kita menangkap form dengan ID 'searchForm'
     if (e.target && e.target.id === "searchForm") {
         e.preventDefault();
-        
+
         const input = e.target.querySelector("#search-box");
         const keyword = input.value.trim();
-        
+
         if (keyword) {
             // Cek lokasi file saat ini
             const currentPath = window.location.pathname;
@@ -21,10 +21,10 @@ document.addEventListener("submit", (e) => {
                  * yang ada di kategori.js atau databuku.js
                  **/
                 console.log("Mencari di halaman kategori:", keyword);
-                
+
                 // Jika loadBooks adalah function global, panggil langsung
                 if (typeof searchBooks === "function") {
-                searchBooks(keyword);
+                    searchBooks(keyword);
                 } else {
                     // Fallback: reload dengan param baru agar loadData() menangkap keyword
                     window.location.search = `?search=${encodeURIComponent(keyword)}`;
@@ -33,12 +33,16 @@ document.addEventListener("submit", (e) => {
             } else {
                 /** * JIKA DI HALAMAN INDEX / LAINNYA:
                  * Pindah ke halaman kategori dengan membawa parameter search
+                 *
+                 * GITHUB PAGES FIX:
+                 * Gunakan path 'kategori.html' atau './kategori.html' (relatif),
+                 * jangan '/kategori.html' (absolut ke root domain).
                  **/
                 console.log("Redirect ke halaman kategori...");
-                
-                // Gunakan path relatif yang aman menuju folder kategori
-                // Jika index.html sejajar dengan folder kategori/
-                window.location.href = `/kategori.html?search=${encodeURIComponent(keyword)}`;
+
+                // Gunakan path relatif agar aman di subdirectory (GitHub Pages)
+                // Asumsi: searchForHome.js dipanggil di index.html yang sejajar dengan kategori.html
+                window.location.href = `kategori.html?search=${encodeURIComponent(keyword)}`;
             }
         }
     }
