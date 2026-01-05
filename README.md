@@ -1,9 +1,10 @@
-# Toko Buku Online (On-Book)
 
-## Deskripsi Singkat
+<h1 align="center"> Toko Buku Online (On-Book) <br> <sub>Tugas PWSK - Proyek Website</sub></h1>
+
+## A. Deskripsi Singkat
 On-Book adalah sebuah website toko buku online yang menyediakan berbagai koleksi buku berkualitas mulai dari fiksi, non-fiksi, edukasi, hingga buku anak. Website ini dirancang untuk memudahkan pengguna dalam mencari, melihat detail, dan memilih buku favorit mereka dengan antarmuka yang responsif dan interaktif.
 
-## Daftar Anggota
+## B. Daftar Anggota
 Berikut adalah anggota tim yang berkontribusi dalam pengembangan project ini:
 
 | Nama | NIM | Username GitHub | Peran / Tugas |
@@ -12,7 +13,7 @@ Berikut adalah anggota tim yang berkontribusi dalam pengembangan project ini:
 | [I Gede Sandi Pujanta] | [240040129] | [@SandiPujanta](https://github.com/SandiPujanta) | Frontend (Home,Header, menu ulasan/testimoni, bootstrap) Backend (Search bar pada menu home & kategori, carousel) 
 | [Nama Anggota 3] | [NIM 3] | [@username3](https://github.com/username3) | JavaScript Logic & API |
 
-## Teknologi yang Digunakan
+## C. Teknologi yang Digunakan
 Website ini dibangun menggunakan teknologi web modern:
 *   **HTML5**: Struktur halaman web.
 *   **CSS3**: Styling responsif dan animasi (custom CSS & variabel).
@@ -20,7 +21,7 @@ Website ini dibangun menggunakan teknologi web modern:
 *   **Bootstrap 3.4.1**: Framework CSS untuk grid system dan komponen dasar.
 *   **Google Books API**: Sumber data dinamis untuk menampilkan daftar buku.
 
-## Fitur Utama
+## D. Fitur Utama
 1.  **Katalog Buku Dinamis**: Menampilkan daftar buku terbaru dan terpopuler yang diambil langsung dari Google Books API.
 2.  **Pencarian Buku**: Fitur pencarian real-time untuk menemukan buku berdasarkan judul atau kata kunci.
 3.  **Filter Kategori**: Memudahkan pengguna menyaring buku berdasarkan genre (Fiksi, Non-Fiksi, Komik, Sains, dll).
@@ -30,7 +31,7 @@ Website ini dibangun menggunakan teknologi web modern:
 7.  **Testimoni Slider**: Menampilkan ulasan pelanggan dalam format slider.
 8.  **Responsif**: Tampilan yang menyesuaikan dengan berbagai ukuran layar (Desktop, Tablet, Mobile).
 
-## Struktur Folder
+## E. Struktur Folder
 Project ini disusun dengan struktur folder yang rapi untuk kemudahan pengembangan:
 
 ```
@@ -70,7 +71,7 @@ Project ini disusun dengan struktur folder yang rapi untuk kemudahan pengembanga
 │   └── place.json         # Data lokasi toko (jika ada)
 ```
 
-## Cara Menjalankan Website
+## E. Cara Menjalankan Website
 Project ini dapat dijalankan dengan mudah karena merupakan static web:
 
 1.  **Clone Repository** (atau download ZIP):
@@ -85,6 +86,6 @@ Project ini dapat dijalankan dengan mudah karena merupakan static web:
     *   Pilih "Open with Live Server".
     *   Website akan terbuka otomatis di browser default Anda (biasanya di `http://127.0.0.1:5500`).
 
-## Tautan GitHub Pages
+## F. Tautan GitHub Pages
 Website dapat diakses secara online melalui link berikut:
 [https://github.com/Novan2/PWSK-Tugas-Team.git](https://github.com/Novan2/PWSK-Tugas-Team.git)
