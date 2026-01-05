@@ -14,7 +14,7 @@ Berikut adalah anggota tim yang berkontribusi dalam pengembangan project ini:
 | ---------------------------- | ----------- | ------------------------------------------------ | ------------------------------------------------------------------------------------------------------------------------------ |
 | Kadek Novan Suhaliem Chandra | 240040107   | [Novan2](https://github.com/username1)           | Frontend (Home, About & Kontak Kategori, Footer), Backend (API Goggle Books, Slider, Contact Form, Map Search Feature On-Book) |
 | [I Gede Sandi Pujanta]       | [240040129] | [@SandiPujanta](https://github.com/SandiPujanta) | Frontend (Home,Header, menu ulasan/testimoni, bootstrap) Backend (Search bar pada menu home & kategori, carousel)              |
-| [Nama Anggota 3]             | [NIM 3]     | [@username3](https://github.com/username3)       | JavaScript Logic & API                                                                                                         |
+| [Fiji Firmanda]             | [240040099]     | [Fiji22-06](https://github.com/Fiji22-06)       | Frontend (Kategori, Menu Kategori, Popup Pembelian), Backend (Integrasi API Google Books pada menu Kategori, Fitur Pencarian, Filter Kategori, Dan Fitur Pembelian)
 
 ## C. Teknologi yang Digunakan
 Website ini dibangun menggunakan teknologi web modern:

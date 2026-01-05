@@ -38,6 +38,7 @@ function openDetailModal(book) {
   // Tampilkan modal
   modal.classList.add("open");
   modal.setAttribute("aria-hidden", "false");
+  document.body.classList.add("no-scroll");
 
   // Fokus ke tombol close untuk accessibility
   const close = modal.querySelector(".modal-close");
@@ -79,6 +80,7 @@ function openDetailModal(book) {
   function closeModal() {
     modal.classList.remove("open");
     modal.setAttribute("aria-hidden", "true");
+    document.body.classList.remove("no-scroll");
   }
 
   // Event klik tombol close
@@ -86,17 +88,7 @@ function openDetailModal(book) {
     closeBtn.addEventListener("click", closeModal);
   }
 
-  // Event klik overlay
-  modal.addEventListener("click", (e) => {
-    if (e.target === modal) closeModal();
-  });
-
-  // Event keyboard ESC
-  document.addEventListener("keydown", (e) => {
-    if (e.key === "Escape" && modal.classList.contains("open")) {
-      closeModal();
-    }
-  });
+  // Tutup hanya via tombol close (hindari auto close saat klik luar)
 
   // Update subtotal saat quantity berubah
   if (qtyInput && subtotalEl && priceEl) {
@@ -179,6 +171,7 @@ function openDetailModal(book) {
     modal.classList.add("open");
     modal.setAttribute("aria-hidden", "false");
     openBtn.setAttribute("aria-expanded", "true");
+    document.body.classList.add("no-scroll");
     if (closeBtn) closeBtn.focus();
   }
 
@@ -187,6 +180,7 @@ function openDetailModal(book) {
     modal.classList.remove("open");
     modal.setAttribute("aria-hidden", "true");
     openBtn.setAttribute("aria-expanded", "false");
+    document.body.classList.remove("no-scroll");
     openBtn.focus();
   }
 
@@ -198,17 +192,7 @@ function openDetailModal(book) {
     closeBtn.addEventListener("click", closeModal);
   }
 
-  // Event klik overlay
-  modal.addEventListener("click", (e) => {
-    if (e.target === modal) closeModal();
-  });
-
-  // Event keyboard ESC
-  document.addEventListener("keydown", (e) => {
-    if (e.key === "Escape" && modal.classList.contains("open")) {
-      closeModal();
-    }
-  });
+  // Tutup hanya via tombol close (hindari auto close saat klik luar)
 
   // Event klik kategori di dalam modal
   modal
