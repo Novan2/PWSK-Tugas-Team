@@ -604,13 +604,69 @@ footer {
         width: auto;
     }
 
-    /* Adjust Search Box for Mobile */
-    .search-box:focus {
-        width: 160px;
-        /* Smaller width on mobile to prevent overflow */
-        position: absolute;
-        z-index: 10;
-    }
+   /*============== Search bar ============= */
+.search-container {
+    flex-shrink: 1;
+    position: absolute;
+    left: 120px;
+}
+
+.search-box {
+    transition: width 0.6s, border-radius 0.6s, background 0.6s, box-shadow 0.6s;
+    width: 39px;
+    height: 40px;
+    border-radius: 20px;
+    border: none;
+    cursor: pointer;
+    background: rgb(235, 235, 235);
+    color: black;
+}
+
+.search-box+label .search-icon {
+    color: black;
+}
+
+.search-box:hover {
+    color: white;
+    background: rgb(200, 200, 200);
+    box-shadow: 0 0 0 5px #5A7863;
+}
+
+.search-box:hover+label .search-icon {
+    color: white;
+}
+
+.search-box:focus {
+    border: none;
+    outline: none;
+    box-shadow: none;
+    padding-left: 15px;
+    cursor: text;
+    width: 150px;
+    border-radius: auto;
+    background: rgb(235, 235, 235);
+    color: black;
+}
+
+.search-box:focus+label .search-icon {
+    color: black;
+}
+
+.search-box:not(:focus) {
+    text-indent: -5000px;
+}
+
+#search-submit {
+    position: relative;
+    left: -5000px;
+}
+
+.search-icon {
+    position: relative;
+    left: -31px;
+    color: white;
+    cursor: pointer;
+}
 
     /* Hero Section Mobile */
     .hero {
