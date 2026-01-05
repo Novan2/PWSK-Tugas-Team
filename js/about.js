@@ -10,6 +10,23 @@ document.addEventListener("DOMContentLoaded", () => {
 
   if (!storeList) return;
 
+  // --- HELPERS ---
+  // Fungsi untuk mendapatkan path root yang dinamis
+  const getBasePath = () => {
+    let path = window.location.pathname;
+    // Jika path berakhiran .html, hapus filenamenya
+    if (path.endsWith(".html")) {
+      return path.substring(0, path.lastIndexOf("/") + 1);
+    }
+    // Jika path tidak berakhiran slash (misal /about), kita asumsikan itu file, jadi ambil parent dir
+    if (!path.endsWith("/")) {
+      return path.substring(0, path.lastIndexOf("/") + 1);
+    }
+    return path;
+  };
+
+  const basePath = getBasePath();
+
   // --- FUNGSI UTAMA UNTUK MERENDER KARTU ---
   const renderStores = (storesToRender, isSearch = false) => {
     // Jika bukan pencarian, kita update counter itemsDisplayed
@@ -20,9 +37,10 @@ document.addEventListener("DOMContentLoaded", () => {
     storesToRender.forEach(store => {
       const article = document.createElement("article");
       article.className = "store-cards";
+      // Gunakan basePath untuk image agar aman di GitHub Pages
       article.innerHTML = `
           <div class="store-card">
-            <img class="store-thumb" src="./media/img2.jpg" alt="Ikon On-Book">
+            <img class="store-thumb" src="${basePath}media/img2.jpg" alt="Ikon On-Book">
           </div>
           <div class="store-card-body">
             <h3 class="store-name">${store.name}</h3>
@@ -56,18 +74,24 @@ document.addEventListener("DOMContentLoaded", () => {
   };
 
   // --- FETCH DATA ---
-  // GITHUB PAGES FIX:
-  // Gunakan path relatif dari root (HTML file), bukan dari file JS.
-  // "data/place.json" akan bekerja jika HTML ada di root.
-  fetch("data/place.json")
-    .then(response => response.json())
+  // Gunakan basePath untuk fetch juga
+  const dataUrl = basePath + "data/place.json";
+  console.log("Fetching stores from:", dataUrl);
+
+  fetch(dataUrl)
+    .then(response => {
+      if (!response.ok) {
+        throw new Error(`HTTP error! Status: ${response.status}`);
+      }
+      return response.json();
+    })
     .then(stores => {
       allStores = stores;
       resetToDefault();
     })
     .catch(error => {
-      console.error("Error:", error);
-      storeList.innerHTML = "<p>Gagal memuat data toko.</p>";
+      console.error("Error fetching stores:", error);
+      storeList.innerHTML = `<p style="text-align:center; color:red;">Gagal memuat data toko.<br>Error: ${error.message}</p>`;
     });
 
   // --- EVENT: TOMBOL LOAD MORE ---
