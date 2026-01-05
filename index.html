@@ -1,17 +1,19 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Toko Buku Online</title>
-    <link rel="stylesheet" href="Asset/style.css">
+    <link rel="stylesheet" href="css/style.css">
     <!-- Bootstrap 3 CSS (untuk glyphicon) -->
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
 
 </head>
+
 <body>
     <!-- NAVBAR -->
-    <header id="site-header"data-include-src="../component/header.html"></header>
+    <header id="site-header" data-include-src="components/header.html"></header>
 
 
     <main>
@@ -28,20 +30,20 @@
         <section class="books">
             <h2>Buku Terlaris & Rekomendasi</h2>
 
-            <div class ="carousel-wrapper">
-                
+            <div class="carousel-wrapper">
+
                 <div class="carousel">
                     <div class="carousel-track" id="carousel-track">
                         <!-- Isi Buku Top 10-->
                     </div>
                 </div>
-                
+
             </div>
             <div class="carousel-dots">
                 <button class="carousel-button left">&#10094;</button>
 
                 <span class="dot active" data-index="first"></span>
-                <span class="dot" data-index="last"></span> 
+                <span class="dot" data-index="last"></span>
 
                 <button class="carousel-button right">&#10095;</button>
             </div>
@@ -83,12 +85,13 @@
         </section>
     </main>
 
-  <footer id="site-footer"data-include-src="../component/footer.html"></footer>
+    <footer id="site-footer" data-include-src="components/footer.html"></footer>
     </footer>
-    <script src="/Javascript/databuku.js" type="module"></script>
-    <script src="/Javascript/slider.js" type="module"></script>
-    <script src="/Javascript/search.js" type="module"></script>
-    <script type="module" src="/Javascript/includes.js"></script>
+    <script src="js/databuku.js" type="module"></script>
+    <script src="js/slider.js" type="module"></script>
+    <script src="js/search.js" type="module"></script>
+    <script type="module" src="js/includes.js"></script>
     <div></div>
 </body>
+
 </html>
