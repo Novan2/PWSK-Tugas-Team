@@ -14,12 +14,6 @@ textarea {
 }
 
 /* Style dasar untuk body */
-body {
-  font-family: Arial, sans-serif;
-  background-color: #f5f5f0;
-}
-
-/* Removed Global Navbar, Hero, Footer Styles as they are in style.css */
 
 main {
   padding: 0px 80px;
@@ -68,7 +62,6 @@ main {
   align-items: center;
   gap: 12px;
   flex-wrap: wrap;
-  /* Already wraps, good */
 }
 
 /* Tombol filter kategori */
@@ -134,13 +127,9 @@ main {
 .modal {
   position: fixed;
   inset: 0;
-  /* cover whole viewport */
   display: none;
-  /* Tersembunyi secara default */
   align-items: center;
-  /* center vertically */
   justify-content: center;
-  /* center horizontally */
   background: transparent;
   z-index: 1200;
 }

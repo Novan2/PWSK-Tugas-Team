@@ -3,7 +3,7 @@
   Menangani rendering grid katalog buku
 */
 
-console.log("kategori-render.js loaded");
+
 
 // Fungsi untuk render grid katalog buku
 function renderKategori(books) {

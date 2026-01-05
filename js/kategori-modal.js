@@ -3,7 +3,7 @@
   Menangani modal detail buku dan modal kategori lainnya
 */
 
-console.log("kategori-modal.js loaded");
+
 
 // Fungsi untuk membuka modal detail buku
 function openDetailModal(book) {

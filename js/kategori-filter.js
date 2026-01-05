@@ -84,17 +84,14 @@ document.addEventListener("DOMContentLoaded", () => {
       // Tambahkan class 'active' ke tombol yang diklik
       btn.classList.add("active");
 
-      // Simpan kategori aktif dan filter
       const chosen = btn.dataset.filter || "all";
       activeCategory = chosen;
       filterRekomendasi(chosen);
 
-      // Render grid utama sesuai pilihan kategori
       const gridFiltered =
         chosen === "all"
           ? allBooks
           : allBooks.filter((b) => b.kategori === chosen);
-      console.log(`Filter: ${chosen}, Hasil: ${gridFiltered.length} buku`);
       renderKategori(gridFiltered);
 
       // Update modal active state

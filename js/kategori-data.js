@@ -1,19 +1,11 @@
-/*
-  kategori-data.js
-  Menangani loading data dari Google Books API dan mapping kategori
-*/
-
-console.log("kategori-data.js loaded");
-
 // Array global untuk menyimpan semua buku
 let allBooks = [];
 
-// Fungsi untuk mapping kategori dari Google Books ke bahasa Indonesia
+// Pemetaan kategori dari Google Books ke kategori lokal
 function mapKategori(googleCategory) {
   if (!googleCategory) return "lainnya";
   const cat = googleCategory.toLowerCase();
 
-  // Mapping kategori English ke Indonesia
   if (cat.includes("fiction") || cat.includes("novel")) return "fiksi";
   if (cat.includes("biography") || cat.includes("memoir")) return "biografi";
   if (cat.includes("comic") || cat.includes("graphic novel")) return "komik";
@@ -29,12 +21,11 @@ function mapKategori(googleCategory) {
   return "lainnya";
 }
 
-// Fungsi untuk format harga ke format Rupiah
+// Format Rupiah
 function formatRp(num) {
   return "Rp " + num.toLocaleString("id-ID");
 }
 
-// Fungsi untuk load data dari Google Books API
 async function loadData() {
   const params = new URLSearchParams(window.location.search);
   let keyword = params.get("search");
@@ -54,9 +45,7 @@ async function loadData() {
   return (async () => {
     let src = [];
 
-    // Jika ada keyword pencarian, cari di Google Books
     if (keyword) {
-      console.log("Mencari di Google Books API:", keyword);
       const url = `https://www.googleapis.com/books/v1/volumes?q=${encodeURIComponent(keyword)}&maxResults=40`;
       try {
         const res = await fetch(url);
@@ -76,7 +65,6 @@ async function loadData() {
       }
     }
 
-    // Jika tidak ada hasil pencarian atau tidak ada keyword, ambil data default
     if (src.length === 0) {
       try {
         const response = await fetch(
@@ -105,7 +93,6 @@ async function loadData() {
       }
     }
 
-    // Proses data buku dengan kategori dan stok random
     allBooks = src.map((book) => {
       let rawHarga = Number(book.harga || 0);
       let finalHarga =
@@ -123,11 +110,6 @@ async function loadData() {
           "https://via.placeholder.com/400x600/90AB8B/EBF4DD?text=No+Cover",
       };
     });
-
-    console.log(`Total buku dimuat: ${allBooks.length}`);
-    allBooks.forEach((b) =>
-      console.log(`${b.judul} -> kategori: ${b.kategori}`),
-    );
 
     return allBooks;
   })();

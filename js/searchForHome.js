@@ -12,77 +12,29 @@ document.addEventListener("submit", (e) => {
         const keyword = input.value.trim();
 
         if (keyword) {
-            // Cek lokasi file saat ini
             const currentPath = window.location.pathname;
 
             if (currentPath.includes("kategori.html")) {
-                /** * JIKA DI HALAMAN KATEGORI:
-                 * Tidak perlu pindah halaman, cukup panggil fungsi loadBooks 
-                 * yang ada di kategori.js atau databuku.js
-                 **/
-                console.log("Mencari di halaman kategori:", keyword);
-
-                // Jika loadBooks adalah function global, panggil langsung
                 if (typeof searchBooks === "function") {
                     searchBooks(keyword);
                 } else {
-                    // Fallback: reload dengan param baru agar loadData() menangkap keyword
                     window.location.search = `?search=${encodeURIComponent(keyword)}`;
                 }
 
             } else {
-                // JIKA DI HALAMAN INDEX / LAINNYA:
-                // Pindah ke halaman kategori dengan membawa parameter search
-                // GITHUB PAGES & LOCALHOST FIX:
-                // Kita perlu mendapatkan "root" directory dari file HTML saat ini.
-                // Logika: Ambil pathname saat ini, hapus 'index.html' jika ada,
-                // lalu tempel 'kategori.html'.
+                let path = window.location.pathname;
 
-                let currentPath = window.location.pathname;
-
-                // 1. Hapus 'index.html', 'about.html', dll jika ada di akhir URL
-                // Ex: /PWSK-Tugas-Team/index.html -> /PWSK-Tugas-Team/
-                // Ex: /index.html -> /
-                if (currentPath.endsWith(".html")) {
-                    currentPath = currentPath.substring(0, currentPath.lastIndexOf("/") + 1);
+                if (path.endsWith(".html")) {
+                    path = path.substring(0, path.lastIndexOf("/") + 1);
                 }
 
-                // 2. Pastikan diakhiri slash (untuk root path seperti /PWSK-Tugas-Team)
-                if (!currentPath.endsWith("/")) {
-                    currentPath += "/";
+                if (!path.endsWith("/")) {
+                    path += "/";
                 }
 
-                // 3. Bangun URL absolut untuk kategori.html
-                // window.location.origin = https://novan2.github.io atau http://127.0.0.1:5500
-                const targetUrl = window.location.origin + currentPath + "kategori.html?search=" + encodeURIComponent(keyword);
-
-                console.log("Redirecting to:", targetUrl);
+                const targetUrl = window.location.origin + path + "kategori.html?search=" + encodeURIComponent(keyword);
                 window.location.href = targetUrl;
             }
         }
     }
 });
-// Fungsi untuk memetakan data buku dari API ke format yang diinginkan
-// export const mapBookData = (item) => {
-//   const volumeInfo = item.volumeInfo || {};
-//   const sale = item.saleInfo || {};
-//   const access = item.accessInfo || {};
-//     return {
-//     id: item.id || null,
-//     title: volumeInfo.title || null,
-//     subtitle: volumeInfo.subtitle || null,
-//     authors: Array.isArray(volumeInfo.authors) ? volumeInfo.authors : [],
-//     publisher: volumeInfo.publisher || null,
-//     publishedDate: volumeInfo.publishedDate || null,
-//     description: volumeInfo.description || null,
-//     pageCount: volumeInfo.pageCount || null,
-//     categories: Array.isArray(volumeInfo.categories) ? volumeInfo.categories : [],
-//     image: volumeInfo.imageLinks?.thumbnail || null,
-//     price: sale.saleability === "FOR_SALE" ? sale.listPrice?.amount || null : null,
-//     currencyCode: sale.saleability === "FOR_SALE" ? sale.listPrice?.currencyCode || null : null,
-//     isEbook: sale.isEbook || false,
-//     previewLink: volumeInfo.previewLink || null,
-//     infoLink: volumeInfo.infoLink || null,
-//     webReaderLink: access.webReaderLink || null,
-//   };
-// }

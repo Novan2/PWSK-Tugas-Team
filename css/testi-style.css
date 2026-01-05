@@ -188,7 +188,7 @@ body {
 
     .testi-card {
         flex: 0 0 100%;
-        /* Full width on mobile */
+        /* Lebar penuh di mobile */
         padding: 24px;
     }
 
@@ -197,4 +197,3 @@ body {
         padding: 40px 0;
     }
 }
-

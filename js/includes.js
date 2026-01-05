@@ -1,7 +1,5 @@
 (function () {
-  /**
-   * Memuat file HTML eksternal ke dalam elemen dengan atribut data-include-src
-   */
+  // Memuat file HTML eksternal
   async function loadIncludes() {
     const nodes = document.querySelectorAll('[data-include-src]');
 
@@ -12,15 +10,11 @@
       try {
         const response = await fetch(src);
         if (!response.ok) throw new Error(`Gagal memuat ${src}: ${response.status}`);
-        
+
         const html = await response.text();
         node.innerHTML = html;
 
-        // --- OPTIONAL: Penyesuaian Path Otomatis ---
-        // Jika file yang di-include punya link/gambar relatif, 
-        // kita bisa menyesuaikannya di sini jika diperlukan.
-        
-        // Eksekusi script di dalam HTML yang baru dimuat
+        // Eksekusi script di dalam HTML yang dimuat
         const scripts = node.querySelectorAll('script');
         scripts.forEach(oldScript => {
           const newScript = document.createElement('script');
@@ -41,7 +35,6 @@
     }
   }
 
-  // Jalankan saat DOM siap
   if (document.readyState === 'loading') {
     document.addEventListener('DOMContentLoaded', loadIncludes);
   } else {

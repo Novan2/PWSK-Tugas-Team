@@ -1,20 +1,17 @@
-<!-- Header navbar yang dipakai bersama di halaman kategori -->
+<!-- Header navbar -->
 <nav>
     <div class="nav-right">
         <div class="menu-logo">
-            <!-- Logo website -->
             <div class="logo">On-Book</div>
 
-            <!-- Form search dengan icon glyphicon -->
             <form id="searchForm" class="search-container" role="search" aria-label="Cari buku">
                 <input id="search-box" type="search" class="search-box" name="q" placeholder="Cari buku..." />
                 <label for="search-box"><span class="glyphicon glyphicon-search search-icon"
                         aria-hidden="true"></span><span class="sr-only">Cari</span></label>
-                <button type="submit" id="search-submit" class="visually-hidden">Search</button>
+                <button type="submit" id="search-submit" class="visually-hidden">Cari</button>
             </form>
         </div>
 
-        <!-- Menu navigasi utama -->
         <ul id="information">
             <li><a href="index.html">Beranda</a></li>
             <li><a href="kategori.html">Kategori Buku</a></li>
@@ -25,7 +22,6 @@
             <li><a class="login" href="#">Masuk</a></li>
         </ul>
 
-        <!-- Hamburger Menu Button -->
         <button class="hamburger" aria-label="Menu">
             <span></span>
             <span></span>
@@ -37,7 +33,6 @@
 
 <script>
     (function () {
-        // Toggle Menu Mobile
         const hamburger = document.querySelector('.hamburger');
         const menu = document.getElementById('information');
 
