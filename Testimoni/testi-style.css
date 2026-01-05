@@ -1,0 +1,162 @@
+/* ============ ROOT & BODY RESET ============ */
+body {
+    background-color: #fcfcf9; /* Warna putih gading yang sangat lembut */
+    font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+    color: #333;
+    margin: 0;
+}
+
+/* ============ HEADER SECTION ============ */
+.testi-container {
+    padding: 80px 20px;
+    max-width: 1200px; /* Diperlebar agar kartu terlihat berjejer */
+    margin: 0 auto;
+    overflow: hidden; /* Memotong konten yang keluar dari batas layar */
+}
+.testi-header {
+    text-align: center;
+    margin-bottom: 50px;
+}
+
+.testi-header h2 {
+    font-size: 32px;
+    color: #2c3e50;
+    font-weight: 700;
+    margin-bottom: 10px;
+    letter-spacing: -0.5px;
+}
+
+.testi-header p {
+    font-size: 16px;
+    color: #7f8c8d;
+    max-width: 600px;
+    margin: 0 auto;
+    line-height: 1.6;
+}
+
+/* ============ SLIDER WRAPPER ============ */
+.testi-slider-wrapper {
+    position: relative;
+    width: 100%;
+    overflow: visible; /* Biarkan kartu terlihat sedikit di pinggir */
+}
+
+.testi-slider {
+    display: flex;
+    gap: 30px;
+    transition: transform 0.6s cubic-bezier(0.25, 1, 0.5, 1);
+    will-change: transform;
+    padding: 20px 0; /* Memberi ruang untuk shadow agar tidak terpotong */
+}
+/* ============ TESTIMONI CARD ============ */
+.testi-card {
+    flex: 0 0 400px; /* Lebar tetap kartu agar berjejer (gerbong) */
+    background: #ffffff;
+    padding: 40px;
+    border-radius: 20px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
+    border: 1px solid #f0f0f0;
+    opacity: 0.4; /* Kartu samping redup */
+    transform: scale(0.9);
+    transition: all 0.5s ease;
+    pointer-events: none;
+    user-select: none;
+}
+
+.testi-card.active {
+    opacity: 1;
+    transform: scale(1);
+    pointer-events: auto;
+    border: 1px solid #5A7863;
+}
+
+/* Konten di dalam Card */
+.stars { 
+    color: #f1c40f; 
+    margin-bottom: 20px; 
+    font-size: 16px; 
+}
+
+.quote {
+    font-size: 16px;
+    line-height: 1.6;
+    color: #444;
+    margin: 20px 0;
+    min-height: 80px; /* Tinggi minimum agar kartu seragam */
+}
+
+.user-info {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    justify-content: center;
+}
+
+.user-info img {
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    object-fit: cover;
+}
+.user-info h4 {
+    margin: 0;
+    font-size: 16px;
+    font-weight: 700;
+    color: #2c3e50;
+}
+
+.user-info small {
+    display: block;
+    color: #95a5a6;
+    font-size: 13px;
+}
+
+/* ============= DOTS & BUTTONS SLIDER =========== */
+.carousel-dots {    
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-top: 40px;
+    padding-bottom: 80px;
+}
+
+.dot {
+    width: 8px;
+    height: 8px;
+    background-color: #cbd5e0;
+    border-radius: 50%;
+    margin: 0 5px;
+    cursor: pointer;
+    transition: all 0.4s ease;
+}
+
+.dot.active {
+    width: 24px;
+    border-radius: 10px;
+    background-color: #5A7863; /* Warna hijau identitas On-Book */
+}
+
+.carousel-button {
+    background-color: #5A7863;
+    color: #ffffff;
+    border: none;
+    width: 35px;
+    height: 35px;
+    border-radius: 50%;
+    cursor: pointer;
+    font-size: 14px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+}
+
+.carousel-button:hover {
+    background-color: #3B4953;
+    transform: scale(1.1);
+}
+
+.carousel-button.left { margin-right: 15px; }
+.carousel-button.right { margin-left: 15px; }
+
