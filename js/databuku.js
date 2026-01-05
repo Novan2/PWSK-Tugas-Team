@@ -1,4 +1,3 @@
-
 // Mendapatkan Cover Resolusi Tinggi
 function getHighResCover(info) {
   const url = info.imageLinks?.thumbnail || info.imageLinks?.smallThumbnail;
