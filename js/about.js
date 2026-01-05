@@ -56,7 +56,10 @@ document.addEventListener("DOMContentLoaded", () => {
   };
 
   // --- FETCH DATA ---
-  fetch("../data/place.json")
+  // GITHUB PAGES FIX:
+  // Gunakan path relatif dari root (HTML file), bukan dari file JS.
+  // "data/place.json" akan bekerja jika HTML ada di root.
+  fetch("data/place.json")
     .then(response => response.json())
     .then(stores => {
       allStores = stores;
@@ -78,12 +81,12 @@ document.addEventListener("DOMContentLoaded", () => {
     const searchTerm = e.target.value.toLowerCase().trim();
 
     if (searchTerm !== "") {
-      const filteredStores = allStores.filter(store => 
-        store.name.toLowerCase().includes(searchTerm) || 
+      const filteredStores = allStores.filter(store =>
+        store.name.toLowerCase().includes(searchTerm) ||
         store.address.toLowerCase().includes(searchTerm)
       );
 
-      storeList.innerHTML = ""; 
+      storeList.innerHTML = "";
       if (filteredStores.length > 0) {
         // Gunakan true untuk menandakan ini mode pencarian
         renderStores(filteredStores, true);
