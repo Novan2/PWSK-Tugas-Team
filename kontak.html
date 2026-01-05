@@ -34,7 +34,7 @@
                 <div class="input-group">
                     <textarea id="message" name="message" placeholder="Message" required></textarea>
                 </div>
-                <button type="button" class="submit-btn" onclick="validateForm()">SEND MESSAGE</button>
+                <button type="submit" class="submit-btn" id="send-btn">SEND MESSAGE</button>
             </form>
 
             <!-- Alert Section -->
@@ -53,6 +53,21 @@
     </div>
 
     <footer id="site-footer" data-include-src="components/footer.html"></footer>
+
+    <!-- Success Modal -->
+    <div id="success-modal" class="modal-overlay">
+        <div class="modal-content">
+            <div class="success-icon">
+                <svg viewBox="0 0 52 52">
+                    <circle class="checkmark-circle" cx="26" cy="26" r="25" fill="none" />
+                    <path class="checkmark-check" fill="none" d="M14.1 27.2l7.1 7.2 16.7-16.8" />
+                </svg>
+            </div>
+            <h3>Pesan Terkirim!</h3>
+            <p>Terima kasih telah menghubungi kami. Kami akan segera merespons pesan Anda.</p>
+            <button id="close-modal-btn">Tutup</button>
+        </div>
+    </div>
 
     <script src="js/kontak.js" type="module"></script>
     <script type="module" src="js/includes.js"></script>

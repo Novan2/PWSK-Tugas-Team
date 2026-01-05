@@ -1,39 +1,76 @@
-function validateForm() {
-    // Ambil nilai dari setiap input
-    var name = document.getElementById("name").value;
-    var company = document.getElementById("company").value;
-    var phone = document.getElementById("phone").value;
-    var email = document.getElementById("email").value;
-    var subject = document.getElementById("subject").value;
-    var message = document.getElementById("message").value;
+document.addEventListener('DOMContentLoaded', () => {
+    const contactForm = document.getElementById("contact-form");
+    const modalSuccess = document.getElementById("success-modal");
+    const closeModalBtn = document.getElementById("close-modal-btn");
 
-    // Validasi: Cek apakah semua field sudah diisi
-    if (name === "" || company === "" || phone === "" || email === "" || subject === "" || message === "") {
-        showAlert("Semua field harus diisi!", "error");
-        return false;
+    if (contactForm) {
+        contactForm.addEventListener("submit", function (event) {
+            event.preventDefault(); // Mencegah reload halaman
+            validateAndSubmit();
+        });
     }
 
-    // Validasi Email
-    var emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-    if (!emailPattern.test(email)) {
-        showAlert("Alamat email tidak valid!", "error");
-        return false;
+    if (closeModalBtn) {
+        closeModalBtn.addEventListener("click", () => {
+            closeModal();
+        });
     }
 
-    // Jika semua validasi lulus, tampilkan alert sukses
-    showAlert("Pesan Anda telah dikirim dengan sukses!", "success");
-    document.getElementById("contact-form").reset(); // Reset form setelah kirim
-}
+    // Tutup modal jika klik di luar konten
+    window.addEventListener("click", (e) => {
+        if (e.target === modalSuccess) {
+            closeModal();
+        }
+    });
 
-// Fungsi untuk menampilkan alert
-function showAlert(message, type) {
-    var alertMessage = document.getElementById("alert-message");
-    alertMessage.textContent = message;
-    alertMessage.className = "alert " + type; // Menambahkan kelas berdasarkan tipe
-    alertMessage.style.display = "block"; // Menampilkan alert
+    function validateAndSubmit() {
+        // Ambil nilai input
+        const name = document.getElementById("name").value.trim();
+        const company = document.getElementById("company").value.trim();
+        const phone = document.getElementById("phone").value.trim();
+        const email = document.getElementById("email").value.trim();
+        const subject = document.getElementById("subject").value.trim();
+        const message = document.getElementById("message").value.trim();
 
-    // Menghilangkan alert setelah 5 detik
-    setTimeout(function() {
-        alertMessage.style.display = "none";
-    }, 5000);
-}
+        // Validasi Sederhana
+        if (!name || !company || !phone || !email || !subject || !message) {
+            showAlert("Semua field harus diisi!", "error");
+            return;
+        }
+
+        const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+        if (!emailPattern.test(email)) {
+            showAlert("Alamat email tidak valid!", "error");
+            return;
+        }
+
+        // Jika valid, tampilkan modal sukses
+        showModal();
+        contactForm.reset();
+    }
+
+    function showModal() {
+        if (modalSuccess) {
+            modalSuccess.style.display = "flex";
+        }
+    }
+
+    function closeModal() {
+        if (modalSuccess) {
+            modalSuccess.style.display = "none";
+        }
+    }
+
+    function showAlert(message, type) {
+        const alertMessage = document.getElementById("alert-message");
+        if (alertMessage) {
+            alertMessage.textContent = message;
+            alertMessage.className = "alert " + type;
+            alertMessage.style.display = "block";
+
+            setTimeout(() => {
+                alertMessage.style.display = "none";
+            }, 3000);
+        }
+    }
+});

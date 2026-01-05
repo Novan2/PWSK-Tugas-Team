@@ -22,7 +22,7 @@ document.addEventListener("DOMContentLoaded", () => {
       article.className = "store-cards";
       article.innerHTML = `
           <div class="store-card">
-            <img class="store-thumb" src="${store.image}" alt="Ikon ${store.name}">
+            <img class="store-thumb" src="./media/img2.jpg" alt="Ikon On-Book">
           </div>
           <div class="store-card-body">
             <h3 class="store-name">${store.name}</h3>
@@ -56,7 +56,7 @@ document.addEventListener("DOMContentLoaded", () => {
   };
 
   // --- FETCH DATA ---
-  fetch("place.json")
+  fetch("../data/place.json")
     .then(response => response.json())
     .then(stores => {
       allStores = stores;
