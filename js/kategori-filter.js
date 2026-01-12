@@ -8,6 +8,22 @@ console.log("kategori-filter.js loaded");
 // Variabel untuk menyimpan kategori aktif
 let activeCategory = "all";
 
+const categoryLabelMap = {
+  all: "Semua",
+  fiksi: "Fiksi",
+  nonfiksi: "Non Fiksi",
+  komik: "Komik",
+  biografi: "Biografi",
+  sains: "Sains",
+  psikologi: "Psikologi",
+  anak: "Buku Anak",
+  bahasa: "Bahasa",
+  fotografi: "Fotografi",
+  sejarah: "Sejarah",
+  referensi: "Referensi",
+  lainnya: "Lainnya",
+};
+
 // Fungsi untuk filter rekomendasi berdasarkan kategori
 function filterRekomendasi(chosen) {
   let filtered = allBooks;
@@ -72,10 +88,56 @@ function handleSearchParam() {
   return true;
 }
 
+function updateModalActiveState(btn) {
+  const modal = document.getElementById("moreCategoriesModal");
+  if (!modal || !btn) return;
+  modal
+    .querySelectorAll(".mega-col button, .mega-left button")
+    .forEach((b) => b.classList.remove("active"));
+  const modalBtn = modal.querySelector(
+    `button[data-filter='${btn.dataset.filter}']`,
+  );
+  if (modalBtn) modalBtn.classList.add("active");
+}
+
+function updateHeaderForCategory(chosen) {
+  const titleEl = document.querySelector(".kategori-header h1");
+  if (!titleEl) return;
+  if (chosen === "all") {
+    titleEl.innerText = "Kategori Buku";
+    return;
+  }
+  const label = categoryLabelMap[chosen] || chosen;
+  titleEl.innerText = `Kategori: ${label}`;
+}
+
+async function fetchAndRenderCategory(chosen, btn) {
+  const grid = document.getElementById("kategoriGrid");
+  if (grid) {
+    grid.innerHTML = '<div class="no-results">Memuat data...</div>';
+  }
+
+  let books = allBooks;
+  if (typeof loadCategoryData === "function") {
+    books = await loadCategoryData(chosen);
+  } else {
+    books =
+      chosen === "all"
+        ? allBooks
+        : allBooks.filter((b) => b.kategori === chosen);
+  }
+
+  renderKategori(books);
+  if (typeof renderRekomendasi === "function") renderRekomendasi();
+  if (typeof renderTerlaris === "function") renderTerlaris();
+  updateModalActiveState(btn);
+  updateHeaderForCategory(chosen);
+}
+
 // Event listener untuk tombol filter kategori
 document.addEventListener("DOMContentLoaded", () => {
   document.querySelectorAll(".kategori-filter button").forEach((btn) => {
-    btn.addEventListener("click", () => {
+    btn.addEventListener("click", async () => {
       // Hapus class 'active' dari semua tombol
       document
         .querySelectorAll(".kategori-filter button")
@@ -86,25 +148,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
       const chosen = btn.dataset.filter || "all";
       activeCategory = chosen;
-      filterRekomendasi(chosen);
-
-      const gridFiltered =
-        chosen === "all"
-          ? allBooks
-          : allBooks.filter((b) => b.kategori === chosen);
-      renderKategori(gridFiltered);
-
-      // Update modal active state
-      const modal = document.getElementById("moreCategoriesModal");
-      if (modal) {
-        modal
-          .querySelectorAll(".mega-col button, .mega-left button")
-          .forEach((b) => b.classList.remove("active"));
-        const modalBtn = modal.querySelector(
-          `button[data-filter='${btn.dataset.filter}']`,
-        );
-        if (modalBtn) modalBtn.classList.add("active");
-      }
+      await fetchAndRenderCategory(chosen, btn);
     });
   });
 });
